@@ -1,22 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+/**
+ * Root Component
+ */
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import Main from './modules/App/App';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-          Working
-        </p>
-      </div>
-    );
-  }
+// Base stylesheet
+require('./base.css');
+
+export default function App(props) {
+  return (
+    <Provider store={props.store}>
+      <BrowserRouter>
+        <Main />
+      </BrowserRouter>
+    </Provider>
+  );
 }
 
-export default App;
+App.propTypes = {
+  store: PropTypes.object.isRequired,
+};
