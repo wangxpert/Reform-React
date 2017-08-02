@@ -1,5 +1,26 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+// Some best-practice CSS that's useful for most apps
+// Just remove them if they're not what you want
+html {
+  box-sizing: border-box;
+}
+
+html,
 body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.925rem;
+  font-weight: 300;
+  line-height: 1.6;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
+  height: 100%;
+  color: #292b2c;
+  background-color: #f5f8fa;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
 }
