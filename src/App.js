@@ -4,17 +4,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import Main from './modules/App/App';
+import { BrowserRouter, Route } from 'react-router-dom';
+import Core from './modules/App';
 
 // Base stylesheet
-require('./base.css');
+import './styles/styles.css';
 
 export default function App(props) {
   return (
     <Provider store={props.store}>
       <BrowserRouter>
-        <Main />
+        <Route path="/" component={Core} />
       </BrowserRouter>
     </Provider>
   );

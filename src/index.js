@@ -9,9 +9,12 @@ import { AppContainer } from 'react-hot-loader';
 import App from './App';
 import { configureStore } from './store';
 import registerServiceWorker from './registerServiceWorker';
+import sagas from './sagas';
 
 // Initialize store
 const store = configureStore(window.__INITIAL_STATE__);
+sagas.forEach(saga => store.runSaga(saga));
+
 const mountApp = document.getElementById('root');
 
 render(
