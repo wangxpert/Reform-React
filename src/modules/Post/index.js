@@ -10,6 +10,10 @@ import {
   selectDepartment
 } from '../../actions/region';
 
+import {
+  postsFetchRequested
+} from '../../actions/posts';
+
 // Import styles
 import './styles/styles.css';
 
@@ -19,6 +23,7 @@ import MobileApps from './components/MobileApps';
 import SponsoredAds from './components/SponsoredAds';
 import CategorySelector from './components/CategorySelector';
 import DepartmentBanner from './components/DepartmentBanner';
+import PostBlock from './components/PostBlock';
 
 // Import routes
 
@@ -33,7 +38,7 @@ class Post extends Component {
   }
 
   componentWillMount() {
-    const { dispatch, region } = this.props;
+    const { dispatch } = this.props;
     dispatch(statesFetchRequested());
   }
 
@@ -48,12 +53,23 @@ class Post extends Component {
   }
 
   selectDepartment(departmentId) {
-    this.props.dispatch(selectDepartment(departmentId));
     const depart = this.props.region.departments.Items.find( ele => ( ele.department === departmentId ) );
     this.setState({ department: depart });
+
+    this.props.dispatch(selectDepartment(departmentId));
+
+    const region = this.props.region;
+    this.props.dispatch(postsFetchRequested(region.selectedState, region.selectedCity, departmentId));
   }
 
   render() {
+
+    var posts = null;
+    if (this.props.posts && this.props.posts.posts) {
+      posts = this.props.posts.posts.Items.map((ele, index) => (
+        <PostBlock key={ index } post={ ele } />
+      ));
+    }
 
     return (
       <div className='row page-layout__viewport'>
@@ -67,6 +83,11 @@ class Post extends Component {
             selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
 
           <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/>
+
+          {/* Department Posts */}
+          <ul className="list-group media-list media-list-stream mb-5">
+            { posts }
+          </ul>
         </div>
 
         <div className="col-3">
@@ -85,7 +106,8 @@ Post.propTypes = {
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
-    region: store.region
+    region: store.region,
+    posts: store.posts
   };
 }
 
