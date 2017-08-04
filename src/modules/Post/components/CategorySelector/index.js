@@ -96,7 +96,7 @@ export default class CategorySelector extends Component {
 }
 
 CategorySelector.propTypes = {
-  states: PropTypes.Object,
-  cities: PropTypes.Object,
-  category: PropTypes.Object
+  states: PropTypes.object,
+  cities: PropTypes.object,
+  category: PropTypes.object
 };
