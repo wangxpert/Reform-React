@@ -31,7 +31,11 @@ class App extends Component {
         { this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && DevTools }
 
         <Header />
-        { routes }
+        
+        <div className='container pt-5 mb-5'>
+          { routes }
+        </div>
+
         <Footer />
       </div>
     )
