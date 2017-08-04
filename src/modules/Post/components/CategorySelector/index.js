@@ -7,15 +7,15 @@ import HomepageBannerImg from '../../assets/homepage-banner.jpg';
 export default class CategorySelector extends Component {
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.states !== this.props.states) {
+    if (nextProps.states !== this.props.states && nextProps.states) {
       this.props.selectState(nextProps.states.Items[0].stateid);
     }
 
-    if (nextProps.cities !== this.props.cities) {
+    if (nextProps.cities !== this.props.cities && nextProps.cities) {
       this.props.selectCity(nextProps.cities.Items[0].city);
     }
 
-    if (nextProps.departments !== this.props.departments) {
+    if (nextProps.departments !== this.props.departments && nextProps.departments) {
       this.props.selectDepartment(nextProps.cities.Items[0].department);
     }
   }
