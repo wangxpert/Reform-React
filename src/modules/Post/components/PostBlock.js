@@ -21,7 +21,7 @@ export default function MobileApps(props) {
       }
       <p>{ post.text }</p>
       <hr width="100%" />
-      <div className="text-center mx-auto"> <!-- FIXME: have to change when login functionality is implemented. -->
+      <div className="text-center mx-auto"> { /* FIXME: have to change when login functionality is implemented. */ }
         <button className="btn btn-secondary mr-3" onClick={ warnAlert }><i className="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;&nbsp;{ post.upvotes } Support</button>
         <button className="btn btn-secondary mr-3" onClick={ warnAlert }><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;&nbsp;{ post.downvotes } { "Don't Support" }</button>
         <button className="btn btn-secondary" onClick={ warnAlert }><i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;{ post.comments } Comments</button>
