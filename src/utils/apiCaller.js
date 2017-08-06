@@ -9,7 +9,7 @@ export default function callApi(endpoint, method = 'get', body) {
     body: JSON.stringify(body),
   })
   .then(response => {
-		if (response.status >= 400) {
+		if (!response.ok) {
 			throw new Error("Bad response from server");
 		}
 		return response.json();

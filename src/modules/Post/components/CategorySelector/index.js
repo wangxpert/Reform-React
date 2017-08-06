@@ -11,7 +11,7 @@ export default class CategorySelector extends Component {
       this.props.selectState(nextProps.states.Items[0].stateid);
     }
 
-    if (nextProps.cities !== this.props.cities && nextProps.cities) {
+    if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
       this.props.selectCity(nextProps.cities.Items[0].city);
     }
 

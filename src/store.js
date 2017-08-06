@@ -3,7 +3,6 @@
  */
 import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import DevTools from './modules/App/components/DevTools';
 import rootReducer from './reducers';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -20,7 +19,7 @@ export function configureStore(initialState = {}) {
 
   if (process.env.NODE_ENV === 'development') {
     // Enable DevTools only when rendering during development.
-    enhancers.push(window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument());
+    enhancers.push(window.devToolsExtension ? window.devToolsExtension() : null);
   }
 
   const store = createStore(rootReducer, initialState, compose(...enhancers));

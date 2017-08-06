@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import './styles/styles.css';
 
 // Import components
-import DevTools from './components/DevTools';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -28,10 +27,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        { this.state.isMounted && !window.devToolsExtension && process.env.NODE_ENV === 'development' && DevTools }
-
         <Header />
-        
+
         <div className='container pt-5 mb-5'>
           { routes }
         </div>
