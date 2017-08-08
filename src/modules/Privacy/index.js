@@ -7,18 +7,18 @@ import './styles/styles.css';
 
 // Import routes
 
-class ContactUs extends Component {
+class Privacy extends Component {
 
   render() {
     return (
       <div className="row page-layout__viewport">
         <div className="col-6 offset-3">
-          <h3>Contact Us</h3>
-          <p>Contact us text.</p>
+          <h3>Privacy Policy</h3>
+          <p>Privacy Policy us text.</p>
         </div>
       </div>
     )
   }
 }
 
-export default ContactUs;
+export default Privacy;

@@ -6,9 +6,9 @@ export default function DepartmentBanner(props) {
       <li className="media postsview_banner" id="categoryBannerDiv">
         <div id="department-banner" className="postsview_department-banner">
           { props.banner ? (
-            <img className="postsview_img" src={`https://${props.banner}`} width="100%" />
+            <img className="postsview_img" src={`https://${props.banner}`} alt="" width="100%" />
           ) : (
-            <img className="postsview_img" src="https://s3.amazonaws.com/media-reformcow-com/banner_1489159906549_20170310t153139.616z"></img>
+            <img className="postsview_img" src="https://s3.amazonaws.com/media-reformcow-com/banner_1489159906549_20170310t153139.616z" alt=""></img>
           ) }
         </div>
       </li>

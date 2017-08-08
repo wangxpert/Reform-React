@@ -9,7 +9,7 @@ export default function MobileApps(props) {
 
   return (
     <li className="media list-group-item p-4 mb-3">
-      <img className="media-object rounded-circle mr-3 postview_avatar" src={ `https://${ post.picture }` } />
+      <img className="media-object rounded-circle mr-3 postview_avatar" src={ `https://${ post.picture }` } alt="" />
       <h3>{ post.preferred_username }</h3>
       <div className="postsview_dept" >{ post.cityname }
         { post.departmentname &&
@@ -17,7 +17,7 @@ export default function MobileApps(props) {
         }
       </div>
       { post.media &&
-        <img className="media-object img-responsive postview_photo mb-2" src={`https://${ post.media }`} />
+        <img className="media-object img-responsive postview_photo mb-2" src={`https://${ post.media }`} alt="" />
       }
       <p>{ post.text }</p>
       <hr width="100%" />

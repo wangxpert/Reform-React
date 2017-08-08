@@ -7,7 +7,7 @@ import './styles/styles.css';
 
 // Import routes
 
-class ContactUs extends Component {
+class AboutUs extends Component {
 
   render() {
     return (
@@ -21,4 +21,4 @@ class ContactUs extends Component {
   }
 }
 
-export default ContactUs;
+export default AboutUs;

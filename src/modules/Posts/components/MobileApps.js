@@ -1,8 +1,8 @@
 import React from 'react';
 
 // Import Assets
-import AppleImage from '../assets/apple-app-store-app.png';
-import AndroidImage from '../assets/google-play-store-app.png';
+import AppleImage from '../../../assets/apple-app-store-app.png';
+import AndroidImage from '../../../assets/google-play-store-app.png';
 
 export default function MobileApps(props) {
   return (

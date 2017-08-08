@@ -27,7 +27,7 @@ import PostBlock from './components/PostBlock';
 
 // Import routes
 
-class Post extends Component {
+class Posts extends Component {
 
   constructor(props) {
     super(props);
@@ -99,7 +99,7 @@ class Post extends Component {
   }
 }
 
-Post.propTypes = {
+Posts.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
@@ -111,4 +111,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps)(Post);
+export default connect(mapStateToProps)(Posts);

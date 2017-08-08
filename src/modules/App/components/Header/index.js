@@ -19,7 +19,7 @@ class Header extends Component {
               <Link to='/' className='page-layout__nav-item'>Posts</Link>
             </li>
             <li className="nav-item">
-              <Link to='/activist'  className='page-layout__nav-item'>Activism Pages</Link>
+              <Link to='/activists'  className='page-layout__nav-item'>Activism Pages</Link>
             </li>
           </ul>
           <ul className="navbar-nav ml-auto mr-3">
