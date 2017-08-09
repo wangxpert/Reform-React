@@ -19,7 +19,9 @@ export function configureStore(initialState = {}) {
 
   if (process.env.NODE_ENV === 'development') {
     // Enable DevTools only when rendering during development.
-    enhancers.push(window.devToolsExtension ? window.devToolsExtension() : null);
+    if (window.devToolsExtension) {
+      enhancers.push(window.devToolsExtension());
+    }
   }
 
   const store = createStore(rootReducer, initialState, compose(...enhancers));
