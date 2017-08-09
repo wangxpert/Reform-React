@@ -16,7 +16,7 @@ export default class CategorySelector extends Component {
     }
 
     if (nextProps.departments !== this.props.departments && nextProps.departments) {
-      this.props.selectDepartment(nextProps.cities.Items[0].department);
+      this.props.selectDepartment(nextProps.departments.Items[0].department);
     }
   }
 
