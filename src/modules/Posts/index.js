@@ -86,6 +86,8 @@ class Posts extends Component {
 
     return (
 
+      const { region, posts } = this.props;
+
       <div className='row page-layout__viewport'>
         <div className="col-3">
           { this.state.showAlert && <AlertBox closeAlert={e => (this.setState({ showAlert: false }))} /> }
@@ -93,7 +95,7 @@ class Posts extends Component {
         </div>
 
         <div className="col-6">
-          <CategorySelector states={ this.props.region.states } cities={ this.props.region.cities } departments={ this.props.region.departments }
+          <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
             selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
 
           <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/>
@@ -102,9 +104,9 @@ class Posts extends Component {
           <ul className="list-group media-list media-list-stream mb-5">
             <InfiniteScroll
                 pageStart={0}
-                loadMore={this.loadPosts.bind(this)}
-                hasMore={this.props.posts.nextKey.postid !== undefined}
-                loader={<div className="loader">Loading ...</div>}
+                loadMore={ this.loadPosts.bind(this) }
+                hasMore={ posts.nextKey.postid !== undefined }
+                loader={ <div className="loader">Loading ...</div> }
             >
               { posts }
             </InfiniteScroll>
