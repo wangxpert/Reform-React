@@ -4,18 +4,17 @@ import Types from '../actions/types';
 
 // Initial State
 const initialState = {
-  posts: [],
-  nextKey: {}
+  posts: []
 };
 
 // Handlers
 
 export const resetPosts = (state = initialState) => {
-  return { ...state, nextKey: {}, posts: [] };
+  return { posts: [] };
 }
 
 export const fetchPostsSucceeded = (state = initialState, action) => {
-  return { ...state, posts: [...state.posts, ...action.posts.Items ], nextKey: action.posts.nextkey };
+  return { ...state, posts: [...state.posts, ...action.posts.Items ], lastKey: action.posts.LastEvaluatedKey };
 }
 
 export const fetchPostsFailed = (state = initialState, action) => {
