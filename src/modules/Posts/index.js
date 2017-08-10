@@ -11,6 +11,7 @@ import {
 } from '../../actions/region';
 
 import {
+  resetPosts,
   postsFetchRequested
 } from '../../actions/posts';
 
@@ -25,8 +26,11 @@ import CategorySelector from './components/CategorySelector';
 import DepartmentBanner from './components/DepartmentBanner';
 import PostBlock from './components/PostBlock';
 
+import InfiniteScroll from 'react-infinite-scroller';
+
 // Import routes
 
+const FETCH_LIMIT = 50;
 class Posts extends Component {
 
   constructor(props) {
@@ -53,25 +57,35 @@ class Posts extends Component {
   }
 
   selectDepartment(departmentId) {
+    const { region, dispatch } = this.props;
+
     const depart = this.props.region.departments.Items.find( ele => ( ele.department === departmentId ) );
     this.setState({ department: depart });
 
-    this.props.dispatch(selectDepartment(departmentId));
+    dispatch(selectDepartment(departmentId));
 
-    const region = this.props.region;
-    this.props.dispatch(postsFetchRequested(region.selectedState, region.selectedCity, departmentId));
+    dispatch(resetPosts());
+    dispatch(postsFetchRequested(region.selectedState, region.selectedCity, departmentId, FETCH_LIMIT));
+  }
+
+  loadPosts() {
+    const { region, posts } = this.props;
+    if (!posts.nextKey.postid) return;
+
+    this.props.dispatch(postsFetchRequested(region.selectedState, region.selectedCity, region.selectedDepartment, FETCH_LIMIT, posts.nextKey.postid))
   }
 
   render() {
 
-    var posts = null;
+    var posts = [];
     if (this.props.posts && this.props.posts.posts) {
-      posts = this.props.posts.posts.Items.map((ele, index) => (
+      posts = this.props.posts.posts.map((ele, index) => (
         <PostBlock key={ index } post={ ele } />
       ));
     }
 
     return (
+
       <div className='row page-layout__viewport'>
         <div className="col-3">
           { this.state.showAlert && <AlertBox closeAlert={e => (this.setState({ showAlert: false }))} /> }
@@ -86,7 +100,14 @@ class Posts extends Component {
 
           {/* Department Posts */}
           <ul className="list-group media-list media-list-stream mb-5">
-            { posts }
+            <InfiniteScroll
+                pageStart={0}
+                loadMore={this.loadPosts.bind(this)}
+                hasMore={this.props.posts.nextKey.postid !== undefined}
+                loader={<div className="loader">Loading ...</div>}
+            >
+              { posts }
+            </InfiniteScroll>
           </ul>
         </div>
 

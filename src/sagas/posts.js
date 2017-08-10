@@ -5,7 +5,7 @@ import * as Api from '../api/posts';
 // worker Saga: will be fired on POSTS_FETCH_REQUESTED actions
 function* fetchPosts(action) {
    try {
-      const posts = yield call(Api.fetchPosts, action.state, action.city, action.department);
+      const posts = yield call(Api.fetchPosts, action.state, action.city, action.department, action.limit, action.nextKey);
       yield put({ type: "POSTS_FETCH_SUCCEEDED", posts: posts });
    } catch (e) {
       yield put({ type: "POSTS_FETCH_FAILED", err: e.message });

@@ -12,10 +12,6 @@ import HomepageBannerImg from '../../../assets/homepage-banner.jpg'
 
 class Activist extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     const { dispatch } = this.props;
     dispatch(activistFetchRequested(this.props.match.params.state, this.props.match.params.city, this.props.match.params.activist));
@@ -33,7 +29,7 @@ class Activist extends Component {
          {this.props.activists.activist ? (
            <div className="card rounded mb-5">
              {this.props.activists.activist.images && this.props.activists.activist.images[0] &&
-               <img className="card-img-top" src={'https://' + this.props.activists.activist.images[0]} />
+               <img className="card-img-top" src={'https://' + this.props.activists.activist.images[0]} alt="" />
              }
              <div className = "card-block">
                <h2 className="card-title ml-2">{this.props.activists.activist.title}</h2>
