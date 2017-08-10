@@ -76,18 +76,16 @@ class Posts extends Component {
   }
 
   render() {
+    const { region, posts } = this.props;
 
-    var posts = [];
+    var renderPosts = [];
     if (this.props.posts && this.props.posts.posts) {
-      posts = this.props.posts.posts.map((ele, index) => (
+      renderPosts = this.props.posts.posts.map((ele, index) => (
         <PostBlock key={ index } post={ ele } />
       ));
     }
 
     return (
-
-      const { region, posts } = this.props;
-
       <div className='row page-layout__viewport'>
         <div className="col-3">
           { this.state.showAlert && <AlertBox closeAlert={e => (this.setState({ showAlert: false }))} /> }
@@ -108,7 +106,7 @@ class Posts extends Component {
                 hasMore={ posts.nextKey.postid !== undefined }
                 loader={ <div className="loader">Loading ...</div> }
             >
-              { posts }
+              { renderPosts }
             </InfiniteScroll>
           </ul>
         </div>
