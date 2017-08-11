@@ -30,7 +30,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 // Import routes
 
-const FETCH_LIMIT = 500;
+const FETCH_LIMIT = 50;
 class Posts extends Component {
 
   constructor(props) {
@@ -70,7 +70,6 @@ class Posts extends Component {
 
   loadPosts() {
     const { region, posts } = this.props;
-    if (!posts.lastKey.postid) return;
 
     this.props.dispatch(postsFetchRequested(region.selectedState, region.selectedCity, region.selectedDepartment, FETCH_LIMIT, posts.lastKey))
   }

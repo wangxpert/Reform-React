@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import InfiniteScroll from 'react-infinite-scroller';
+
 // Import Components
 import ActivistBlock from './ActivistBlock';
 import CategorySelector from './CategorySelector';
@@ -15,9 +17,12 @@ import {
 } from '../../../actions/region';
 
 import {
+  resetActivists,
   activistsFetchRequested
 } from '../../../actions/activists';
 
+
+const FETCH_LIMIT = 50;
 class ActivistList extends Component {
 
   componentWillMount() {
@@ -31,29 +36,48 @@ class ActivistList extends Component {
   }
 
   selectCity(city) {
-    this.props.dispatch(selectCity(city));
-    this.props.dispatch(activistsFetchRequested(this.props.region.selectedState, city));
+    const { dispatch, region } = this.props;
+
+    dispatch(selectCity(city));
+    dispatch(resetActivists());
+    dispatch(activistsFetchRequested(region.selectedState, city, FETCH_LIMIT));
+  }
+
+  loadActivists() {
+    const { region, activists, dispatch } = this.props;
+    console.log('loadActivists');
+
+    dispatch(activistsFetchRequested(region.selectedState, region.selectedCity, FETCH_LIMIT, activists.lastKey))
   }
 
   render() {
-    var activists = null;
-    if (this.props.activists && this.props.activists.activists) {
-      activists = this.props.activists.activists.Items.map((ele, index) => (
+    const { region, activists } = this.props;
+    var renderActivists = null;
+    if (activists.activists) {
+      renderActivists = activists.activists.map((ele, index) => (
         <ActivistBlock key={ index } activist={ ele } />
       ));
     }
 
     return (
       <div>
-        <CategorySelector states={ this.props.region.states } cities={ this.props.region.cities }
+        <CategorySelector states={ region.states } cities={ region.cities }
           selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } />
 
-        { (activists && activists.length) ?
+        { (activists.activists && activists.activists.length) ?
           (
             <div>
               <h6 className='ml-2' > Select an activism page from the list below </h6>
               <ul className='list-group media-list media-list-stream mb-5' >
-                { activists }
+                <InfiniteScroll
+                    pageStart={ 0 }
+                    loadMore={ this.loadActivists.bind(this) }
+                    hasMore={ activists.lastKey !== undefined }
+                    loader={ <div className="loader">Loading ...</div> }
+                >
+                  { renderActivists }
+                </InfiniteScroll>
+
               </ul>
             </div>
           ) : (

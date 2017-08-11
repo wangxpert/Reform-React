@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // Import Actions
-import {
-  activistFetchRequested,
-} from '../../../actions/activists';
 
 // Import Assets
 import HomepageBannerImg from '../../../assets/homepage-banner.jpg'
@@ -13,11 +10,13 @@ import HomepageBannerImg from '../../../assets/homepage-banner.jpg'
 class Activist extends Component {
 
   componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(activistFetchRequested(this.props.match.params.state, this.props.match.params.city, this.props.match.params.activist));
+
   }
 
   render() {
+    console.log(this.props);
+    const activist = this.props.activists.activists.find(e => (e.activismid === this.props.match.params.activist));
+
     return (
       <div>
         <ul className="list-group media-list media-list-stream mb-4">
@@ -26,14 +25,14 @@ class Activist extends Component {
           </li>
          </ul>
          {/* Activism Pages List */}
-         {this.props.activists.activist ? (
+         {activist ? (
            <div className="card rounded mb-5">
-             {this.props.activists.activist.images && this.props.activists.activist.images[0] &&
-               <img className="card-img-top" src={'https://' + this.props.activists.activist.images[0]} alt="" />
+             {activist.images && activist.images[0] &&
+               <img className="card-img-top" src={'https://' + activist.images[0]} alt="" />
              }
              <div className = "card-block">
-               <h2 className="card-title ml-2">{this.props.activists.activist.title}</h2>
-               <p className = "card-text">{this.props.activists.activist.content}</p>
+               <h2 className="card-title ml-2">{activist.title}</h2>
+               <p className = "card-text">{activist.content}</p>
                <hr width="100%" />
                <div className="mb-4">
                  <h6>Stay informed. Sign up for email updates.</h6>

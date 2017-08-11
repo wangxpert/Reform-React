@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import { Switch, Route } from 'react-router-dom';
-
 // Import styles
 import '../Posts/styles/styles.css';
 import './styles/styles.css';
@@ -11,10 +9,8 @@ import AlertBox from '../Posts/components/AlertBox';
 import MobileApps from '../Posts/components/MobileApps';
 import SponsoredAds from '../Posts/components/SponsoredAds';
 
-import ActivistList from './components/ActivistList';
-import Activist from './components/Activist';
-
 // Import routes
+import routes from './routes';
 
 class Activists extends Component {
 
@@ -31,19 +27,12 @@ class Activists extends Component {
     return (
       <div className='row page-layout__viewport'>
         <div className="col-3">
-          { this.state.showAlert && <AlertBox closeAlert={e => (this.setState({ showAlert: false }))} /> }
+          { this.state.showAlert && <AlertBox closeAlert={ e => (this.setState({ showAlert: false })) } /> }
           <MobileApps />
         </div>
 
         <div className="col-6">
-
-          {/* Activism Pages List */}
-          <Switch>
-            <Route exact path='/activists/' component={ ActivistList } />
-            <Route path='/activists/:state/:city/:activist' component={ Activist } />
-          </Switch>
-          { /*<ActivistList activists={this.props.activists} />*/ }
-
+          { routes }
         </div>
 
         <div className="col-3">

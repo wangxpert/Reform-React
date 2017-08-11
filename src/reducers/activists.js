@@ -4,33 +4,28 @@ import Types from '../actions/types';
 
 // Initial State
 const initialState = {
-
+  activists: []
 };
 
 // Handlers
 
+export const resetActivists = (state = initialState) => {
+  return { activists: [] };
+}
+
 export const fetchActivistsSucceeded = (state = initialState, action) => {
-  return { ...state, activists: action.activists };
+  return { ...state, activists: [ ...state.activists, ...action.activists.Items ], lastKey: action.activists.LastEvaluatedKey };
 }
 
 export const fetchActivistsFailed = (state = initialState, action) => {
   return { ...state, err: action.err };
 }
 
-export const fetchActivistSucceeded = (state = initialState, action) => {
-  return { ...state, activist: action.activist };
-}
-
-export const fetchActivistFailed = (state = initialState, action) => {
-  return { ...state, err: action.err };
-}
-
 // map action types to reducer functions
 export const handlers = {
+  [Types.RESET_ACTIVISTS]: resetActivists,
   [Types.ACTIVISTS_FETCH_SUCCEEDED]: fetchActivistsSucceeded,
   [Types.ACTIVISTS_FETCH_FAILED]: fetchActivistsFailed,
-  [Types.ACTIVIST_FETCH_SUCCEEDED]: fetchActivistSucceeded,
-  [Types.ACTIVIST_FETCH_FAILED]: fetchActivistFailed
 }
 
 /* Selectors */

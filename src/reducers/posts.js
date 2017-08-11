@@ -14,7 +14,7 @@ export const resetPosts = (state = initialState) => {
 }
 
 export const fetchPostsSucceeded = (state = initialState, action) => {
-  return { ...state, posts: [...state.posts, ...action.posts.Items ], lastKey: action.posts.LastEvaluatedKey };
+  return { ...state, posts: [ ...state.posts, ...action.posts.Items ], lastKey: action.posts.LastEvaluatedKey };
 }
 
 export const fetchPostsFailed = (state = initialState, action) => {
