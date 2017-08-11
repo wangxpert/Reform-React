@@ -14,7 +14,6 @@ class Activist extends Component {
   }
 
   render() {
-    console.log(this.props);
     const activist = this.props.activists.activists.find(e => (e.activismid === this.props.match.params.activist));
 
     return (

@@ -6,6 +6,11 @@ import HomepageBannerImg from '../../../../assets/homepage-banner.jpg';
 
 export default class CategorySelector extends Component {
 
+  componentDidMount() {
+    if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState);
+    if (this.props.selectedCity) this.props.selectCity(this.props.selectedCity);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.states !== this.props.states && nextProps.states) {
       this.props.selectState(nextProps.states.Items[0].stateid);
@@ -13,10 +18,6 @@ export default class CategorySelector extends Component {
 
     if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
       this.props.selectCity(nextProps.cities.Items[0].city);
-    }
-
-    if (nextProps.departments !== this.props.departments && nextProps.departments) {
-      this.props.selectDepartment(nextProps.cities.Items[0].department);
     }
   }
 
@@ -59,7 +60,7 @@ export default class CategorySelector extends Component {
             <div className="form-group row">
               <label htmlFor="location-input" className="col-3 col-form-label">State</label>
               <div className="col-9">
-                <select name="state" className="form-control postsview_select" defaultValue={ this.props.selectedState } onChange={ e => this.props.selectState(e.target.value) }>
+                <select name="state" className="form-control postsview_select" value={ this.props.selectedState } onChange={ e => this.props.selectState(e.target.value) }>
                   { stateOptions }
                 </select>
                 {/* <p>Selected state is {this.props.selectedState}</p> */}
@@ -85,5 +86,6 @@ export default class CategorySelector extends Component {
 CategorySelector.propTypes = {
   states: PropTypes.object,
   cities: PropTypes.object,
-  category: PropTypes.object
+  selectedState: PropTypes.string,
+  selectedCity: PropTypes.string
 };

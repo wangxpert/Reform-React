@@ -42,8 +42,8 @@ class Posts extends Component {
   }
 
   componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(statesFetchRequested());
+    const { dispatch, region } = this.props;
+    if (!region.states) dispatch(statesFetchRequested());
   }
 
   selectState(state) {
@@ -93,6 +93,7 @@ class Posts extends Component {
 
         <div className="col-6">
           <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
+            selectedState={ region.selectedState } selectedCity={ region.selectedCity } selectedDepartment = { region.selectedDepartment }
             selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
 
           <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/>

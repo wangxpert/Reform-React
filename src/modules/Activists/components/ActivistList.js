@@ -26,8 +26,8 @@ const FETCH_LIMIT = 50;
 class ActivistList extends Component {
 
   componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(statesFetchRequested());
+    const { dispatch, region } = this.props;
+    if (!region.states) dispatch(statesFetchRequested());
   }
 
   selectState(state) {
@@ -62,6 +62,7 @@ class ActivistList extends Component {
     return (
       <div>
         <CategorySelector states={ region.states } cities={ region.cities }
+          selectedState={ region.selectedState } selectedCity={ region.selectedCity }
           selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } />
 
         { (activists.activists && activists.activists.length) ?
