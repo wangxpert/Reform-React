@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "es6-promise": "^4.1.1",
+    "font-awesome": "^4.7.0",
     "isomorphic-fetch": "^2.2.1",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.0.2",

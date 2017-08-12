@@ -10,6 +10,7 @@ const AsyncAboutUs = asyncComponent(() => import('../AboutUs'));
 const AsyncTerms = asyncComponent(() => import('../Terms'));
 const AsyncPrivacy = asyncComponent(() => import('../Privacy'));
 const AsyncActivists = asyncComponent(() => import('../Activists'));
+const AsyncLogin = asyncComponent(() => import('../Authentication/Login'));
 
 const routes = (
   <Switch>
@@ -19,6 +20,7 @@ const routes = (
     <Route path='/terms' component={ AsyncTerms } />
     <Route path='/privacy' component={ AsyncPrivacy } />
     <Route path='/activists' component={ AsyncActivists } />
+    <Route path='/auth/login' component={ AsyncLogin } />
   </Switch>
 );
 

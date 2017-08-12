@@ -8,6 +8,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Core from './modules/App';
 
 // Base stylesheet
+import 'font-awesome/css/font-awesome.css'
 import './styles/styles.css';
 
 export default function App(props) {

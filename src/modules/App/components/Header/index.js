@@ -24,7 +24,7 @@ class Header extends Component {
           </ul>
           <ul className="navbar-nav ml-auto mr-3">
             <li className="nav-item">
-                <Link to='/login'  className='page-layout__nav-item'>Login</Link>
+                <Link to='/auth/login'  className='page-layout__nav-item'>Login</Link>
             </li>
           </ul>
         </div>

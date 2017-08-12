@@ -7,7 +7,6 @@ import HomepageBannerImg from '../../../../assets/homepage-banner.jpg';
 export default class CategorySelector extends Component {
 
   componentDidMount() {
-    console.log(this.props);
     if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState);
     if (this.props.selectedCity && !this.props.departments) this.props.selectCity(this.props.selectedCity);
     if (this.props.selectedDepartment) this.props.selectDepartment(this.props.selectedDepartment);
