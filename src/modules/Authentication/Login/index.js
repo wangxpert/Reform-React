@@ -5,7 +5,10 @@ import { connect } from 'react-redux';
 // Import styles
 import '../styles/styles.css';
 
-// Import components
+// Import Components
+
+// Import Actions
+import { loginRequested } from '../../../actions/auth';
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png';
@@ -14,26 +17,41 @@ class Login extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { isMounted: false };
+    this.state = {
+      email: '',
+      password: '',
+      remember: false
+    };
   }
 
   componentDidMount() {
-    this.setState({ isMounted: true });
+
   }
 
   onChange(e) {
-    this.setState({ [e.target.id]: e.target.value });
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value
+    });
   }
 
-  onLogin() {
-    alert('book');
+
+
+  onLogin(e) {
+    e.preventDefault();
+
+    const { dispatch } = this.props;
+    dispatch(loginRequested(this.state.email, this.state.password, this.state.remember));
   }
 
   render() {
     return (
       <div className="page-layout__viewport row mt-5">
-        <div className="card px-5 py-5 col-md-4 push-md-4 align-middle">
-          <form className="form-horizontal" role="form">
+        <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4 align-middle">
+          <form className="form-horizontal" onSubmit={this.onLogin.bind(this)}>
               <div className="row">
                 <div className="col text-center">
                   <img src={ imgLogo } alt="logo"/>
@@ -41,7 +59,7 @@ class Login extends Component {
               </div>
               <div className="row mb-3">
                 <div className="text-center col my-3">
-                  <h2 style={{ color: '#333' }}></h2>
+                  <h2 style={{ color: '#333' }}> </h2>
                 </div>
                 <div className="col-12">
                     <div className="form-group">
@@ -73,11 +91,13 @@ class Login extends Component {
                   </div>
               </div>
               <div className="row mb-3">
-                <div className="col" style={{paddingTop: '.35rem'}}>
+                <div className="col">
                   <div className="form-check mb-2 mr-sm-2 mb-sm-0">
                     <label className="form-check-label">
                       <input className="form-check-input" name="remember"
-                             type="checkbox" />
+                             type="checkbox"
+                             checked={ this.state.remember }
+                             onChange={ this.onChange.bind(this) }/>
                       <span style={{paddingBottom: '.15rem'}}>
                         Remember me
                       </span>
