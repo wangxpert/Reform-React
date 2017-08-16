@@ -12,7 +12,8 @@ import {
 
 import {
   resetPosts,
-  postsFetchRequested
+  postsFetchRequested,
+  upvotePostRequested
 } from '../../actions/posts';
 
 // Import styles
@@ -74,13 +75,23 @@ class Posts extends Component {
     this.props.dispatch(postsFetchRequested(region.selectedState, region.selectedCity, region.selectedDepartment, FETCH_LIMIT, posts.lastKey));
   }
 
+  onUpvote(post) {
+    const { region, auth, dispatch } = this.props;
+
+    if (auth.state === 'LOGGED') {
+      dispatch(upvotePostRequested(region.selectedState, region.selectedCity, region.selectedDepartment, post, auth.user.idToken.jwtToken));
+    } else {
+      alert('You have to login to upvote.');
+    }
+  }
+
   render() {
     const { region, posts } = this.props;
 
     var renderPosts = [];
     if (this.props.posts && this.props.posts.posts) {
       renderPosts = this.props.posts.posts.map((ele, index) => (
-        <PostBlock key={ index } post={ ele } />
+        <PostBlock key={ index } post={ ele } onUpvote={ this.onUpvote.bind(this) } />
       ));
     }
 
@@ -128,7 +139,8 @@ Posts.propTypes = {
 function mapStateToProps(store) {
   return {
     region: store.region,
-    posts: store.posts
+    posts: store.posts,
+    auth: store.auth
   };
 }
 

@@ -1,6 +1,6 @@
-import {
+ import {
   CognitoUserPool,
-  CognitoUserAttribute,
+  // CognitoUserAttribute,
   CognitoUser,
   AuthenticationDetails
 } from 'amazon-cognito-identity-js';
@@ -37,10 +37,66 @@ export function requestLogin(email, password) {
   );
 }
 
+export function requestLogout() {
+  const cognitoUser = getCurrentUser();
+  cognitoUser.signOut();
+}
+
+export function requestResetPassword() {
+  const cognitoUser = getCurrentUser();
+
+  return new Promise((resolve, reject) =>
+    cognitoUser.forgotPassword({
+      onSuccess: data => resolve(data),
+      onFailure: err => reject(err)
+    })
+  ).then(response => response,
+	   err => {
+       throw new Error(err);
+     }
+  );
+}
+
+export function requestConfirmPassword(verificationCode, newPassword) {
+  const cognitoUser = getCurrentUser();
+
+  return new Promise((resolve, reject) =>
+    cognitoUser.confirmPassword(verificationCode, newPassword, {
+      onSuccess: data => resolve(data),
+      onFailure: err => reject(err)
+    })
+  ).then(response => response,
+	   err => {
+       throw new Error(err);
+     }
+  );
+}
+
 export function getCurrentUser() {
 
   const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
   const cognitoUser = userPool.getCurrentUser();
 
   return cognitoUser;
+}
+
+export function getSession() {
+  var cognitoUser = getCurrentUser();
+
+  if (cognitoUser === null) {
+    throw new Error('No Current User');
+  } else {
+
+    return new Promise((resolve, reject) =>
+      cognitoUser.getSession((err, result) => {
+        if (err) reject(err);
+        resolve(result);
+      })
+    ).then(response => response,
+  	   err => {
+         throw new Error(err);
+       }
+    );
+
+  }
 }

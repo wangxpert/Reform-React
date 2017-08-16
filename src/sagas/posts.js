@@ -1,8 +1,9 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 import Types from '../actions/types';
 import * as Api from '../api/posts';
+import * as Actions from '../actions/posts';
 
-// worker Saga: will be fired on POSTS_FETCH_REQUESTED actions
+// Saga: will be fired on POSTS_FETCH_REQUESTED actions
 function* fetchPosts(action) {
    try {
       const posts = yield call(Api.fetchPosts, action.state, action.city, action.department, action.limit, action.lastKey);
@@ -12,9 +13,20 @@ function* fetchPosts(action) {
    }
 }
 
+// Saga: will be fired on UPVOTE_POST_REQUESTED actions
+function* upvotePost(action) {
+   try {
+      yield call(Api.upvotePost, action.state, action.city, action.department, action.post, action.idToken);
+      yield put(Actions.upvotePostSucceeded());
+   } catch (e) {
+      yield put(Actions.upvotePostFailed(e.message));
+   }
+}
+
 /*
   Does not allow concurrent fetches.
 */
 export function* postsSaga() {
   yield takeLatest(Types.POSTS_FETCH_REQUESTED, fetchPosts);
+  yield takeLatest(Types.UPVOTE_POST_REQUESTED, upvotePost);
 }

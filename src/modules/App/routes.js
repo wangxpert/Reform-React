@@ -12,7 +12,6 @@ const AsyncAdvertise = asyncComponent(() => import('../Advertise'));
 const AsyncPrivacy = asyncComponent(() => import('../Privacy'));
 const AsyncActivists = asyncComponent(() => import('../Activists'));
 const AsyncLogin = asyncComponent(() => import('../Authentication/Login'));
-const AsyncRegister = asyncComponent(() => import('../Authentication/Register'));
 
 const routes = (
   <Switch>
@@ -24,7 +23,6 @@ const routes = (
     <Route path='/privacy' component={ AsyncPrivacy } />
     <Route path='/activists' component={ AsyncActivists } />
     <Route path='/auth/login' component={ AsyncLogin } />
-    <Route path='/auth/register' component={ AsyncRegister } />
   </Switch>
 );
 

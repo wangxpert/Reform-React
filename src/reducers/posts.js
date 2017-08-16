@@ -22,11 +22,28 @@ export const fetchPostsFailed = (state = initialState, action) => {
 }
 
 
+export const upvotePostRequested = (state = initialState) => {
+  return { ...state };
+}
+
+export const upvotePostSucceeded = (state = initialState, action) => {
+  return { ...state };
+}
+
+export const upvotePostFailed = (state = initialState, action) => {
+  return { ...state, err: action.err };
+}
+
+
+
 // map action types to reducer functions
 export const handlers = {
   [Types.RESET_POSTS]: resetPosts,
   [Types.POSTS_FETCH_SUCCEEDED]: fetchPostsSucceeded,
   [Types.POSTS_FETCH_FAILED]: fetchPostsFailed,
+  [Types.UPVOTE_POST_REQUESTED]: upvotePostRequested,
+  [Types.UPVOTE_POST_SUCCEEDED]: upvotePostSucceeded,
+  [Types.UPVOTE_POST_FAILED]: upvotePostFailed
 }
 
 /* Selectors */

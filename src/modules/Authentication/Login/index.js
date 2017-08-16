@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 // Import styles
 import '../styles/styles.css';
 
 // Import Components
+import {
+  ThreeBounce,
+} from 'better-react-spinkit'
 
 // Import Actions
 import { loginRequested } from '../../../actions/auth';
@@ -42,12 +46,15 @@ class Login extends Component {
 
   onLogin(e) {
     e.preventDefault();
+    if (this.props.auth.state === 'LOGGING_IN')
+      return;
 
     const { dispatch } = this.props;
     dispatch(loginRequested(this.state.email, this.state.password, this.state.remember));
   }
 
   render() {
+
     return (
       <div className="page-layout__viewport row mt-5">
         <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4 align-middle">
@@ -57,7 +64,7 @@ class Login extends Component {
                   <img src={ imgLogo } alt="logo"/>
                 </div>
               </div>
-              <div className="row mb-3">
+              <div className="row">
                 <div className="text-center col my-3">
                   <h2 style={{ color: '#333' }}> </h2>
                 </div>
@@ -110,7 +117,10 @@ class Login extends Component {
               <div className="row">
                 <div className="col-12">
                   <button type="submit" className="btn btn-success col">
-                    <i className="fa fa-sign-in"></i> Login
+                    { this.props.auth.state === 'LOGGING_IN' ?
+                      (<ThreeBounce size={12} color='white' />) :
+                      (<div><i className="fa fa-sign-in"></i> Login</div>)
+                    }
                   </button>
                 </div>
               </div>
@@ -128,8 +138,8 @@ Login.propTypes = {
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
-
+    auth: store.auth
   };
 }
 
-export default connect(mapStateToProps)(Login);
+export default withRouter(connect(mapStateToProps)(Login));

@@ -1,9 +1,25 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
+// Import Actions
+import { logoutRequested } from '../../../../actions/auth';
+
+// Import Styles
 import './styles.css';
 
 class Header extends Component {
+
+  onAuth() {
+    const { auth, history, dispatch } = this.props;
+    if (auth.state === 'LOGGED') {
+      dispatch(logoutRequested());
+    } else {
+      history.push('/auth/login');
+    }
+  }
 
   render() {
     return (
@@ -24,7 +40,9 @@ class Header extends Component {
           </ul>
           <ul className="navbar-nav ml-auto mr-3">
             <li className="nav-item">
-                <Link to='/auth/login'  className='page-layout__nav-item'>Login</Link>
+              <a href="" className='page-layout__nav-item' onClick={ this.onAuth.bind(this) }>
+                { this.props.auth.state === 'LOGGED' ? 'Logout' : 'Login' }
+              </a>
             </li>
           </ul>
         </div>
@@ -33,4 +51,18 @@ class Header extends Component {
   }
 }
 
-export default Header;
+Header.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired
+}
+
+// Retrieve data from store as props
+function mapStateToProps(store) {
+  return {
+    auth: store.auth
+  };
+}
+
+export default withRouter(connect(mapStateToProps)(Header));

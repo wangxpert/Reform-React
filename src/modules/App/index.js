@@ -13,11 +13,19 @@ import Footer from './components/Footer';
 // Import routes
 import routes from './routes';
 
+// Import Actions
+import { getSessionRequested } from '../../actions/auth';
+
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = { isMounted: false };
+  }
+
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(getSessionRequested());
   }
 
   componentDidMount() {
