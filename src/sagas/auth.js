@@ -38,7 +38,7 @@ function* getSession(action) {
 // Saga: will be fired on RESET_PASSWORD_REQUESTED actions
 function* requestResetPassword(action) {
   try {
-    const data = yield call(Api.requestResetPassword);
+    const data = yield call(Api.requestResetPassword, action.email);
     yield put(Actions.resetPasswordRequestSucceeded(data));
   } catch (e) {
     yield put(Actions.resetPasswordRequestFailed(e.message));
@@ -48,7 +48,7 @@ function* requestResetPassword(action) {
 // Saga: will be fired on CONFIRM_PASSWORD_REQUESTED actions
 function* requestConfirmPassword(action) {
   try {
-    const data = yield call(Api.requestConfirmPassword, action.verificationCode, action.newPassword);
+    const data = yield call(Api.requestConfirmPassword, action.email, action.verificationCode, action.newPassword);
     yield put(Actions.confirmPasswordSucceeded(data));
   } catch (e) {
     yield put(Actions.confirmPasswordFailed(e.message));

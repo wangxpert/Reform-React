@@ -8,10 +8,18 @@ export default function callApi(endpoint, method = 'get', body, idToken) {
     method,
     body: JSON.stringify(body),
   })
-  .then(response => {
-		if (!response.ok) {
-			throw new Error('Bad response from server');
-		}
-		return response.json();
-	})
+  .then(response => response.json().then(json => ({ json, response })))
+  .then(({ json, response }) => {
+    if (!response.ok) {
+      return Promise.reject(json);
+    }
+
+    return json;
+  })
+  .then(
+    response => response,
+    error => {
+      throw new Error(error.errorMessage);
+    }
+  );
 }

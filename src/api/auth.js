@@ -7,6 +7,17 @@
 
 import { AWS_COGNITO_POOL } from '../config';
 
+function newCognitoUser(email) {
+  const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
+
+  const userData = {
+    Username: email,
+    Pool: userPool
+  }
+
+  return new CognitoUser(userData);
+}
+
 export function requestLogin(email, password) {
 
   const authData = {
@@ -16,14 +27,7 @@ export function requestLogin(email, password) {
 
   const authDetails = new AuthenticationDetails(authData);
 
-  const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
-
-  const userData = {
-    Username: email,
-    Pool: userPool
-  }
-
-  const cognitoUser = new CognitoUser(userData);
+  const cognitoUser = newCognitoUser(email);
 
   return new Promise((resolve, reject) =>
     cognitoUser.authenticateUser(authDetails, {
@@ -42,8 +46,15 @@ export function requestLogout() {
   cognitoUser.signOut();
 }
 
-export function requestResetPassword() {
-  const cognitoUser = getCurrentUser();
+export function requestResetPassword(email) {
+  const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
+
+  const userData = {
+    Username: email,
+    Pool: userPool
+  }
+
+  const cognitoUser = new CognitoUser(userData);
 
   return new Promise((resolve, reject) =>
     cognitoUser.forgotPassword({
@@ -57,8 +68,8 @@ export function requestResetPassword() {
   );
 }
 
-export function requestConfirmPassword(verificationCode, newPassword) {
-  const cognitoUser = getCurrentUser();
+export function requestConfirmPassword(email, verificationCode, newPassword) {
+  const cognitoUser = newCognitoUser(email);
 
   return new Promise((resolve, reject) =>
     cognitoUser.confirmPassword(verificationCode, newPassword, {

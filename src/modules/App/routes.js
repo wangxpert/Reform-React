@@ -12,6 +12,8 @@ const AsyncAdvertise = asyncComponent(() => import('../Advertise'));
 const AsyncPrivacy = asyncComponent(() => import('../Privacy'));
 const AsyncActivists = asyncComponent(() => import('../Activists'));
 const AsyncLogin = asyncComponent(() => import('../Authentication/Login'));
+const AsyncResetPassword = asyncComponent(() => import('../Authentication/ResetPassword'));
+const AsyncConfirmPassword = asyncComponent(() => import('../Authentication/ResetPassword/ConfirmPassword'));
 
 const routes = (
   <Switch>
@@ -23,6 +25,8 @@ const routes = (
     <Route path='/privacy' component={ AsyncPrivacy } />
     <Route path='/activists' component={ AsyncActivists } />
     <Route path='/auth/login' component={ AsyncLogin } />
+    <Route path='/password/reset' component={ AsyncResetPassword } />
+    <Route path='/password/confirm' component={ AsyncConfirmPassword } />
   </Switch>
 );
 

@@ -33,7 +33,7 @@ export const logoutSucceeded = (state = initialState, action) => {
 
 // Reset Password Request
 export const resetPasswordRequested = (state = initialState, action) => {
-  return { state: 'REQUESTING_RESET_PASSWORD' };
+  return { state: 'REQUESTING_RESET_PASSWORD', email: action.email };
 }
 
 export const resetPasswordRequestSucceeded = (state = initialState, action) => {
@@ -46,7 +46,7 @@ export const resetPasswordRequestFailed = (state = initialState, action) => {
 
 // Confirm Password
 export const confirmPasswordRequested = (state = initialState, action) => {
-  return { state: 'CONFIRMING_PASSWORD', verificationCode: action.verificationCode, newPassword: action.newPassword };
+  return { state: 'CONFIRMING_PASSWORD', email: action.email, verificationCode: action.verificationCode, newPassword: action.newPassword };
 }
 
 export const confirmPasswordSucceeded = (state = initialState, action) => {

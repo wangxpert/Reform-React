@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 // Import styles
 import '../styles/styles.css';
@@ -42,8 +42,6 @@ class Login extends Component {
     });
   }
 
-
-
   onLogin(e) {
     e.preventDefault();
     if (this.props.auth.state === 'LOGGING_IN')
@@ -53,77 +51,71 @@ class Login extends Component {
     dispatch(loginRequested(this.state.email, this.state.password, this.state.remember));
   }
 
+  onForgotPassword(e) {
+  }
+
   render() {
 
     return (
       <div className="page-layout__viewport row mt-5">
         <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4 align-middle">
           <form className="form-horizontal" onSubmit={this.onLogin.bind(this)}>
-              <div className="row">
-                <div className="col text-center">
-                  <img src={ imgLogo } alt="logo"/>
-                </div>
+            <div className="row mb-5">
+              <div className="col text-center">
+                <img src={ imgLogo } alt="logo"/>
               </div>
-              <div className="row">
-                <div className="text-center col my-3">
-                  <h2 style={{ color: '#333' }}> </h2>
-                </div>
+            </div>
+            <div className="row">
+              <div className="col-12">
+                  <div className="form-group">
+                      <label htmlFor="email" className="ml-2">Email :</label>
+                      <div className="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-at"></i></div>
+                          <input type="text" name="email" className="form-control" id="email"
+                                 placeholder="Email" required autoFocus value={ this.state.email } onChange={ this.onChange.bind(this) } />
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div className="row">
                 <div className="col-12">
                     <div className="form-group">
-                        <label htmlFor="email" className="ml-2">Email :</label>
+                        <label htmlFor="password" className="ml-2">Password :</label>
                         <div className="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-at"></i></div>
-                            <input type="text" name="email" className="form-control" id="email"
-                                   placeholder="Email" required autoFocus onChange={ this.onChange.bind(this) } />
+                            <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-key"></i></div>
+                            <input type="password" name="password" className="form-control" id="password"
+                                   placeholder="Password" required value={ this.state.password } onChange={ this.onChange.bind(this) } />
                         </div>
                     </div>
                 </div>
-              </div>
-              <div className="row">
-                  <div className="col-12">
-                      <div className="form-group">
-                          <label htmlFor="password" className="ml-2">Password :</label>
-                          <div className="input-group mb-2 mr-sm-2 mb-sm-0">
-                              <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-key"></i></div>
-                              <input type="password" name="password" className="form-control" id="password"
-                                     placeholder="Password" required onChange={ this.onChange.bind(this) } />
-                          </div>
-                      </div>
-                  </div>
-                  <div className="col-md-3">
-                      <div className="form-control-feedback">
-                          <span className="text-danger align-middle">
-                          </span>
-                      </div>
-                  </div>
-              </div>
-              <div className="row mb-3">
-                <div className="col">
-                  <div className="form-check mb-2 mr-sm-2 mb-sm-0">
-                    <label className="form-check-label">
-                      <input className="form-check-input" name="remember"
-                             type="checkbox"
-                             checked={ this.state.remember }
-                             onChange={ this.onChange.bind(this) }/>
-                      <span style={{paddingBottom: '.15rem'}}>
-                        Remember me
-                      </span>
-                    </label>
-                    <a className="float-right" href="/password/reset">Forgot Your Password?</a>
-                  </div>
+            </div>
+            <div className="row mb-3">
+              <div className="col">
+                <div className="form-check mb-2 mr-sm-2 mb-sm-0">
+                  <label className="form-check-label">
+                    <input className="form-check-input" name="remember"
+                           type="checkbox"
+                           checked={ this.state.remember }
+                           onChange={ this.onChange.bind(this) }/>
+                    <span style={{paddingBottom: '.15rem'}}>
+                      Remember me
+                    </span>
+                  </label>
+                  <Link className="float-right" to="/password/reset">Forgot Your Password?</Link>
                 </div>
               </div>
-              <hr />
-              <div className="row">
-                <div className="col-12">
-                  <button type="submit" className="btn btn-success col">
-                    { this.props.auth.state === 'LOGGING_IN' ?
-                      (<ThreeBounce size={12} color='white' />) :
-                      (<div><i className="fa fa-sign-in"></i> Login</div>)
-                    }
-                  </button>
-                </div>
+            </div>
+            <hr />
+            <div className="row">
+              <div className="col-12">
+                <button type="submit" className="btn btn-success col">
+                  { this.props.auth.state === 'LOGGING_IN' ?
+                    (<ThreeBounce size={12} color='white' />) :
+                    (<div><i className="fa fa-sign-in"></i> Login</div>)
+                  }
+                </button>
               </div>
+            </div>
           </form>
         </div>
       </div>

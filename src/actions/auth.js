@@ -28,8 +28,8 @@ export const getSessionFailed = (err) =>
   ({ type: Types.GET_SESSION_FAILED, err: err });
 
 // Reset Password Request
-export const resetPasswordRequested = () =>
-  ({ type: Types.RESET_PASSWORD_REQUESTED });
+export const resetPasswordRequested = (email) =>
+  ({ type: Types.RESET_PASSWORD_REQUESTED, email: email });
 
 export const resetPasswordRequestSucceeded = (user) =>
   ({ type: Types.RESET_PASSWORD_REQUEST_SUCCEEDED, user: user });
@@ -38,8 +38,8 @@ export const resetPasswordRequestFailed = (err) =>
   ({ type: Types.RESET_PASSWORD_REQUEST_FAILED, err: err });
 
 // Confirm Password
-export const confirmPasswordRequested = (verificationCode, newPassword) =>
-  ({ type: Types.CONFIRM_PASSWORD_REQUESTED, verificationCode: verificationCode, newPassword: newPassword });
+export const confirmPasswordRequested = (email, verificationCode, newPassword) =>
+  ({ type: Types.CONFIRM_PASSWORD_REQUESTED, email: email, verificationCode: verificationCode, newPassword: newPassword });
 
 export const confirmPasswordSucceeded = () =>
   ({ type: Types.CONFIRM_PASSWORD_SUCCEEDED });

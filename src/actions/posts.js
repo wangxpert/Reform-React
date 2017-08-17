@@ -17,8 +17,8 @@ export const postsFetchFailed = (err) =>
 export const upvotePostRequested = (state, city, department, post, idToken) =>
   ({ type: Types.UPVOTE_POST_REQUESTED, state, city, department, post, idToken });
 
-export const upvotePostSucceeded = () =>
-  ({ type: Types.UPVOTE_POST_SUCCEEDED });
+export const upvotePostSucceeded = (state, city, department, post) =>
+  ({ type: Types.UPVOTE_POST_SUCCEEDED, state, city, department, post });
 
 export const upvotePostFailed = (err) =>
   ({ type: Types.UPVOTE_POST_FAILED, err: err });

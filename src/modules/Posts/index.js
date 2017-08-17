@@ -76,10 +76,10 @@ class Posts extends Component {
   }
 
   onUpvote(post) {
-    const { region, auth, dispatch } = this.props;
+    const { auth, dispatch } = this.props;
 
     if (auth.state === 'LOGGED') {
-      dispatch(upvotePostRequested(region.selectedState, region.selectedCity, region.selectedDepartment, post, auth.user.idToken.jwtToken));
+      dispatch(upvotePostRequested(post.state, post.city, post.department, post.post, auth.user.idToken.jwtToken));
     } else {
       alert('You have to login to upvote.');
     }
@@ -91,7 +91,7 @@ class Posts extends Component {
     var renderPosts = [];
     if (this.props.posts && this.props.posts.posts) {
       renderPosts = this.props.posts.posts.map((ele, index) => (
-        <PostBlock key={ index } post={ ele } onUpvote={ this.onUpvote.bind(this) } />
+        <PostBlock key={ index } post={ ele } state={ posts.state } onUpvote={ this.onUpvote.bind(this) } />
       ));
     }
 
