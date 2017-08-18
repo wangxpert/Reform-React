@@ -4,12 +4,15 @@ import Types from '../actions/types';
 import * as Actions from '../actions/auth';
 import * as Api from '../api/auth';
 
+import { push } from 'react-router-redux';
+
 // Saga: will be fired on SIGNUP_REQUESTED actions
 function* requestSignup(action) {
    try {
-     const userName = yield call(Api.requestSignup, action.info);
+     // const userName = yield call(Api.requestSignup, action.info);
+     yield call(Api.requestSignup, action.info);
      yield put(Actions.signupSucceeded(action.info.userName));
-     action.router.push(`/auth/confirm/${action.info.userName}`);
+     put(push(`/auth/confirm/${action.info.userName}`));
    } catch (e) {
      alert(e.message); // temporary message. Will remove.
      yield put(Actions.signupFailed(e.message));
@@ -21,6 +24,7 @@ function* requestConfirmUser(action) {
    try {
      const result = yield call(Api.requestConfirmUser, action.userName, action.verificationCode);
      yield put(Actions.confirmUserSucceeded(result));
+     yield put('/auth/login');
    } catch (e) {
      alert(e.message); // temporary message. Will remove.
      yield put(Actions.confirmUserFailed(e.message));
@@ -42,8 +46,9 @@ function* requestResendCode(action) {
 // Saga: will be fired on LOGIN_REQUESTED actions
 function* requestLogin(action) {
    try {
-     const user = yield call(Api.requestLogin, action.email, action.password);
+     const user = yield call(Api.requestLogin, action.userName, action.password);
      yield put(Actions.loginSucceeded(user));
+     yield put(push('/'));
    } catch (e) {
      alert(e.message); // temporary message. Will remove.
      yield put(Actions.loginFailed(e.message));
@@ -73,8 +78,9 @@ function* getSession(action) {
 // Saga: will be fired on RESET_PASSWORD_REQUESTED actions
 function* requestResetPassword(action) {
   try {
-    const data = yield call(Api.requestResetPassword, action.email);
+    const data = yield call(Api.requestResetPassword, action.userName);
     yield put(Actions.resetPasswordRequestSucceeded(data));
+    yield put(push(`/password/confirm/${action.userName}`));
   } catch (e) {
     yield put(Actions.resetPasswordRequestFailed(e.message));
   }
@@ -83,8 +89,10 @@ function* requestResetPassword(action) {
 // Saga: will be fired on CONFIRM_PASSWORD_REQUESTED actions
 function* requestConfirmPassword(action) {
   try {
-    const data = yield call(Api.requestConfirmPassword, action.email, action.verificationCode, action.newPassword);
+    const data = yield call(Api.requestConfirmPassword, action.userName, action.verificationCode, action.newPassword);
     yield put(Actions.confirmPasswordSucceeded(data));
+    alert('Password is reseted.'); // temporary message. Will remove.
+    yield put(push('/auth/login'))
   } catch (e) {
     yield put(Actions.confirmPasswordFailed(e.message));
   }

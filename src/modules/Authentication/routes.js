@@ -16,7 +16,7 @@ const routes = (
     <Route path='/auth/signup' component={ AsyncSignUp } />
     <Route path='/auth/confirm/:userName' component={ AsyncConfirmUser } />
     <Route path='/password/reset' component={ AsyncResetPassword } />
-    <Route path='/password/confirm' component={ AsyncConfirmPassword } />
+    <Route path='/password/confirm/:userName' component={ AsyncConfirmPassword } />
   </Switch>
 );
 

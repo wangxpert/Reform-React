@@ -41,7 +41,6 @@ export const upvotePostFailed = (state = initialState, action) => {
 }
 
 
-
 // map action types to reducer functions
 export const handlers = {
   [Types.RESET_POSTS]: resetPosts,

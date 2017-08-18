@@ -5,12 +5,18 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from './reducers';
 
+import createHistory from 'history/createBrowserHistory';
+import { routerMiddleware } from 'react-router-redux';
+
 const sagaMiddleware = createSagaMiddleware();
+
+const history = createHistory();
 
 export function configureStore(initialState = {}) {
   // Middleware and store enhancers
   const middlewares = [
-      sagaMiddleware
+      sagaMiddleware,
+      routerMiddleware(history)
   ];
 
   const enhancers = [
@@ -38,5 +44,5 @@ export function configureStore(initialState = {}) {
     });
   }
 
-  return store;
+  return { store, history };
 }

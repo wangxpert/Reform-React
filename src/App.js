@@ -4,7 +4,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter } from 'react-router-redux';
+
 import Core from './modules/App';
 
 // Base stylesheet
@@ -14,9 +16,9 @@ import './styles/styles.css';
 export default function App(props) {
   return (
     <Provider store={props.store}>
-      <BrowserRouter>
+      <ConnectedRouter history={props.history}>
         <Route path="/" component={Core} />
-      </BrowserRouter>
+      </ConnectedRouter>
     </Provider>
   );
 }

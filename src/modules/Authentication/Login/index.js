@@ -16,6 +16,7 @@ import { loginRequested } from '../../../actions/auth';
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png';
+import { push } from 'react-router-redux';
 
 class Login extends Component {
 

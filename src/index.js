@@ -12,14 +12,14 @@ import registerServiceWorker from './registerServiceWorker';
 import sagas from './sagas';
 
 // Initialize store
-const store = configureStore(window.__INITIAL_STATE__);
+const { store, history } = configureStore(window.__INITIAL_STATE__);
 sagas.forEach(saga => store.runSaga(saga));
 
 const mountApp = document.getElementById('root');
 
 render(
   <AppContainer>
-    <App store={store} />
+    <App store={store} history={history} />
   </AppContainer>,
   mountApp
 );

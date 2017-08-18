@@ -15,7 +15,7 @@ export const signupRequested = (state = initialState, action) => {
 }
 
 export const signupSucceeded = (state = initialState, action) => {
-  return { state: 'SIGNUP_SUCCEEDED', userName: action.userName };
+  return { state: 'SIGNUP_SUCCEEDED' };
 }
 
 export const signupFailed = (state = initialState, action) => {
@@ -24,7 +24,7 @@ export const signupFailed = (state = initialState, action) => {
 
 // Confirm User
 export const confirmUserRequested = (state = initialState, action) => {
-  return { state: 'CONFIRMING_USER', userName: action.userName }
+  return { state: 'CONFIRMING_USER' }
 }
 
 export const confirmUserSucceeded = (state = initialState, action) => {
@@ -37,7 +37,7 @@ export const confirmUserFailed = (state = initialState, action) => {
 
 // Resend Verification Code
 export const resendCodeRequested = (state = initialState, action) => {
-  return { state: 'RESENDING_CODE', userName: action.userName }
+  return { state: 'RESENDING_CODE' }
 }
 
 export const resendCodeSucceeded = (state = initialState, action) => {
@@ -72,11 +72,11 @@ export const logoutSucceeded = (state = initialState, action) => {
 
 // Reset Password Request
 export const resetPasswordRequested = (state = initialState, action) => {
-  return { state: 'REQUESTING_RESET_PASSWORD', email: action.email };
+  return { state: 'REQUESTING_RESET_PASSWORD' };
 }
 
 export const resetPasswordRequestSucceeded = (state = initialState, action) => {
-  return { state: 'RESET_PASSWORD_REQUESTED' };
+  return { state: 'RESET_PASSWORD_REQUEST_SUCCEEDED', result: action.result };
 }
 
 export const resetPasswordRequestFailed = (state = initialState, action) => {
@@ -85,11 +85,11 @@ export const resetPasswordRequestFailed = (state = initialState, action) => {
 
 // Confirm Password
 export const confirmPasswordRequested = (state = initialState, action) => {
-  return { state: 'CONFIRMING_PASSWORD', email: action.email, verificationCode: action.verificationCode, newPassword: action.newPassword };
+  return { state: 'CONFIRMING_PASSWORD' };
 }
 
 export const confirmPasswordSucceeded = (state = initialState, action) => {
-  return { state: 'CONFIRM_PASSWORD_SUCCEEDED' };
+  return { state: 'CONFIRM_PASSWORD_SUCCEEDED', result: action.result };
 }
 
 export const confirmPasswordFailed = (state = initialState, action) => {
@@ -111,13 +111,13 @@ export const getSessionFailed = (state = initialState, action) => {
 
 // map action types to reducer functions
 export const handlers = {
-  [Types.SIGNUP_FAILED]: signupRequested,
+  [Types.SIGNUP_REQUESTED]: signupRequested,
   [Types.SIGNUP_SUCCEEDED]: signupSucceeded,
   [Types.SIGNUP_FAILED]: signupFailed,
 
-  [Types.CONFIRM_PASSWORD_REQUESTED]: confirmPasswordRequested,
-  [Types.CONFIRM_PASSWORD_SUCCEEDED]: confirmPasswordSucceeded,
-  [Types.CONFIRM_PASSWORD_FAILED]: confirmPasswordFailed,
+  [Types.CONFIRM_USER_REQUESTED]: confirmUserRequested,
+  [Types.CONFIRM_USER_SUCCEEDED]: confirmUserSucceeded,
+  [Types.CONFIRM_USER_FAILED]: confirmUserFailed,
 
   [Types.RESEND_CODE_REQUESTED]: resendCodeRequested,
   [Types.RESEND_CODE_SUCCEEDED]: resendCodeSucceeded,
@@ -134,9 +134,9 @@ export const handlers = {
   [Types.RESET_PASSWORD_REQUEST_SUCCEEDED]: resetPasswordRequestSucceeded,
   [Types.RESET_PASSWORD_REQUEST_FAILED]: resetPasswordRequestFailed,
 
-  [Types.CONFIRM_PASSWORD_REQUESTED]: resetPasswordRequested,
-  [Types.CONFIRM_PASSWORD_SUCCEEDED]: resetPasswordRequestSucceeded,
-  [Types.CONFIRM_PASSWORD_FAILED]: resetPasswordRequestFailed,
+  [Types.CONFIRM_PASSWORD_REQUESTED]: confirmPasswordRequested,
+  [Types.CONFIRM_PASSWORD_SUCCEEDED]: confirmPasswordSucceeded,
+  [Types.CONFIRM_PASSWORD_FAILED]: confirmPasswordFailed,
 
   [Types.GET_SESSION_REQUESTED]: getSessionRequested,
   [Types.GET_SESSION_SUCCEEDED]: getSessionSucceeded,

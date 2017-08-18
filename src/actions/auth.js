@@ -1,8 +1,8 @@
 import Types from './types';
 
 // Sign up
-export const signupRequested = (info, router) =>
-  ({ type: Types.SIGNUP_REQUESTED, info, router  });
+export const signupRequested = (info) =>
+  ({ type: Types.SIGNUP_REQUESTED, info });
 
 export const signupSucceeded = (userName) =>
   ({ type: Types.SIGNUP_SUCCEEDED, userName });
@@ -31,8 +31,8 @@ export const resendCodeFailed = (err) =>
   ({ type: Types.RESEND_CODE_FAILED, err });
 
 // Log in
-export const loginRequested = (email, password, remember) =>
-  ({ type: Types.LOGIN_REQUESTED, email: email, password: password, remember: remember });
+export const loginRequested = (userName, password, remember) =>
+  ({ type: Types.LOGIN_REQUESTED, userName, password, remember });
 
 export const loginSucceeded = (user) =>
   ({ type: Types.LOGIN_SUCCEEDED, user: user });
@@ -58,21 +58,21 @@ export const getSessionFailed = (err) =>
   ({ type: Types.GET_SESSION_FAILED, err: err });
 
 // Reset Password Request
-export const resetPasswordRequested = (email) =>
-  ({ type: Types.RESET_PASSWORD_REQUESTED, email: email });
+export const resetPasswordRequested = (userName) =>
+  ({ type: Types.RESET_PASSWORD_REQUESTED, userName });
 
-export const resetPasswordRequestSucceeded = (user) =>
-  ({ type: Types.RESET_PASSWORD_REQUEST_SUCCEEDED, user: user });
+export const resetPasswordRequestSucceeded = (result) =>
+  ({ type: Types.RESET_PASSWORD_REQUEST_SUCCEEDED, result });
 
 export const resetPasswordRequestFailed = (err) =>
   ({ type: Types.RESET_PASSWORD_REQUEST_FAILED, err: err });
 
 // Confirm Password
-export const confirmPasswordRequested = (email, verificationCode, newPassword) =>
-  ({ type: Types.CONFIRM_PASSWORD_REQUESTED, email: email, verificationCode: verificationCode, newPassword: newPassword });
+export const confirmPasswordRequested = (userName, verificationCode, newPassword) =>
+  ({ type: Types.CONFIRM_PASSWORD_REQUESTED, userName, verificationCode, newPassword });
 
-export const confirmPasswordSucceeded = () =>
-  ({ type: Types.CONFIRM_PASSWORD_SUCCEEDED });
+export const confirmPasswordSucceeded = (result) =>
+  ({ type: Types.CONFIRM_PASSWORD_SUCCEEDED, result });
 
 export const confirmPasswordFailed = (err) =>
   ({ type: Types.CONFIRM_PASSWORD_FAILED, err: err });

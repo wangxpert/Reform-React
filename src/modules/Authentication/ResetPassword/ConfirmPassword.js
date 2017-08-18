@@ -20,7 +20,6 @@ class ConfirmPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
       verificationCode: '',
       password: ''
     };
@@ -43,9 +42,12 @@ class ConfirmPassword extends Component {
   onReset(e) {
     e.preventDefault();
 
-    const { dispatch, auth } = this.props;
+    const { auth } = this.props;
+    if (auth.state === 'CONFIRMING_PASSWORD')
+      return;
 
-    dispatch(confirmPasswordRequested(auth.email, this.state.verificationCode, this.state.password));
+    const { dispatch, match: { params: { userName } } } = this.props;
+    dispatch(confirmPasswordRequested(userName, this.state.verificationCode, this.state.password));
   }
 
   render() {
@@ -88,7 +90,7 @@ class ConfirmPassword extends Component {
               <div className="row">
                 <div className="col-12">
                   <button type="submit" className="btn btn-success col">
-                    { this.props.auth.state === 'LOGGING_IN' ?
+                    { this.props.auth.state === 'CONFIRMING_PASSWORD' ?
                       (<ThreeBounce size={12} color='white' />) :
                       (<div><i className="fa fa-refresh"></i> Reset</div>)
                     }

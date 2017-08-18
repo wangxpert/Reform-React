@@ -99,16 +99,16 @@ export function requestResendCode(userName) {
   );
 }
 
-export function requestLogin(email, password) {
+export function requestLogin(userName, password) {
 
   const authData = {
-    Username: email,
+    Username: userName,
     Password: password
   };
 
   const authDetails = new AuthenticationDetails(authData);
 
-  const cognitoUser = newCognitoUser(email);
+  const cognitoUser = newCognitoUser(userName);
 
   return new Promise((resolve, reject) =>
     cognitoUser.authenticateUser(authDetails, {
@@ -127,11 +127,11 @@ export function requestLogout() {
   cognitoUser.signOut();
 }
 
-export function requestResetPassword(email) {
+export function requestResetPassword(userName) {
   const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
 
   const userData = {
-    Username: email,
+    Username: userName,
     Pool: userPool
   }
 
@@ -149,8 +149,8 @@ export function requestResetPassword(email) {
   );
 }
 
-export function requestConfirmPassword(email, verificationCode, newPassword) {
-  const cognitoUser = newCognitoUser(email);
+export function requestConfirmPassword(userName, verificationCode, newPassword) {
+  const cognitoUser = newCognitoUser(userName);
 
   return new Promise((resolve, reject) =>
     cognitoUser.confirmPassword(verificationCode, newPassword, {

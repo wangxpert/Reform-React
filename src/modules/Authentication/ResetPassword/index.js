@@ -49,7 +49,6 @@ class ResetPassword extends Component {
 
     const { dispatch, history } = this.props;
     dispatch( resetPasswordRequested(this.state.email) );
-    history.push('/password/confirm');
   }
 
   render() {
@@ -79,7 +78,7 @@ class ResetPassword extends Component {
               <div className="row">
                 <div className="col-12">
                   <button type="submit" className="btn btn-success col">
-                    { this.props.auth.state === 'LOGGING_IN' ?
+                    { this.props.auth.state === 'REQUESTING_RESET_PASSWORD' ?
                       (<ThreeBounce size={12} color='white' />) :
                       (<div><i className="fa"></i>Next</div>)
                     }
