@@ -4,6 +4,41 @@ import Types from '../actions/types';
 import * as Actions from '../actions/auth';
 import * as Api from '../api/auth';
 
+// Saga: will be fired on SIGNUP_REQUESTED actions
+function* requestSignup(action) {
+   try {
+     const userName = yield call(Api.requestSignup, action.info);
+     yield put(Actions.signupSucceeded(action.info.userName));
+     action.router.push(`/auth/confirm/${action.info.userName}`);
+   } catch (e) {
+     alert(e.message); // temporary message. Will remove.
+     yield put(Actions.signupFailed(e.message));
+   }
+}
+
+// Saga: will be fired on CONFIRM_USER_REQUESTED actions
+function* requestConfirmUser(action) {
+   try {
+     const result = yield call(Api.requestConfirmUser, action.userName, action.verificationCode);
+     yield put(Actions.confirmUserSucceeded(result));
+   } catch (e) {
+     alert(e.message); // temporary message. Will remove.
+     yield put(Actions.confirmUserFailed(e.message));
+   }
+}
+
+// Saga: will be fired on RESEND_CODE_REQUESTED actions
+function* requestResendCode(action) {
+   try {
+     const result = yield call(Api.requestResendCode, action.userName);
+     yield put(Actions.resendCodeSucceeded(result));
+   } catch (e) {
+     alert(e.message); // temporary message. Will remove.
+     yield put(Actions.resendCodeFailed(e.message));
+   }
+}
+
+
 // Saga: will be fired on LOGIN_REQUESTED actions
 function* requestLogin(action) {
    try {
@@ -59,6 +94,9 @@ function* requestConfirmPassword(action) {
   Does not allow concurrent fetches.
 */
 export function* authSaga() {
+  yield takeLatest(Types.SIGNUP_REQUESTED, requestSignup);
+  yield takeLatest(Types.CONFIRM_USER_REQUESTED, requestConfirmUser);
+  yield takeLatest(Types.RESEND_CODE_REQUESTED, requestResendCode);
   yield takeLatest(Types.LOGIN_REQUESTED, requestLogin);
   yield takeLatest(Types.LOGOUT_REQUESTED, requestLogout);
   yield takeLatest(Types.GET_SESSION_REQUESTED, getSession);

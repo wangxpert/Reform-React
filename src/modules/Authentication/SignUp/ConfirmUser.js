@@ -1,29 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 // Import styles
 import '../styles/styles.css';
 
 // Import Components
 import {
-  ThreeBounce,
+  Circle,
+  ThreeBounce
 } from 'better-react-spinkit'
 
 // Import Actions
-import { confirmPasswordRequested } from '../../../actions/auth';
+import { confirmUserRequested, resendCodeRequested } from '../../../actions/auth';
 
 // Import Assets
 
-class ConfirmPassword extends Component {
+class ConfirmUser extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       email: '',
-      verificationCode: '',
-      password: ''
+      verificationCode: ''
     };
+
+    console.log(props);
   }
 
   componentDidMount() {
@@ -40,57 +44,67 @@ class ConfirmPassword extends Component {
     });
   }
 
-  onReset(e) {
+  onConfirm(e) {
     e.preventDefault();
 
-    const { dispatch, auth } = this.props;
+    const { auth } = this.props;
+    if (auth.state === 'CONFIRMING_USER')
+      return;
 
-    dispatch(confirmPasswordRequested(auth.email, this.state.verificationCode, this.state.password));
+    const { dispatch, match: { params: { userName } } } = this.props;
+    dispatch(confirmUserRequested(userName, this.state.verificationCode));
+    //history.push('/password/confirm');
+  }
+
+  onResendCode(e) {
+    e.preventDefault();
+
+    const { dispatch, auth, match: { params: { userName } } } = this.props;
+
+    if (auth.state === 'RESENDING_CODE')
+      return;
+
+    dispatch(resendCodeRequested(userName));
   }
 
   render() {
 
+    const { auth } = this.props;
+
     return (
       <div className="page-layout__viewport row mt-5">
         <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4">
-          <form className="form-horizontal" onSubmit={this.onReset.bind(this)}>
+          <form className="form-horizontal" onSubmit={ this.onConfirm.bind(this) }>
               <div className="row mb-4">
                 <div className="col text-center">
-                  <h3>Reset Password</h3>
+                  <h3>Confirm User</h3>
                 </div>
               </div>
               <div className="row">
                 <div className="col-12">
                     <div className="form-group">
-                        <label htmlFor="code" className="ml-2">Verification Code :</label>
+                        <label htmlFor="email" className="ml-2">{ "We've sent the verification code via SMS." }</label>
                         <div className="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-certificate"></i></div>
+                            <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-check-square-o"></i></div>
                             <input type="text" name="verificationCode" className="form-control" id="code"
-                                   placeholder="Code" required autoFocus value={ this.state.verificationCode }onChange={ this.onChange.bind(this) } />
+                                   placeholder="Verification Code" required autoFocus value={ this.state.verificationCode } onChange={ this.onChange.bind(this) } />
                         </div>
                     </div>
+                    <a className="float-right" href="" onClick={ this.onResendCode.bind(this) }>
+                      { auth.state === 'RESENDING_CODE' ?
+                        (<Circle size={15} color='#02b2fb' />) :
+                        'Resend Code'
+                      }
+                    </a>
                 </div>
               </div>
-              <div className="row">
-                  <div className="col-12">
-                      <div className="form-group">
-                          <label htmlFor="password" className="ml-2">New Password :</label>
-                          <div className="input-group mr-sm-2 mb-sm-0">
-                              <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-key"></i></div>
-                              <input type="password" name="password" className="form-control" id="password"
-                                     placeholder="Password" required value={ this.state.password } onChange={ this.onChange.bind(this) } />
-                          </div>
-                      </div>
-                  </div>
-              </div>
-
               <hr />
               <div className="row">
                 <div className="col-12">
                   <button type="submit" className="btn btn-success col">
-                    { this.props.auth.state === 'LOGGING_IN' ?
+                    { auth.state === 'CONFIRMING_USER' ?
                       (<ThreeBounce size={12} color='white' />) :
-                      (<div><i className="fa fa-refresh"></i> Reset</div>)
+                      (<div><i className="fa"></i>Confirm</div>)
                     }
                   </button>
                 </div>
@@ -102,7 +116,7 @@ class ConfirmPassword extends Component {
   }
 }
 
-ConfirmPassword.propTypes = {
+ConfirmUser.propTypes = {
   dispatch: PropTypes.func.isRequired
 };
 
@@ -113,4 +127,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default connect(mapStateToProps)(ConfirmPassword);
+export default withRouter(connect(mapStateToProps)(ConfirmUser));

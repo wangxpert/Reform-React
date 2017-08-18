@@ -76,9 +76,10 @@ class Posts extends Component {
   }
 
   onUpvote(post) {
-    const { auth, dispatch } = this.props;
+    const { auth, posts, dispatch } = this.props;
 
     if (auth.state === 'LOGGED') {
+      if (posts.state !== 'UPVOTING_POST')
       dispatch(upvotePostRequested(post.state, post.city, post.department, post.post, auth.user.idToken.jwtToken));
     } else {
       alert('You have to login to upvote.');

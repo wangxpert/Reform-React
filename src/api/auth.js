@@ -1,21 +1,102 @@
  import {
   CognitoUserPool,
-  // CognitoUserAttribute,
+  CognitoUserAttribute,
   CognitoUser,
   AuthenticationDetails
 } from 'amazon-cognito-identity-js';
 
 import { AWS_COGNITO_POOL } from '../config';
 
-function newCognitoUser(email) {
+function newCognitoUser(userName) {
   const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
 
   const userData = {
-    Username: email,
+    Username: userName,
     Pool: userPool
   }
 
   return new CognitoUser(userData);
+}
+
+export function requestSignup(info) {
+  console.log(info);
+  const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
+
+  var attributeList = [];
+
+  attributeList.push(new CognitoUserAttribute({
+    Name: 'preferred_username',
+    Value: info.userName
+  }));
+
+  attributeList.push(new CognitoUserAttribute({
+    Name: 'name',
+    Value: info.name
+  }));
+
+  attributeList.push(new CognitoUserAttribute({
+    Name: 'email',
+    Value: info.email
+  }));
+
+  attributeList.push(new CognitoUserAttribute({
+    Name: 'phone_number',
+    Value: info.phoneNumber
+  }));
+
+  attributeList.push(new CognitoUserAttribute({
+    Name: 'custom:zipcode',
+    Value: info.zipCode
+  }));
+
+  return new Promise((resolve, reject) =>
+    userPool.signUp(info.email, info.password, attributeList, null, function(err, result){
+      if (err) {
+          return reject(err);
+      }
+      // const cognitoUser = result.user;
+      // resolve(cognitoUser.getUsername());
+      resolve(info.email);
+    })
+  ).then(response => response,
+	   err => {
+       throw new Error(err);
+     }
+  );
+}
+
+export function requestConfirmUser(userName, verificationCode) {
+  const cognitoUser = newCognitoUser(userName);
+
+  return new Promise((resolve, reject) =>
+    cognitoUser.confirmRegistration(verificationCode, true, function(err, result) {
+      if (err) {
+          return reject(err);
+      }
+      resolve(result);
+    })
+  ).then(response => response,
+	   err => {
+       throw new Error(err);
+     }
+  );
+}
+
+export function requestResendCode(userName) {
+  const cognitoUser = newCognitoUser(userName);
+
+  return new Promise((resolve, reject) =>
+    cognitoUser.resendConfirmationCode(function(err, result) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(result);
+    })
+  ).then(response => response,
+	   err => {
+       throw new Error(err);
+     }
+  );
 }
 
 export function requestLogin(email, password) {

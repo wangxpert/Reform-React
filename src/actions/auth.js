@@ -1,5 +1,35 @@
 import Types from './types';
 
+// Sign up
+export const signupRequested = (info, router) =>
+  ({ type: Types.SIGNUP_REQUESTED, info, router  });
+
+export const signupSucceeded = (userName) =>
+  ({ type: Types.SIGNUP_SUCCEEDED, userName });
+
+export const signupFailed = (err) =>
+  ({ type: Types.SIGNUP_FAILED, err: err });
+
+// Confirm User
+export const confirmUserRequested = (userName, verificationCode) =>
+  ({ type: Types.CONFIRM_USER_REQUESTED, userName, verificationCode });
+
+export const confirmUserSucceeded = (result) =>
+  ({ type: Types.CONFIRM_USER_SUCCEEDED, result });
+
+export const confirmUserFailed = (err) =>
+  ({ type: Types.CONFIRM_USER_FAILED, err });
+
+// Resend Verification Code
+export const resendCodeRequested = (userName) =>
+  ({ type: Types.RESEND_CODE_REQUESTED, userName });
+
+export const resendCodeSucceeded = (result) =>
+  ({ type: Types.RESEND_CODE_SUCCEEDED, result });
+
+export const resendCodeFailed = (err) =>
+  ({ type: Types.RESEND_CODE_FAILED, err });
+
 // Log in
 export const loginRequested = (email, password, remember) =>
   ({ type: Types.LOGIN_REQUESTED, email: email, password: password, remember: remember });

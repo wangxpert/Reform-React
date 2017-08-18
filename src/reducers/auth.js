@@ -9,6 +9,45 @@ const initialState = {
 
 /* Handlers */
 
+// Sign up
+export const signupRequested = (state = initialState, action) => {
+  return { state: 'SIGNING_UP' }
+}
+
+export const signupSucceeded = (state = initialState, action) => {
+  return { state: 'SIGNUP_SUCCEEDED', userName: action.userName };
+}
+
+export const signupFailed = (state = initialState, action) => {
+  return { state: 'SIGNUP_FAILED', err: action.err };
+}
+
+// Confirm User
+export const confirmUserRequested = (state = initialState, action) => {
+  return { state: 'CONFIRMING_USER', userName: action.userName }
+}
+
+export const confirmUserSucceeded = (state = initialState, action) => {
+  return { state: 'CONFIRM_USER_SUCCEEDED', result: action.result }
+}
+
+export const confirmUserFailed = (state = initialState, action) => {
+  return { state: 'CONFIRM_USER_FAILED', err: action.err }
+}
+
+// Resend Verification Code
+export const resendCodeRequested = (state = initialState, action) => {
+  return { state: 'RESENDING_CODE', userName: action.userName }
+}
+
+export const resendCodeSucceeded = (state = initialState, action) => {
+  return { state: 'RESEND_CODE_SUCCEEDED', result: action.result }
+}
+
+export const resendCodeFailed = (state = initialState, action) => {
+  return { state: 'RESEND_CODE_FAILED', err: action.err }
+}
+
 // Log in
 export const loginRequested = (state = initialState, action) => {
   return { state: 'LOGGING_IN' };
@@ -72,6 +111,18 @@ export const getSessionFailed = (state = initialState, action) => {
 
 // map action types to reducer functions
 export const handlers = {
+  [Types.SIGNUP_FAILED]: signupRequested,
+  [Types.SIGNUP_SUCCEEDED]: signupSucceeded,
+  [Types.SIGNUP_FAILED]: signupFailed,
+
+  [Types.CONFIRM_PASSWORD_REQUESTED]: confirmPasswordRequested,
+  [Types.CONFIRM_PASSWORD_SUCCEEDED]: confirmPasswordSucceeded,
+  [Types.CONFIRM_PASSWORD_FAILED]: confirmPasswordFailed,
+
+  [Types.RESEND_CODE_REQUESTED]: resendCodeRequested,
+  [Types.RESEND_CODE_SUCCEEDED]: resendCodeSucceeded,
+  [Types.RESEND_CODE_FAILED]: resendCodeFailed,
+
   [Types.LOGIN_REQUESTED]: loginRequested,
   [Types.LOGIN_SUCCEEDED]: loginSucceeded,
   [Types.LOGIN_FAILED]: loginFailed,

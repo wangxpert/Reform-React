@@ -39,11 +39,20 @@ class Header extends Component {
             </li>
           </ul>
           <ul className="navbar-nav ml-auto mr-3">
-            <li className="nav-item">
+            <li className="nav-item px-4">
               <a href="" className='page-layout__nav-item' onClick={ this.onAuth.bind(this) }>
                 { this.props.auth.state === 'LOGGED' ? 'Logout' : 'Login' }
               </a>
             </li>
+
+            { this.props.auth.state !== 'LOGGED' &&
+              <li className="nav-item">
+                <a href="/auth/signup" className='page-layout__nav-item'>
+                  Signup
+                </a>
+              </li>
+            }
+
           </ul>
         </div>
       </nav>
