@@ -73,6 +73,9 @@ class Posts extends Component {
   loadPosts() {
     const { region, posts } = this.props;
 
+    if (posts.state === 'FETCHING_POSTS')
+      return;
+
     this.props.dispatch(postsFetchRequested(region.selectedState, region.selectedCity, region.selectedDepartment, FETCH_LIMIT, posts.lastKey));
   }
 

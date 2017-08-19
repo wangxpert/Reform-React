@@ -2,7 +2,7 @@ import { put, call, takeLatest } from 'redux-saga/effects';
 import Types from '../actions/types';
 import * as Api from '../api/activists';
 
-// worker Saga: will be fired on POSTS_FETCH_REQUESTED actions
+// worker Saga: will be fired on ACTIVISTS_FETCH_REQUESTED actions
 function* fetchActivists(action) {
    try {
       const activists = yield call(Api.fetchActivists, action.state, action.city, action.limit, action.lastKey);
