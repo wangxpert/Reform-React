@@ -19,7 +19,7 @@ export default function callApi(endpoint, method = 'get', body, idToken) {
   .then(
     response => response,
     error => {
-      throw new Error(error.errorMessage);
+      throw error;
     }
   );
 }
