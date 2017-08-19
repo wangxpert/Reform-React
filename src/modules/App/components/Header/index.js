@@ -48,7 +48,7 @@ class Header extends Component {
             { this.props.auth.state !== 'LOGGED' &&
               <li className="nav-item">
                 <a href="/auth/signup" className='page-layout__nav-item'>
-                  SignUp
+                  Register
                 </a>
               </li>
             }

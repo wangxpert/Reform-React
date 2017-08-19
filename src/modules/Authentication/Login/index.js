@@ -116,7 +116,7 @@ class Login extends Component {
 
               <div className="col">
                 <div className="form-check mt-3 mb-2 mr-sm-2 mb-sm-0 text-center">
-                  <Link to="/auth/signup">No Account? &nbsp;Sign Up</Link>
+                  <Link to="/auth/signup">No Account? &nbsp;Register</Link>
                 </div>
               </div>
             </div>

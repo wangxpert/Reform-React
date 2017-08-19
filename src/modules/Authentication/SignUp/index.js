@@ -196,7 +196,7 @@ class SignUp extends Component {
                 <button type="submit" className="btn btn-success col">
                   { this.props.auth.state === 'SIGNING_UP' ?
                     (<ThreeBounce size={12} color='white' />) :
-                    (<div><i className="fa"></i> Sign Up</div>)
+                    (<div><i className="fa"></i> Register</div>)
                   }
                 </button>
               </div>
