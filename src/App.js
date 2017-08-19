@@ -12,6 +12,7 @@ import Core from './modules/App';
 // Base stylesheet
 import 'font-awesome/css/font-awesome.css'
 import './styles/styles.css';
+import 'react-notifications/lib/notifications.css';
 
 export default function App(props) {
   return (

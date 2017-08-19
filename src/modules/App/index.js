@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import './styles/styles.css';
 
 // Import components
+import { NotificationContainer } from 'react-notifications';
+
+
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -38,10 +41,12 @@ class App extends Component {
         <Header />
 
         <div className='container pt-5 mb-5'>
+          <NotificationContainer />
           { routes }
         </div>
 
         <Footer />
+
       </div>
     )
   }

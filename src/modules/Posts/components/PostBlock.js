@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { NotificationManager } from 'react-notifications';
+
 import {
   Circle
 } from 'better-react-spinkit';
@@ -8,7 +10,7 @@ export default function MobileApps(props) {
   const post = props.post;
 
   function warnAlert() {
-    alert('You must be logged in to perform this function');
+    NotificationManager.warning('You must be logged in to perform this function', 'Not permitted');
   }
 
   return (

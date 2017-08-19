@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 // Import styles
 import '../styles/styles.css';
@@ -16,7 +15,6 @@ import { loginRequested } from '../../../actions/auth';
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png';
-import { push } from 'react-router-redux';
 
 class Login extends Component {
 
@@ -48,8 +46,7 @@ class Login extends Component {
     if (this.props.auth.state === 'LOGGING_IN')
       return;
 
-    const { dispatch } = this.props;
-    dispatch(loginRequested(this.state.email, this.state.password, this.state.remember));
+    this.props.loginRequested(this.state.email, this.state.password, this.state.remember);
   }
 
   onForgotPassword(e) {
@@ -93,7 +90,7 @@ class Login extends Component {
             <div className="row mb-3">
               <div className="col">
                 <div className="form-check mb-2 mr-sm-2 mb-sm-0">
-                  <label className="form-check-label">
+                  {/* }<label className="form-check-label">
                     <input className="form-check-input" name="remember"
                            type="checkbox"
                            checked={ this.state.remember }
@@ -101,7 +98,7 @@ class Login extends Component {
                     <span style={{paddingBottom: '.15rem'}}>
                       Remember me
                     </span>
-                  </label>
+                  </label>*/}
                   <Link className="float-right" to="/password/reset">Forgot Your Password?</Link>
                 </div>
               </div>
@@ -116,6 +113,12 @@ class Login extends Component {
                   }
                 </button>
               </div>
+
+              <div className="col">
+                <div className="form-check mt-3 mb-2 mr-sm-2 mb-sm-0 text-center">
+                  <Link to="/auth/signup">No Account? &nbsp;Sign Up</Link>
+                </div>
+              </div>
             </div>
           </form>
         </div>
@@ -125,14 +128,20 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  dispatch: PropTypes.func.isRequired
 };
 
 // Retrieve data from store as props
-function mapStateToProps(store) {
+const mapStateToProps = store => {
   return {
     auth: store.auth
   };
 }
 
-export default withRouter(connect(mapStateToProps)(Login));
+// Retrieve dispatch and callbacks from store as props
+const mapDispatchToProps = dispatch => {
+  return {
+    loginRequested: (userName, password, remember) => dispatch(loginRequested(userName, password, remember))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

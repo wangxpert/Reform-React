@@ -45,7 +45,6 @@ class ActivistList extends Component {
 
   loadActivists() {
     const { region, activists, dispatch } = this.props;
-    console.log('loadActivists');
 
     dispatch(activistsFetchRequested(region.selectedState, region.selectedCity, FETCH_LIMIT, activists.lastKey))
   }

@@ -4,6 +4,8 @@ import Types from '../actions/types';
 import * as Actions from '../actions/auth';
 import * as Api from '../api/auth';
 
+import { NotificationManager } from 'react-notifications';
+
 import { push } from 'react-router-redux';
 
 // Saga: will be fired on SIGNUP_REQUESTED actions
@@ -12,10 +14,10 @@ function* requestSignup(action) {
      // const userName = yield call(Api.requestSignup, action.info);
      yield call(Api.requestSignup, action.info);
      yield put(Actions.signupSucceeded(action.info.userName));
-     put(push(`/auth/confirm/${action.info.userName}`));
+     yield put(push(`/auth/confirm/${ action.info.userName }`));
    } catch (e) {
-     alert(e.message); // temporary message. Will remove.
-     yield put(Actions.signupFailed(e.message));
+     NotificationManager.error(e.message, 'Error...');
+     yield put(Actions.signupFailed(e));
    }
 }
 
@@ -24,10 +26,11 @@ function* requestConfirmUser(action) {
    try {
      const result = yield call(Api.requestConfirmUser, action.userName, action.verificationCode);
      yield put(Actions.confirmUserSucceeded(result));
+     NotificationManager.success('You account is confirmed. Enjoy.', 'Confirm User');
      yield put('/auth/login');
    } catch (e) {
-     alert(e.message); // temporary message. Will remove.
-     yield put(Actions.confirmUserFailed(e.message));
+     NotificationManager.error(e.message, 'Error...');
+     yield put(Actions.confirmUserFailed(e));
    }
 }
 
@@ -37,21 +40,39 @@ function* requestResendCode(action) {
      const result = yield call(Api.requestResendCode, action.userName);
      yield put(Actions.resendCodeSucceeded(result));
    } catch (e) {
-     alert(e.message); // temporary message. Will remove.
-     yield put(Actions.resendCodeFailed(e.message));
+     NotificationManager.error(e.message, 'Error...');
+     yield put(Actions.resendCodeFailed(e));
    }
 }
 
+function confirmUserMessage() {
+  return new Promise((resolve, reject) =>
+    NotificationManager.error('User is not confirmed. If you want to confirm this user, please click here.', 'Error...', 5000,
+      () => resolve('toConfirmUser')
+    )
+  ).then(response => response,
+	   err => {
+       throw err;
+     }
+  );
+}
 
 // Saga: will be fired on LOGIN_REQUESTED actions
 function* requestLogin(action) {
    try {
      const user = yield call(Api.requestLogin, action.userName, action.password);
      yield put(Actions.loginSucceeded(user));
+     NotificationManager.success(`Welcome ${ action.userName }`, 'Welcome');
      yield put(push('/'));
    } catch (e) {
-     alert(e.message); // temporary message. Will remove.
-     yield put(Actions.loginFailed(e.message));
+     yield put(Actions.loginFailed(e));
+
+     if (e.code === 'UserNotConfirmedException') {
+       yield call(confirmUserMessage);
+       yield put(push(`/auth/confirm/${ action.userName }`))
+     } else {
+       NotificationManager.error(e.message, 'Error...');
+     }
    }
 }
 
@@ -61,7 +82,7 @@ function* requestLogout(action) {
     yield call(Api.requestLogout);
     yield put(Actions.logoutSucceeded());
   } catch (e) {
-    console.log(e.message);
+    NotificationManager.error(e.message, 'Error...');
   }
 }
 
@@ -71,7 +92,7 @@ function* getSession(action) {
     const user = yield call(Api.getSession);
     yield put(Actions.getSessionSucceeded(user));
   } catch (e) {
-    yield put(Actions.getSessionFailed(e.message));
+    yield put(Actions.getSessionFailed(e));
   }
 }
 
@@ -80,9 +101,10 @@ function* requestResetPassword(action) {
   try {
     const data = yield call(Api.requestResetPassword, action.userName);
     yield put(Actions.resetPasswordRequestSucceeded(data));
-    yield put(push(`/password/confirm/${action.userName}`));
+    yield put(push(`/password/confirm/${ action.userName }`));
   } catch (e) {
-    yield put(Actions.resetPasswordRequestFailed(e.message));
+    NotificationManager.error(e.message, 'Error...');
+    yield put(Actions.resetPasswordRequestFailed(e));
   }
 }
 
@@ -91,10 +113,11 @@ function* requestConfirmPassword(action) {
   try {
     const data = yield call(Api.requestConfirmPassword, action.userName, action.verificationCode, action.newPassword);
     yield put(Actions.confirmPasswordSucceeded(data));
-    alert('Password is reseted.'); // temporary message. Will remove.
+    NotificationManager.success('You can use the new password from now.', 'Reset Password');
     yield put(push('/auth/login'))
   } catch (e) {
-    yield put(Actions.confirmPasswordFailed(e.message));
+    NotificationManager.error(e.message, 'Error...');
+    yield put(Actions.confirmPasswordFailed(e));
   }
 }
 

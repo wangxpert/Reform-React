@@ -28,6 +28,7 @@ import DepartmentBanner from './components/DepartmentBanner';
 import PostBlock from './components/PostBlock';
 
 import InfiniteScroll from 'react-infinite-scroller';
+import { NotificationManager } from 'react-notifications';
 
 // Import routes
 
@@ -82,7 +83,7 @@ class Posts extends Component {
       if (posts.state !== 'UPVOTING_POST')
       dispatch(upvotePostRequested(post.state, post.city, post.department, post.post, auth.user.idToken.jwtToken));
     } else {
-      alert('You have to login to upvote.');
+      NotificationManager.warning('You have to login to upvote.', 'Not permitted');
     }
   }
 

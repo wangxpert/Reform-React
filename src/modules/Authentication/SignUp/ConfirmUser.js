@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 // Import styles
 import '../styles/styles.css';
@@ -26,8 +25,6 @@ class ConfirmUser extends Component {
       email: '',
       verificationCode: ''
     };
-
-    console.log(props);
   }
 
   componentDidMount() {
@@ -53,7 +50,6 @@ class ConfirmUser extends Component {
 
     const { dispatch, match: { params: { userName } } } = this.props;
     dispatch(confirmUserRequested(userName, this.state.verificationCode));
-    //history.push('/password/confirm');
   }
 
   onResendCode(e) {
@@ -127,4 +123,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(ConfirmUser));
+export default connect(mapStateToProps)(ConfirmUser);

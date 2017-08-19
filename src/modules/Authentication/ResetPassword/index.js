@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 // Import styles
 import '../styles/styles.css';
@@ -47,7 +46,7 @@ class ResetPassword extends Component {
     if (this.props.auth.state === 'LOGGING_IN')
       return;
 
-    const { dispatch, history } = this.props;
+    const { dispatch } = this.props;
     dispatch( resetPasswordRequested(this.state.email) );
   }
 
@@ -103,4 +102,4 @@ function mapStateToProps(store) {
   };
 }
 
-export default withRouter(connect(mapStateToProps)(ResetPassword));
+export default connect(mapStateToProps)(ResetPassword);

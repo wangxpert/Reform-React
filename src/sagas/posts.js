@@ -3,6 +3,8 @@ import Types from '../actions/types';
 import * as Api from '../api/posts';
 import * as Actions from '../actions/posts';
 
+import { NotificationManager } from 'react-notifications';
+
 // Saga: will be fired on POSTS_FETCH_REQUESTED actions
 function* fetchPosts(action) {
    try {
@@ -19,7 +21,7 @@ function* upvotePost(action) {
      yield call(Api.upvotePost, action.state, action.city, action.department, action.post, action.idToken);
      yield put(Actions.upvotePostSucceeded(action.state, action.city, action.department, action.post));
    } catch (e) {
-     alert(e.message.replace(/^\[.*\]/, '')); // temporary message. Will remove.
+     NotificationManager.error(e.message.replace(/^\[.*\]/, ''), 'Error...');
      yield put(Actions.upvotePostFailed(e.message));
    }
 }

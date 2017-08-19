@@ -19,7 +19,6 @@ function newCognitoUser(userName) {
 }
 
 export function requestSignup(info) {
-  console.log(info);
   const userPool = new CognitoUserPool(AWS_COGNITO_POOL);
 
   var attributeList = [];
@@ -60,7 +59,7 @@ export function requestSignup(info) {
     })
   ).then(response => response,
 	   err => {
-       throw new Error(err);
+       throw err;
      }
   );
 }
@@ -77,7 +76,7 @@ export function requestConfirmUser(userName, verificationCode) {
     })
   ).then(response => response,
 	   err => {
-       throw new Error(err);
+       throw err;
      }
   );
 }
@@ -94,7 +93,7 @@ export function requestResendCode(userName) {
     })
   ).then(response => response,
 	   err => {
-       throw new Error(err);
+       throw err;
      }
   );
 }
@@ -117,7 +116,7 @@ export function requestLogin(userName, password) {
     })
   ).then(response => response,
 	   err => {
-       throw new Error(err);
+       throw err;
      }
   );
 }
@@ -144,7 +143,7 @@ export function requestResetPassword(userName) {
     })
   ).then(response => response,
 	   err => {
-       throw new Error(err);
+       throw err;
      }
   );
 }
@@ -159,7 +158,7 @@ export function requestConfirmPassword(userName, verificationCode, newPassword) 
     })
   ).then(response => response,
 	   err => {
-       throw new Error(err);
+       throw err;
      }
   );
 }
@@ -186,7 +185,7 @@ export function getSession() {
       })
     ).then(response => response,
   	   err => {
-         throw new Error(err);
+         throw err;
        }
     );
 
