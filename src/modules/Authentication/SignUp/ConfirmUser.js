@@ -68,7 +68,7 @@ class ConfirmUser extends Component {
     const { auth } = this.props;
 
     return (
-      <div className="page-layout__viewport row mt-5">
+      <div className="page-layout__viewport row py-5">
         <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4">
           <form className="form-horizontal" onSubmit={ this.onConfirm.bind(this) }>
               <div className="row mb-4">
