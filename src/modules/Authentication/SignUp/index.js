@@ -19,7 +19,7 @@ import { signupRequested } from '../../../actions/auth';
 import imgLogo from '../../../assets/reformcow_96px.png';
 
 // Import Utils
-import { capitalize } from '../../../utils/input';
+import { capitalize, normalizePhoneNumber } from '../../../utils/input';
 
 class SignUp extends Component {
 
@@ -30,6 +30,7 @@ class SignUp extends Component {
       firstName: '',
       lastName: '',
       email: '',
+      countryCode: '+1',
       phoneNumber: '',
       zipCode: '',
       password: '',
@@ -49,6 +50,8 @@ class SignUp extends Component {
     this.setState({
       [name]: value
     });
+
+        console.log(`${ this.state.countryCode }${ normalizePhoneNumber(this.state.phoneNumber) }`);
   }
 
   validateInput() {
@@ -68,11 +71,12 @@ class SignUp extends Component {
     if (this.validateInput() === false) return;
 
     const { dispatch } = this.props;
+
     dispatch(signupRequested({
       userName: this.state.userName,
       name: `${capitalize(this.state.firstName)} ${capitalize(this.state.lastName)}`,
       email: this.state.email,
-      phoneNumber: `+${this.state.phoneNumber}`,
+      phoneNumber: `${this.state.countryCode}${this.state.phoneNumber.replace(/\D/g, '')}`,
       zipCode: this.state.zipCode,
       password: this.state.password
     }));
@@ -143,8 +147,11 @@ class SignUp extends Component {
                       <label htmlFor="phone_number" className="ml-2 sr-only">Phone Number :</label>
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-phone"></i></div>
+                          <input type="tel" name="countryCode" className="form-control col-2" id="country_code"
+                                placeholder="+1" required
+                                value={ this.state.countryCode } />
                           <input type="tel" name="phoneNumber" className="form-control" id="phone_number"
-                                placeholder="Phone Number" required pattern="(\d){10}"
+                                placeholder="Phone Number" required pattern="(\D)*((\d)(\D)*){10}"
                                 value={ this.state.phoneNumber } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
@@ -157,7 +164,7 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-map-marker"></i></div>
                           <input type="text" name="zipCode" className="form-control" id="zip_code"
-                                 placeholder="ZIP Code" required pattern="(\d){5}" title="XXXXXXXXXX"
+                                 placeholder="ZIP Code" required pattern="(\d){5}" title="ZIP code must have 5 digits."
                                  value={ this.state.zipCode } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>

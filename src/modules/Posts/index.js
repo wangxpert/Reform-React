@@ -116,14 +116,20 @@ class Posts extends Component {
 
           {/* Department Posts */}
           <ul className="list-group media-list media-list-stream mb-5">
-            <InfiniteScroll
-                pageStart={0}
-                loadMore={ this.loadPosts.bind(this) }
-                hasMore={ posts.lastKey !== undefined }
-                loader={ <div className="loader">Loading ...</div> }
-            >
-              { renderPosts }
-            </InfiniteScroll>
+            { (posts.posts && posts.posts.length) ?
+              (
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={ this.loadPosts.bind(this) }
+                    hasMore={ posts.lastKey !== undefined }
+                    loader={ <div className="loader">Loading ...</div> }
+                >
+                  { renderPosts }
+                </InfiniteScroll>
+              ) : (
+                <h6 className='ml-2' > Sorry, there are no posts yet for this category. </h6>
+              )
+            }
           </ul>
         </div>
 

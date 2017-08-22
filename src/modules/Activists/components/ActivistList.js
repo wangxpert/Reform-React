@@ -81,7 +81,7 @@ class ActivistList extends Component {
               </ul>
             </div>
           ) : (
-            <h6 className='ml-2' > Sorry, there are no activists to show. </h6>
+            <h6 className='ml-2' > Sorry, there are no activist pages to show. </h6>
           )
         }
       </div>
