@@ -13,7 +13,7 @@ import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
 
 // Import Actions
-import { signupRequested, validateSignUpInfoRequested } from '../../../actions/auth';
+import { signupRequested } from '../../../actions/auth';
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png';

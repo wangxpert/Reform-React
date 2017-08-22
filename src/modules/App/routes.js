@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 // Import Components
 import asyncComponent from '../../components/AsyncComponent';
 
-import routeAuth from '../Authentication/routes';
+import Authentication from '../Authentication';
 
 const AsyncPosts = asyncComponent(() => import('../Posts'));
 const AsyncContactUs = asyncComponent(() => import('../ContactUs'));
@@ -23,7 +23,7 @@ const routes = (
     <Route path='/advertise' component={ AsyncAdvertise } />
     <Route path='/privacy' component={ AsyncPrivacy } />
     <Route path='/activists' component={ AsyncActivists } />
-    { routeAuth }
+    <Authentication />
   </Switch>
 );
 
