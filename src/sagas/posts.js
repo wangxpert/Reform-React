@@ -21,8 +21,8 @@ function* upvotePost(action) {
      yield call(Api.upvotePost, action.state, action.city, action.department, action.post, action.idToken);
      yield put(Actions.upvotePostSucceeded(action.state, action.city, action.department, action.post));
    } catch (e) {
-     NotificationManager.error(e.message.replace(/^\[.*\]/, ''), 'Error...');
-     yield put(Actions.upvotePostFailed(e.message));
+     NotificationManager.error(e.errorMessage.replace(/^\[.*\]/, ''), 'Error...');
+     yield put(Actions.upvotePostFailed(e.errorMessage));
    }
 }
 
