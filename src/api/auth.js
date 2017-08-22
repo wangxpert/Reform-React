@@ -5,6 +5,8 @@
   AuthenticationDetails
 } from 'amazon-cognito-identity-js';
 
+import callApi from '../utils/apiCaller';
+
 import { AWS_COGNITO_POOL } from '../config';
 
 function newCognitoUser(userName) {
@@ -17,6 +19,15 @@ function newCognitoUser(userName) {
 
   return new CognitoUser(userData);
 }
+
+export function validateSignUpInfo(email, alias, phone, zipCode) {
+  return callApi(`accounts/available?email=${ email }&alias=${ alias }&phone=${ phone }&zipcode=${ zipCode } `);
+}
+
+export function upvotePost(state, city, department, post, idToken) {
+  return callApi(`states/${state}/cities/${city}/departments/${department}/posts/${post}/upvote`, 'put', {}, idToken);
+}
+
 
 export function requestSignup(info) {
   const userPool = new CognitoUserPool(AWS_COGNITO_POOL);

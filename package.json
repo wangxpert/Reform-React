@@ -5,7 +5,7 @@
   "dependencies": {
     "amazon-cognito-identity-js": "^1.19.0",
     "better-react-spinkit": "^2.0.0",
-    "bootstrap": "^4.0.0-alpha.6",
+    "bootstrap": "4.0.0-alpha.6",
     "es6-promise": "^4.1.1",
     "font-awesome": "^4.7.0",
     "history": "^4.6.3",

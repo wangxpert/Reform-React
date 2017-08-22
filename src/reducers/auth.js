@@ -9,6 +9,20 @@ const initialState = {
 
 /* Handlers */
 
+// SignUp Information Validation
+export const validateSignUpInfoRequested = (state = initialState, action) => {
+  //return { state: 'VALIDATING_SIGNUP_INFO' };
+  return { ...state };
+}
+
+export const validateSignUpInfoSucceeded = (state = initialState, action) => {
+  return { state: 'VALIDATE_SIGNUP_INFO_SUCCEEDED', result: action.result };
+}
+
+export const validateSignUpInfoFailed = (state = initialState, action) => {
+  return { state: 'VALIDATE_SIGNUP_INFO_FAILED', err: action.err };
+}
+
 // Sign up
 export const signupRequested = (state = initialState, action) => {
   return { state: 'SIGNING_UP' }
@@ -111,6 +125,10 @@ export const getSessionFailed = (state = initialState, action) => {
 
 // map action types to reducer functions
 export const handlers = {
+  [Types.VALIDATE_SIGNUP_INFO_REQUESTED]: validateSignUpInfoRequested,
+  [Types.VALIDATE_SIGNUP_INFO_SUCCEEDED]: validateSignUpInfoSucceeded,
+  [Types.VALIDATE_SIGNUP_INFO_FAILED]: validateSignUpInfoFailed,
+
   [Types.SIGNUP_REQUESTED]: signupRequested,
   [Types.SIGNUP_SUCCEEDED]: signupSucceeded,
   [Types.SIGNUP_FAILED]: signupFailed,

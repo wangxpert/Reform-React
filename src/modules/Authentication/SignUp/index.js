@@ -13,7 +13,7 @@ import { NotificationManager } from 'react-notifications';
 import { Link } from 'react-router-dom';
 
 // Import Actions
-import { signupRequested } from '../../../actions/auth';
+import { signupRequested, validateSignUpInfoRequested } from '../../../actions/auth';
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png';
@@ -46,7 +46,6 @@ class SignUp extends Component {
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
 
-    console.log(this.state.firstName);
     this.setState({
       [name]: value
     });
@@ -76,7 +75,7 @@ class SignUp extends Component {
       phoneNumber: `+${this.state.phoneNumber}`,
       zipCode: this.state.zipCode,
       password: this.state.password
-    }, this.props.history));
+    }));
   }
 
   render() {
@@ -145,7 +144,7 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-phone"></i></div>
                           <input type="tel" name="phoneNumber" className="form-control" id="phone_number"
-                                placeholder="Phone Number" required pattern="(\d)*"
+                                placeholder="Phone Number" required pattern="(\d){10}"
                                 value={ this.state.phoneNumber } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
@@ -158,7 +157,8 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-map-marker"></i></div>
                           <input type="text" name="zipCode" className="form-control" id="zip_code"
-                                 placeholder="ZIP Code" required value={ this.state.zipCode } onChange={ this.onChange.bind(this) } />
+                                 placeholder="ZIP Code" required pattern="(\d){5}" title="XXXXXXXXXX"
+                                 value={ this.state.zipCode } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
               </div>

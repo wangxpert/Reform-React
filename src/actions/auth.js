@@ -1,5 +1,15 @@
 import Types from './types';
 
+// Validate For Sign up
+export const validateSignUpInfoRequested = (info) =>
+  ({ type: Types.VALIDATE_SIGNUP_INFO_REQUESTED, info });
+
+export const validateSignUpInfoSucceeded = (result) =>
+  ({ type: Types.VALIDATE_SIGNUP_INFO_SUCCEEDED, result });
+
+export const validateSignUpInfoFailed = (err) =>
+  ({ type: Types.VALIDATE_SIGNUP_INFO_FAILED, err: err });
+
 // Sign up
 export const signupRequested = (info) =>
   ({ type: Types.SIGNUP_REQUESTED, info });

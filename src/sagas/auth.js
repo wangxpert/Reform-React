@@ -1,4 +1,4 @@
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { put, select, call, take, takeLatest } from 'redux-saga/effects';
 import Types from '../actions/types';
 
 import * as Actions from '../actions/auth';
@@ -8,13 +8,47 @@ import { NotificationManager } from 'react-notifications';
 
 import { push } from 'react-router-redux';
 
+// Saga: will be fired on VALIDATE_SIGNUP_INFO_REQUESTED actions
+function* requestValidateUserInfo(action) {
+   try {
+     const result = yield call(Api.validateSignUpInfo, action.info.email, action.info.userName, action.info.phoneNumber, action.info.zipCode);
+     yield put(Actions.validateSignUpInfoSucceeded(result));
+   } catch (e) {
+     NotificationManager.error(e.message, 'Error...');
+     yield put(Actions.validateSignUpInfoFailed(e));
+   }
+}
+
 // Saga: will be fired on SIGNUP_REQUESTED actions
+function handleValidationResult(result) {
+  const fieldName = {
+    phone: 'Phone Number',
+    email: 'Email',
+    alias: 'User Name',
+    zipcode: 'ZIP Code'
+  }
+  for (let field in result) {
+    if (result[field] === 'in_use') {
+      throw Error(`${fieldName[field]} is in use.`);
+    } else if (result[field] === 'invalid') {
+      throw Error(`${fieldName[field]} is not valid.`);
+    }
+  }
+  return true;
+}
+
 function* requestSignup(action) {
    try {
-     // const userName = yield call(Api.requestSignup, action.info);
-     yield call(Api.requestSignup, action.info);
-     yield put(Actions.signupSucceeded(action.info.userName));
-     yield put(push(`/auth/confirm/${ action.info.userName }`));
+     yield put(Actions.validateSignUpInfoRequested(action.info));
+     const actResult = yield take([Types.VALIDATE_SIGNUP_INFO_SUCCEEDED, Types.VALIDATE_SIGNUP_INFO_FAILED]);
+     if (actResult.type === Types.VALIDATE_SIGNUP_INFO_SUCCEEDED) {
+       const validateResult = handleValidationResult(actResult.result);
+       if (validateResult === true) {
+         const userName = yield call(Api.requestSignup, action.info);
+         yield put(Actions.signupSucceeded(userName));
+         yield put(push(`/auth/confirm/${ userName }`));
+       }
+     }
    } catch (e) {
      NotificationManager.error(e.message, 'Error...');
      yield put(Actions.signupFailed(e));
@@ -125,6 +159,7 @@ function* requestConfirmPassword(action) {
   Does not allow concurrent fetches.
 */
 export function* authSaga() {
+  yield takeLatest(Types.VALIDATE_SIGNUP_INFO_REQUESTED, requestValidateUserInfo);
   yield takeLatest(Types.SIGNUP_REQUESTED, requestSignup);
   yield takeLatest(Types.CONFIRM_USER_REQUESTED, requestConfirmUser);
   yield takeLatest(Types.RESEND_CODE_REQUESTED, requestResendCode);
