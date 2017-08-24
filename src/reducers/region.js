@@ -1,48 +1,48 @@
-import { createReducer } from 'reduxsauce';
+import { createReducer } from 'reduxsauce'
 // Import Actions
-import Types from '../actions/types';
+import Types from '../actions/types'
 
 // Initial State
 const initialState = {
 
-};
+}
 
 // Handlers
 
 export const fetchStatesSucceeded = (state = initialState, action) => {
-  return { ...state, states: action.states };
+  return { ...state, states: action.states }
 }
 
 export const fetchStatesFailed = (state = initialState, action) => {
-  return { ...state, err: action.err };
+  return { ...state, err: action.err }
 }
 
 export const fetchCitiesSucceeded = (state = initialState, action) => {
-  return { ...state, cities: action.cities };
+  return { ...state, cities: action.cities }
 }
 
 export const fetchCitiesFailed = (state = initialState, action) => {
-  return { ...state, err: action.err };
+  return { ...state, err: action.err }
 }
 
 export const fetchDepartmentsSucceeded = (state = initialState, action) => {
-  return { ...state, departments: action.departments };
+  return { ...state, departments: action.departments }
 }
 
 export const fetchDepartmentsFailed = (state = initialState, action) => {
-  return { ...state, err: action.err };
+  return { ...state, err: action.err }
 }
 
 export const selectState = (state = initialState, action) => {
-  return { ...state, selectedState: action.state };
+  return { ...state, selectedState: action.state }
 }
 
 export const selectCity = (state = initialState, action) => {
-  return { ...state, selectedCity: action.city };
+  return { ...state, selectedCity: action.city }
 }
 
 export const selectDepartment = (state = initialState, action) => {
-  return { ...state, selectedDepartment: action.department };
+  return { ...state, selectedDepartment: action.department }
 }
 
 // map action types to reducer functions
@@ -62,4 +62,4 @@ export const handlers = {
 
 
 // Export Reducer
-export default createReducer(initialState, handlers);
+export default createReducer(initialState, handlers)

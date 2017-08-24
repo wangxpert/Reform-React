@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Import styles
-import '../styles/styles.css';
+import '../styles/styles.css'
 
 // Import Components
 import {
@@ -11,18 +11,18 @@ import {
 } from 'better-react-spinkit'
 
 // Import Actions
-import { confirmPasswordRequested } from '../../../actions/auth';
+import { confirmPasswordRequested } from '../../../actions/auth'
 
 // Import Assets
 
 class ConfirmPassword extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       verificationCode: '',
       password: ''
-    };
+    }
   }
 
   componentDidMount() {
@@ -30,31 +30,31 @@ class ConfirmPassword extends Component {
   }
 
   onChange(e) {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
 
     this.setState({
       [name]: value
-    });
+    })
   }
 
   onReset(e) {
-    e.preventDefault();
+    e.preventDefault()
 
-    const { auth } = this.props;
+    const { auth } = this.props
     if (auth.state === 'CONFIRMING_PASSWORD')
-      return;
+      return
 
-    const { dispatch, match: { params: { userName } } } = this.props;
-    dispatch(confirmPasswordRequested(userName, this.state.verificationCode, this.state.password));
+    const { dispatch, match: { params: { userName } } } = this.props
+    dispatch(confirmPasswordRequested(userName, this.state.verificationCode, this.state.password))
   }
 
   render() {
 
     return (
-      <div className="page-layout__viewport row py-5">
-        <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4">
+      <div className="row py-5">
+        <div className="px-4 py-4 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4">
           <form className="form-horizontal" onSubmit={this.onReset.bind(this)}>
               <div className="row mb-4">
                 <div className="col text-center">
@@ -106,13 +106,13 @@ class ConfirmPassword extends Component {
 
 ConfirmPassword.propTypes = {
   dispatch: PropTypes.func.isRequired
-};
+}
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     auth: store.auth
-  };
+  }
 }
 
-export default connect(mapStateToProps)(ConfirmPassword);
+export default connect(mapStateToProps)(ConfirmPassword)

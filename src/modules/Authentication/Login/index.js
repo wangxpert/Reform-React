@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 // Import styles
-import '../styles/styles.css';
+import '../styles/styles.css'
 
 // Import Components
 import {
@@ -11,20 +11,20 @@ import {
 } from 'better-react-spinkit'
 
 // Import Actions
-import { loginRequested } from '../../../actions/auth';
+import { loginRequested } from '../../../actions/auth'
 
 // Import Assets
-import imgLogo from '../../../assets/reformcow_96px.png';
+import imgLogo from '../../../assets/reformcow_96px.png'
 
 class Login extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: '',
       password: '',
       remember: false
-    };
+    }
   }
 
   componentDidMount() {
@@ -32,21 +32,21 @@ class Login extends Component {
   }
 
   onChange(e) {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
 
     this.setState({
       [name]: value
-    });
+    })
   }
 
   onLogin(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (this.props.auth.state === 'LOGGING_IN')
-      return;
+      return
 
-    this.props.loginRequested(this.state.email, this.state.password, this.state.remember);
+    this.props.loginRequested(this.state.email, this.state.password, this.state.remember)
   }
 
   onForgotPassword(e) {
@@ -55,9 +55,9 @@ class Login extends Component {
   render() {
 
     return (
-      <div className="page-layout__viewport row py-5">
-        <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4 align-middle">
-          <form className="form-horizontal" onSubmit={this.onLogin.bind(this)}>
+      <div className="row py-4">
+        <div className="px-4 py-4 mx-auto">
+          <form className="form-horizontal" onSubmit={ this.onLogin.bind(this) }>
             <div className="row mb-5">
               <div className="col text-center">
                 <img src={ imgLogo } alt="logo"/>
@@ -116,7 +116,7 @@ class Login extends Component {
 
               <div className="col">
                 <div className="form-check mt-3 mb-2 mr-sm-2 mb-sm-0 text-center">
-                  <Link to="/auth/signup">No Account? &nbsp;Register</Link>
+                  <Link to="/auth/signup">No Account? &nbspRegister</Link>
                 </div>
               </div>
             </div>
@@ -128,20 +128,20 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-};
+}
 
 // Retrieve data from store as props
 const mapStateToProps = store => {
   return {
     auth: store.auth
-  };
+  }
 }
 
 // Retrieve dispatch and callbacks from store as props
 const mapDispatchToProps = dispatch => {
   return {
     loginRequested: (userName, password, remember) => dispatch(loginRequested(userName, password, remember))
-  };
+  }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

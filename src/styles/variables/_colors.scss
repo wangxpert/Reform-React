@@ -1,0 +1,45 @@
+$brand-primary: #02447b;
+$primary-bg: #02447b;
+$app-bg: #f5f8fa;
+$card-bg: #fff;
+
+$text-primary: #292b2c;
+$text-secondary: #fff;
+
+$gray-light:                #BCC5D0;
+$gray-lighter:              #E3E8EC;
+$gray-lightest:             #F1F3F8;
+
+$text-muted: $gray-light !default;
+
+$header-bg: $primary-bg;
+$header-text-color: $text-secondary;
+$brand-text-color: $text-secondary;
+
+$dropdown-border-color:         $gray-lighter;
+$dropdown-divider-bg:           $gray-lightest;
+
+
+// Side Bar
+$sidebar-color: $text-primary;
+$sidebar-bg: $app-bg;
+$sidebar-header-bg: rgba(0, 0, 0, .2);
+$sidebar-footer-bg: rgba(0, 0, 0, .2);
+
+$sidebar-nav-color:                 $text-primary;
+$sidebar-nav-title-color:           $gray-lighter;
+
+$sidebar-nav-link-color: $text-primary;
+$sidebar-nav-link-bg: transparent;
+$sidebar-nav-link-icon-color: $text-muted;
+
+$sidebar-nav-link-hover-color:      #fff;
+$sidebar-nav-link-hover-bg:         $brand-primary;
+$sidebar-nav-link-hover-icon-color: #fff !important;
+
+$sidebar-nav-link-active-color:     #fff;
+$sidebar-nav-link-active-bg:        lighten($sidebar-bg, 5%);
+$sidebar-nav-link-active-icon-color: $brand-primary;
+
+$inputpage-bg: $card-bg;
+$inputpage-title-color: $text-primary;

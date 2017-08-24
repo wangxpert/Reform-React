@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "amazon-cognito-identity-js": "^1.19.0",
+    "aws-sdk": "^2.103.0",
     "better-react-spinkit": "^2.0.0",
     "bootstrap": "4.0.0-alpha.6",
     "es6-promise": "^4.1.1",
@@ -15,6 +16,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-file-input": "^0.2.5",
     "react-hot-loader": "^3.0.0-beta.7",
     "react-infinite-scroller": "^1.0.15",
     "react-notifications": "^1.4.3",
@@ -22,9 +24,11 @@
     "react-router-dom": "^4.1.2",
     "react-router-redux": "^5.0.0-alpha.6",
     "react-scripts": "1.0.10",
+    "reactstrap": "^4.8.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",
-    "reduxsauce": "^0.6.0"
+    "reduxsauce": "^0.6.0",
+    "uniqid": "^4.1.1"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",

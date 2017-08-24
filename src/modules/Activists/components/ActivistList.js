@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-import InfiniteScroll from 'react-infinite-scroller';
+import InfiniteScroll from 'react-infinite-scroller'
 
 // Import Components
-import ActivistBlock from './ActivistBlock';
-import CategorySelector from './CategorySelector';
+import ActivistBlock from './ActivistBlock'
+import CategorySelector from './CategorySelector'
 
 // Import Actions
 import {
@@ -14,48 +14,48 @@ import {
   citiesFetchRequested,
   selectState,
   selectCity
-} from '../../../actions/region';
+} from '../../../actions/region'
 
 import {
   resetActivists,
   activistsFetchRequested
-} from '../../../actions/activists';
+} from '../../../actions/activists'
 
 
-const FETCH_LIMIT = 50;
+const FETCH_LIMIT = 50
 class ActivistList extends Component {
 
   componentWillMount() {
-    const { dispatch, region } = this.props;
-    if (!region.states) dispatch(statesFetchRequested());
+    const { dispatch, region } = this.props
+    if (!region.states) dispatch(statesFetchRequested())
   }
 
   selectState(state) {
-    this.props.dispatch(selectState(state));
-    this.props.dispatch(citiesFetchRequested(state));
+    this.props.dispatch(selectState(state))
+    this.props.dispatch(citiesFetchRequested(state))
   }
 
   selectCity(city) {
-    const { dispatch, region } = this.props;
+    const { dispatch, region } = this.props
 
-    dispatch(selectCity(city));
-    dispatch(resetActivists());
-    dispatch(activistsFetchRequested(region.selectedState, city, FETCH_LIMIT));
+    dispatch(selectCity(city))
+    dispatch(resetActivists())
+    dispatch(activistsFetchRequested(region.selectedState, city, FETCH_LIMIT))
   }
 
   loadActivists() {
-    const { region, activists, dispatch } = this.props;
+    const { region, activists, dispatch } = this.props
 
     dispatch(activistsFetchRequested(region.selectedState, region.selectedCity, FETCH_LIMIT, activists.lastKey))
   }
 
   render() {
-    const { region, activists } = this.props;
-    var renderActivists = null;
+    const { region, activists } = this.props
+    var renderActivists = null
     if (activists.activists) {
       renderActivists = activists.activists.map((ele, index) => (
         <ActivistBlock key={ index } activist={ ele } />
-      ));
+      ))
     }
 
     return (
@@ -92,14 +92,14 @@ class ActivistList extends Component {
 
 ActivistList.propTypes = {
   dispatch: PropTypes.func.isRequired
-};
+}
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     region: store.region,
     activists: store.activists
-  };
+  }
 }
 
-export default connect(mapStateToProps)(ActivistList);
+export default connect(mapStateToProps)(ActivistList)

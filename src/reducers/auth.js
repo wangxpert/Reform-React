@@ -1,26 +1,26 @@
-import { createReducer } from 'reduxsauce';
+import { createReducer } from 'reduxsauce'
 // Import Actions
-import Types from '../actions/types';
+import Types from '../actions/types'
 
 // Initial State
 const initialState = {
   state: 'NOT_LOGGED'
-};
+}
 
 /* Handlers */
 
 // SignUp Information Validation
 export const validateSignUpInfoRequested = (state = initialState, action) => {
-  //return { state: 'VALIDATING_SIGNUP_INFO' };
-  return { ...state };
+  //return { state: 'VALIDATING_SIGNUP_INFO' }
+  return { ...state }
 }
 
 export const validateSignUpInfoSucceeded = (state = initialState, action) => {
-  return { state: 'VALIDATE_SIGNUP_INFO_SUCCEEDED', result: action.result };
+  return { state: 'VALIDATE_SIGNUP_INFO_SUCCEEDED', result: action.result }
 }
 
 export const validateSignUpInfoFailed = (state = initialState, action) => {
-  return { state: 'VALIDATE_SIGNUP_INFO_FAILED', err: action.err };
+  return { state: 'VALIDATE_SIGNUP_INFO_FAILED', err: action.err }
 }
 
 // Sign up
@@ -29,11 +29,11 @@ export const signupRequested = (state = initialState, action) => {
 }
 
 export const signupSucceeded = (state = initialState, action) => {
-  return { state: 'SIGNUP_SUCCEEDED' };
+  return { state: 'SIGNUP_SUCCEEDED' }
 }
 
 export const signupFailed = (state = initialState, action) => {
-  return { state: 'SIGNUP_FAILED', err: action.err };
+  return { state: 'SIGNUP_FAILED', err: action.err }
 }
 
 // Confirm User
@@ -64,63 +64,63 @@ export const resendCodeFailed = (state = initialState, action) => {
 
 // Log in
 export const loginRequested = (state = initialState, action) => {
-  return { state: 'LOGGING_IN' };
+  return { state: 'LOGGING_IN' }
 }
 
 export const loginSucceeded = (state = initialState, action) => {
-  return { state: 'LOGGED', user: action.user };
+  return { state: 'LOGGED', session: action.session }
 }
 
 export const loginFailed = (state = initialState, action) => {
-  return { state: 'NOT_LOGGED', err: action.err };
+  return { state: 'NOT_LOGGED', err: action.err }
 }
 
 // Log out
 export const logoutRequested = (state = initialState, action) => {
-  return { state: 'LOGGING_OUT' };
+  return { state: 'LOGGING_OUT' }
 }
 
 export const logoutSucceeded = (state = initialState, action) => {
-  return { state: 'NOT_LOGGED' };
+  return { state: 'NOT_LOGGED' }
 }
 
 // Reset Password Request
 export const resetPasswordRequested = (state = initialState, action) => {
-  return { state: 'REQUESTING_RESET_PASSWORD' };
+  return { state: 'REQUESTING_RESET_PASSWORD' }
 }
 
 export const resetPasswordRequestSucceeded = (state = initialState, action) => {
-  return { state: 'RESET_PASSWORD_REQUEST_SUCCEEDED', result: action.result };
+  return { state: 'RESET_PASSWORD_REQUEST_SUCCEEDED', result: action.result }
 }
 
 export const resetPasswordRequestFailed = (state = initialState, action) => {
-  return { state: 'RESET_PASSWORD_REQUEST_FAILED', err: action.err };
+  return { state: 'RESET_PASSWORD_REQUEST_FAILED', err: action.err }
 }
 
 // Confirm Password
 export const confirmPasswordRequested = (state = initialState, action) => {
-  return { state: 'CONFIRMING_PASSWORD' };
+  return { state: 'CONFIRMING_PASSWORD' }
 }
 
 export const confirmPasswordSucceeded = (state = initialState, action) => {
-  return { state: 'CONFIRM_PASSWORD_SUCCEEDED', result: action.result };
+  return { state: 'CONFIRM_PASSWORD_SUCCEEDED', result: action.result }
 }
 
 export const confirmPasswordFailed = (state = initialState, action) => {
-  return { state: 'CONFIRM_PASSWORD_FAILED', err: action.err };
+  return { state: 'CONFIRM_PASSWORD_FAILED', err: action.err }
 }
 
 // Get Logged User
 export const getSessionRequested = (state = initialState, action) => {
-  return { state: 'GETTING_SESSION' };
+  return { state: 'GETTING_SESSION' }
 }
 
 export const getSessionSucceeded = (state = initialState, action) => {
-  return { state: 'LOGGED', user: action.user };
+  return { state: 'LOGGED', session: action.session }
 }
 
 export const getSessionFailed = (state = initialState, action) => {
-  return { state: 'NOT_LOGGED', err: action.err };
+  return { state: 'NOT_LOGGED', err: action.err }
 }
 
 // map action types to reducer functions
@@ -165,4 +165,4 @@ export const handlers = {
 
 
 // Export Reducer
-export default createReducer(initialState, handlers);
+export default createReducer(initialState, handlers)

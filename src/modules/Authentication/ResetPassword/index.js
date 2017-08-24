@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Import styles
-import '../styles/styles.css';
+import '../styles/styles.css'
 
 // Import Components
 import {
@@ -11,19 +11,19 @@ import {
 } from 'better-react-spinkit'
 
 // Import Actions
-import { resetPasswordRequested } from '../../../actions/auth';
+import { resetPasswordRequested } from '../../../actions/auth'
 
 // Import Assets
 
 class ResetPassword extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       email: '',
       verificationCode: '',
       password: ''
-    };
+    }
   }
 
   componentDidMount() {
@@ -31,30 +31,30 @@ class ResetPassword extends Component {
   }
 
   onChange(e) {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
 
     this.setState({
       [name]: value
-    });
+    })
   }
 
 
   onNext(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (this.props.auth.state === 'LOGGING_IN')
-      return;
+      return
 
-    const { dispatch } = this.props;
-    dispatch( resetPasswordRequested(this.state.email) );
+    const { dispatch } = this.props
+    dispatch( resetPasswordRequested(this.state.email) )
   }
 
   render() {
 
     return (
-      <div className="page-layout__viewport row py-5">
-        <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4">
+      <div className="row py-5">
+        <div className="px-4 py-4 mx-auto">
           <form className="form-horizontal" onSubmit={this.onNext.bind(this)}>
               <div className="row mb-4">
                 <div className="col text-center">
@@ -93,13 +93,13 @@ class ResetPassword extends Component {
 
 ResetPassword.propTypes = {
   dispatch: PropTypes.func.isRequired
-};
+}
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     auth: store.auth
-  };
+  }
 }
 
-export default connect(mapStateToProps)(ResetPassword);
+export default connect(mapStateToProps)(ResetPassword)

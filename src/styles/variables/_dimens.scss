@@ -1,0 +1,57 @@
+$spacer:   1rem !default;
+$spacer-x: $spacer !default;
+$spacer-y: $spacer !default;
+$spacers: (
+  0: (
+    x: 0,
+    y: 0
+  ),
+  1: (
+    x: ($spacer-x * .25),
+    y: ($spacer-y * .25)
+  ),
+  2: (
+    x: ($spacer-x * .5),
+    y: ($spacer-y * .5)
+  ),
+  3: (
+    x: $spacer-x,
+    y: $spacer-y
+  ),
+  4: (
+    x: ($spacer-x * 1.5),
+    y: ($spacer-y * 1.5)
+  ),
+  5: (
+    x: ($spacer-x * 3),
+    y: ($spacer-y * 3)
+  )
+) !default
+
+$border-width: 1px !default;
+
+$header-height: 60px;
+$footer-height: 40px;
+
+// Side Bar
+
+$sidebar-width: 240px;
+$mobile-sidebar-width: 240px;
+$sidebar-compact-width: 50px;
+$sidebar-compact-height: $sidebar-compact-width;
+
+$sidebar-padding: 0;
+$sidebar-nav-title-padding-y: 1rem;
+$sidebar-nav-title-padding-x: 1.25rem;
+
+$sidebar-nav-link-padding-y: 1rem;
+$sidebar-nav-link-padding-x: 1.25rem;
+
+
+$brand-width: $sidebar-width - $header-height;
+
+$navbar-padding-x: $spacer !default;
+$navbar-padding-y: ($spacer / 2) !default;
+
+$inputpage-padding-y: 1.5rem;
+$inputpage-padding-x: 2rem;

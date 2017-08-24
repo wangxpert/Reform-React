@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Import Actions
 
@@ -14,7 +14,7 @@ class Activist extends Component {
   }
 
   render() {
-    const activist = this.props.activists.activists.find(e => (e.activismid === this.props.match.params.activist));
+    const activist = this.props.activists.activists.find(e => (e.activismid === this.props.match.params.activist))
 
     return (
       <div>
@@ -66,14 +66,14 @@ class Activist extends Component {
 
 Activist.propTypes = {
   dispatch: PropTypes.func.isRequired
-};
+}
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     activists: store.activists,
     region: store.region
-  };
+  }
 }
 
-export default connect(mapStateToProps)(Activist);
+export default connect(mapStateToProps)(Activist)

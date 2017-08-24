@@ -1,61 +1,103 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+
+import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
 
 // Import Actions
-import { logoutRequested } from '../../../../actions/auth';
+import { logoutRequested } from '../../../../actions/auth'
 
 // Import Styles
-import './styles.css';
+import './styles.css'
 
 class Header extends Component {
 
-  onAuth() {
-    const { auth, history, dispatch } = this.props;
-    if (auth.state === 'LOGGED') {
-      dispatch(logoutRequested());
-    } else {
-      history.push('/auth/login');
+  constructor(props) {
+    super(props)
+
+    this.toggle = this.toggle.bind(this)
+    this.state = {
+      dropdownOpen: false
     }
   }
 
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    })
+  }
+
+  sidebarToggle(e) {
+    e.preventDefault()
+    document.body.classList.toggle('sidebar-hidden')
+  }
+
+  mobileSidebarToggle(e) {
+    e.preventDefault()
+    document.body.classList.toggle('sidebar-mobile-show')
+  }
+
+  isLogged() {
+    return this.props.auth.state === 'LOGGED'
+  }
+
+  onAuth() {
+    const { auth, history, dispatch } = this.props
+    if (auth.state === 'LOGGED') {
+      dispatch(logoutRequested())
+    } else {
+      history.push('/auth/login')
+    }
+  }
+
+  onLink(path) {
+    this.props.history.push(path)
+  }
+
   render() {
+    const user = this.props.account.user
+
     return (
-      <nav className="navbar navbar-toggleable-md  fixed-top navbar-inverse page-layout__navbar">
-        <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <Link className="navbar-brand ml-3" to="/">ReformCOW</Link>
+      <header className="app-header navbar">
+        <button className="navbar-toggler mobile-sidebar-toggler hidden-lg-up" type="button" onClick={ this.mobileSidebarToggle }>&#9776;</button>
+        <ul className="nav navbar-nav hidden-md-down">
+          <li className="nav-item">
+            <a className="nav-link navbar-toggler sidebar-toggler" onClick={ this.sidebarToggle } href="">&#9776;</a>
+          </li>
+        </ul>
+        <a className="navbar-brand" href="/">
+          <div className="d-flex h-100 flex-column justify-content-center align-items-center">
+            <strong>Reform COW</strong>
+          </div>
+        </a>
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className="navbar-nav mr-auto">
-            <li className="nav-item px-4">
-              <Link to='/' className='page-layout__nav-item'>Posts</Link>
-            </li>
-            <li className="nav-item">
-              <Link to='/activists'  className='page-layout__nav-item'>Activism Pages</Link>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto mr-3">
-            <li className="nav-item px-4">
-              <a href="" className='page-layout__nav-item' onClick={ this.onAuth.bind(this) }>
-                { this.props.auth.state === 'LOGGED' ? 'Logout' : 'Login' }
+        <ul className="nav navbar-nav ml-auto">
+          <li className="nav-item">
+            <Dropdown isOpen={ this.state.dropdownOpen } toggle={ this.toggle }>
+              <a onClick={ this.toggle } className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded={ this.state.dropdownOpen }>
+                <img src={ '/img/user.png' } className="img-avatar" alt="User"/>
+                <span className="hidden-md-down">{ user && user.preferred_username }</span>
               </a>
-            </li>
+              <DropdownMenu className="dropdown-menu-right">
+                <DropdownItem header className="text-center"><strong>Account</strong></DropdownItem>
+                { this.isLogged() && (
+                  <DropdownItem onClick={ e => this.onLink('/account/profile') }>
+                    <i className="fa fa-user"></i> Profile
+                  </DropdownItem>
+                )}
+                <DropdownItem onClick={ this.onAuth.bind(this) }>{ this.isLogged() ? (<div><i className="fa fa-sign-out"></i> Logout</div>) : (<div><i className="fa fa-sign-in"></i> Login</div>) }</DropdownItem>
+                { !this.isLogged() &&
+                  <DropdownItem onClick={ e => this.onLink('/auth/signup') }>
+                    <i className="fa fa-user"></i> Register
+                  </DropdownItem>
+                }
 
-            { this.props.auth.state !== 'LOGGED' &&
-              <li className="nav-item">
-                <a href="/auth/signup" className='page-layout__nav-item'>
-                  Register
-                </a>
-              </li>
-            }
-
-          </ul>
-        </div>
-      </nav>
+              </DropdownMenu>
+            </Dropdown>
+          </li>
+        </ul>
+      </header>
     )
   }
 }
@@ -70,8 +112,9 @@ Header.propTypes = {
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
-    auth: store.auth
-  };
+    auth: store.auth,
+    account: store.account
+  }
 }
 
-export default withRouter(connect(mapStateToProps)(Header));
+export default withRouter(connect(mapStateToProps)(Header))

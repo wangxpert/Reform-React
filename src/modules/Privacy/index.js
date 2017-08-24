@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 // Import styles
-import './styles/styles.css';
+import './styles/styles.css'
 
 // Import components
 
@@ -21,4 +21,4 @@ class Privacy extends Component {
   }
 }
 
-export default Privacy;
+export default Privacy

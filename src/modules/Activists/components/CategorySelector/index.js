@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 // Import Assets
-import HomepageBannerImg from '../../../../assets/homepage-banner.jpg';
+import HomepageBannerImg from '../../../../assets/homepage-banner.jpg'
 
 export default class CategorySelector extends Component {
 
   componentDidMount() {
-    if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState);
-    if (this.props.selectedCity) this.props.selectCity(this.props.selectedCity);
+    if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState)
+    if (this.props.selectedCity) this.props.selectCity(this.props.selectedCity)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.states !== this.props.states && nextProps.states) {
-      this.props.selectState(nextProps.states.Items[0].stateid);
+      this.props.selectState(nextProps.states.Items[0].stateid)
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
-      this.props.selectCity(nextProps.cities.Items[0].city);
+      this.props.selectCity(nextProps.cities.Items[0].city)
     }
   }
 
@@ -40,14 +40,14 @@ export default class CategorySelector extends Component {
   }
 
   render() {
-    var stateOptions = null;
-    var cityOptions = null;
+    var stateOptions = null
+    var cityOptions = null
 
     if (this.props.states)
-      stateOptions = this.props.states.Items.map(this.makeStateOption);
+      stateOptions = this.props.states.Items.map(this.makeStateOption)
 
     if (this.props.cities)
-      cityOptions = this.props.cities.Items.map(this.makeCityOption);
+      cityOptions = this.props.cities.Items.map(this.makeCityOption)
 
     return (
       <ul className="list-group media-list media-list-stream mb-4">
@@ -88,4 +88,4 @@ CategorySelector.propTypes = {
   cities: PropTypes.object,
   selectedState: PropTypes.string,
   selectedCity: PropTypes.string
-};
+}

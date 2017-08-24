@@ -1,0 +1,202 @@
+// IE10&11 Flexbox fix
+@media all and (-ms-high-contrast:none) {
+  html {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.app {
+  background-color: $app-bg;
+  color: $text-primary;
+  font-size: $app-font-size;
+  flex-direction: column;
+  display: flex;
+  min-height: 100vh;
+
+  .app-header {
+    flex: 0 0 $header-height;
+  }
+
+  .app-footer {
+    flex: 0 0 $footer-height;
+  }
+
+  .app-body {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row;
+    overflow-x: hidden;
+
+    .main {
+      font-size: $main-font-size;
+      flex: 1;
+    }
+
+    .sidebar {
+      // $sidebar-width is the width of the columns
+      flex: 0 0 $sidebar-width;
+      // put the nav on the left
+      order: -1;
+    }
+  }
+}
+
+.header-fixed {
+  .app-header {
+    position: fixed;
+    width: 100%;
+    z-index: $zindex-header;
+  }
+  .app-body {
+    margin-top: $header-height;
+  }
+}
+
+//
+// Sidebar
+//
+.sidebar-hidden {
+
+  .sidebar {
+    margin-left: - $sidebar-width;
+  }
+}
+
+.sidebar-fixed {
+
+  .sidebar {
+    position: fixed;
+    height: calc(100vh - #{$header-height});
+
+    .sidebar-nav {
+      height: calc(100vh - #{$header-height});
+    }
+  }
+
+  .main, .app-footer {
+    margin-left: $sidebar-width;
+  }
+
+  &.sidebar-hidden {
+
+    .main, .app-footer {
+      margin-left: 0;
+    }
+  }
+}
+
+.sidebar-compact {
+  .sidebar {
+    flex: 0 0 $sidebar-compact-width;
+  }
+
+  &.sidebar-hidden {
+
+    .sidebar {
+      margin-left: - $sidebar-compact-width;
+    }
+  }
+
+  &.sidebar-fixed {
+
+    .main, .app-footer {
+      margin-left: $sidebar-compact-width;
+    }
+
+    &.sidebar-hidden {
+
+      .main, .app-footer {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+//
+// Animations
+//
+.app-header,
+.app-footer,
+.sidebar,
+.main {
+  transition-duration: $layout-transition-speed, $layout-transition-speed;
+  transition-property: margin-left, margin-right;
+}
+
+//
+// Mobile layout
+//
+
+@include media-breakpoint-down(md) {
+
+  .app-header {
+    position: fixed !important;
+    z-index: $zindex-header;
+    width: 100%;
+
+    .navbar-toggler {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 70px;
+      height: inherit;
+    }
+
+    .navbar-toggler {
+      @if (lightness( $header-bg ) > 40) {
+        color: $header-text-color;
+      } @else {
+        color: #fff;
+      }
+    }
+
+    .navbar-brand {
+      width: 100% !important;
+      margin: 0 auto !important;
+    }
+
+    .navbar-nav {
+      position: absolute;
+      top: 0;
+      right: 15px;
+      height: inherit;
+    }
+  }
+
+  .app-body {
+    margin-top: $header-height;
+  }
+
+  .sidebar {
+    position: fixed;
+    width: $mobile-sidebar-width;
+    margin-left: - $mobile-sidebar-width;
+
+    .sidebar-nav,
+    .nav {
+      width: $mobile-sidebar-width !important;
+    }
+  }
+
+  .main, .app-footer {
+    margin-left: 0 !important;
+  }
+
+  .sidebar-mobile-show {
+
+    .sidebar {
+      width: $mobile-sidebar-width;
+      margin-left: 0;
+
+      .sidebar-nav {
+        height: calc(100vh - #{$header-height});
+      }
+    }
+
+    .main {
+      margin-right: - $mobile-sidebar-width !important;
+      margin-left: $mobile-sidebar-width !important;
+    }
+  }
+}

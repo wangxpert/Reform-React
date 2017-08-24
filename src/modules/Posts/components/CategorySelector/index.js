@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 
 // Import Assets
-import HomepageBannerImg from '../../../../assets/homepage-banner.jpg';
+import HomepageBannerImg from '../../../../assets/homepage-banner.jpg'
 
 export default class CategorySelector extends Component {
 
   componentDidMount() {
-    if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState);
-    if (this.props.selectedCity && !this.props.departments) this.props.selectCity(this.props.selectedCity);
-    if (this.props.selectedDepartment) this.props.selectDepartment(this.props.selectedDepartment);
+    if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState)
+    if (this.props.selectedCity && !this.props.departments) this.props.selectCity(this.props.selectedCity)
+    if (this.props.selectedDepartment) this.props.selectDepartment(this.props.selectedDepartment)
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.states !== this.props.states && nextProps.states) {
-      this.props.selectState(nextProps.states.Items[0].stateid);
+      this.props.selectState(nextProps.states.Items[0].stateid)
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
-      this.props.selectCity(nextProps.cities.Items[0].city);
+      this.props.selectCity(nextProps.cities.Items[0].city)
     }
 
     if (nextProps.departments !== this.props.departments && nextProps.departments) {
-      this.props.selectDepartment(nextProps.departments.Items[0].department);
+      this.props.selectDepartment(nextProps.departments.Items[0].department)
     }
   }
 
@@ -45,17 +45,17 @@ export default class CategorySelector extends Component {
   }
 
   render() {
-    var stateOptions = null;
-    var cityOptions = null;
-    var departOptions = null;
+    var stateOptions = null
+    var cityOptions = null
+    var departOptions = null
     if (this.props.states)
-      stateOptions = this.props.states.Items.map(this.makeStateOption);
+      stateOptions = this.props.states.Items.map(this.makeStateOption)
 
     if (this.props.cities)
-      cityOptions = this.props.cities.Items.map(this.makeCityOption);
+      cityOptions = this.props.cities.Items.map(this.makeCityOption)
 
     if (this.props.departments)
-      departOptions = this.props.departments.Items.map(this.makeDepartmentOption);
+      departOptions = this.props.departments.Items.map(this.makeDepartmentOption)
 
     return (
       <ul className="list-group media-list media-list-stream mb-4">
@@ -105,4 +105,4 @@ CategorySelector.propTypes = {
   states: PropTypes.object,
   cities: PropTypes.object,
   category: PropTypes.object
-};
+}

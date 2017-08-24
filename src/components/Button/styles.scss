@@ -1,0 +1,25 @@
+$button-bg: #3498db;
+
+.button {
+  background: $button-bg;
+  border: none;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, .3);
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  padding: 6px 30px;
+  outline: 0;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button:hover {
+  box-shadow: 0px 0px 6px darken($button-bg, 20%);
+}
+
+.button:active {
+  box-shadow: none;
+}

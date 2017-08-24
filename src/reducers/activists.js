@@ -1,24 +1,24 @@
-import { createReducer } from 'reduxsauce';
+import { createReducer } from 'reduxsauce'
 // Import Actions
-import Types from '../actions/types';
+import Types from '../actions/types'
 
 // Initial State
 const initialState = {
   activists: []
-};
+}
 
 // Handlers
 
 export const resetActivists = (state = initialState) => {
-  return { activists: [] };
+  return { activists: [] }
 }
 
 export const fetchActivistsSucceeded = (state = initialState, action) => {
-  return { ...state, activists: [ ...state.activists, ...action.activists.Items ], lastKey: action.activists.LastEvaluatedKey };
+  return { ...state, activists: [ ...state.activists, ...action.activists.Items ], lastKey: action.activists.LastEvaluatedKey }
 }
 
 export const fetchActivistsFailed = (state = initialState, action) => {
-  return { ...state, err: action.err };
+  return { ...state, err: action.err }
 }
 
 // map action types to reducer functions
@@ -32,4 +32,4 @@ export const handlers = {
 
 
 // Export Reducer
-export default createReducer(initialState, handlers);
+export default createReducer(initialState, handlers)

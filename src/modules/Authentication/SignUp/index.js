@@ -1,30 +1,30 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
 // Import styles
-import '../styles/styles.css';
+import '../styles/styles.css'
 
 // Import Components
 import {
   ThreeBounce
-} from 'better-react-spinkit';
-import { NotificationManager } from 'react-notifications';
-import { Link } from 'react-router-dom';
+} from 'better-react-spinkit'
+import { NotificationManager } from 'react-notifications'
+import { Link } from 'react-router-dom'
 
 // Import Actions
-import { signupRequested } from '../../../actions/auth';
+import { signupRequested } from '../../../actions/auth'
 
 // Import Assets
-import imgLogo from '../../../assets/reformcow_96px.png';
+import imgLogo from '../../../assets/reformcow_96px.png'
 
 // Import Utils
-import { capitalize, normalizePhoneNumber } from '../../../utils/input';
+import { capitalize, normalizePhoneNumber } from '../../../utils/input'
 
 class SignUp extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
       userName: '',
       firstName: '',
@@ -35,7 +35,7 @@ class SignUp extends Component {
       zipCode: '',
       password: '',
       confirmPassword: ''
-    };
+    }
   }
 
   componentDidMount() {
@@ -43,51 +43,49 @@ class SignUp extends Component {
   }
 
   onChange(e) {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
 
     this.setState({
       [name]: value
-    });
-
-        console.log(`${ this.state.countryCode }${ normalizePhoneNumber(this.state.phoneNumber) }`);
+    })
   }
 
   validateInput() {
-    const state = this.state;
+    const state = this.state
     if (state.password !== state.confirmPassword) {
-      NotificationManager.error('Password must match the confirm password.', "Password doesn't match...");
-      return false;
+      NotificationManager.error('Password must match the confirm password.', "Password doesn't match...")
+      return false
     }
-    return true;
+    return true
   }
 
   onSignUp(e) {
-    e.preventDefault();
+    e.preventDefault()
     if (this.props.auth.state === 'SIGNING_UP')
-      return;
+      return
 
-    if (this.validateInput() === false) return;
+    if (this.validateInput() === false) return
 
-    const { dispatch } = this.props;
+    const { dispatch } = this.props
 
     dispatch(signupRequested({
       userName: this.state.userName,
       name: `${capitalize(this.state.firstName)} ${capitalize(this.state.lastName)}`,
       email: this.state.email,
-      phoneNumber: `${this.state.countryCode}${this.state.phoneNumber.replace(/\D/g, '')}`,
+      phoneNumber: `${this.state.countryCode}${normalizePhoneNumber(this.state.phoneNumber)}`,
       zipCode: this.state.zipCode,
       password: this.state.password
-    }));
+    }))
   }
 
   render() {
 
     return (
-      <div className="page-layout__viewport row py-5">
-        <div className="card px-5 py-5 col-12 col-md-6 push-md-3 col-lg-4 push-lg-4 align-middle">
-          <form className="form-horizontal" onSubmit={this.onSignUp.bind(this)}>
+      <div className="row py-3">
+        <div className="px-4 py-4 mx-auto">
+          <form className="form-horizontal" onSubmit={ this.onSignUp.bind(this) }>
             <div className="row mb-5">
               <div className="col text-center">
                 <img src={ imgLogo } alt="logo"/>
@@ -148,7 +146,7 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-phone"></i></div>
                           <input type="tel" name="countryCode" className="form-control col-2" id="country_code"
-                                placeholder="+1" required
+                                placeholder="+1" required readOnly
                                 value={ this.state.countryCode } />
                           <input type="tel" name="phoneNumber" className="form-control" id="phone_number"
                                 placeholder="Phone Number" required pattern="(\D)*((\d)(\D)*){10}"
@@ -209,7 +207,7 @@ class SignUp extends Component {
               </div>
               <div className="col">
                 <div className="form-check mt-3 mb-2 mr-sm-2 mb-sm-0 text-center">
-                  <Link to="/auth/login">Already have a account? &nbsp;Login</Link>
+                  <Link to="/auth/login">Already have a account? &nbspLogin</Link>
                 </div>
               </div>
             </div>
@@ -222,13 +220,13 @@ class SignUp extends Component {
 
 SignUp.propTypes = {
   dispatch: PropTypes.func.isRequired
-};
+}
 
 // Retrieve data from store as props
 function mapStateToProps(store) {
   return {
     auth: store.auth
-  };
+  }
 }
 
-export default connect(mapStateToProps)(SignUp);
+export default connect(mapStateToProps)(SignUp)

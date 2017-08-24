@@ -1,18 +1,19 @@
-import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 
 // Import Components
-import asyncComponent from '../../components/AsyncComponent';
+import asyncComponent from '../../components/AsyncComponent'
 
-import Authentication from '../Authentication';
+import Authentication from '../Authentication'
+import Account from '../Account'
 
-const AsyncPosts = asyncComponent(() => import('../Posts'));
-const AsyncContactUs = asyncComponent(() => import('../ContactUs'));
-const AsyncAboutUs = asyncComponent(() => import('../AboutUs'));
-const AsyncTerms = asyncComponent(() => import('../Terms'));
-const AsyncAdvertise = asyncComponent(() => import('../Advertise'));
-const AsyncPrivacy = asyncComponent(() => import('../Privacy'));
-const AsyncActivists = asyncComponent(() => import('../Activists'));
+const AsyncPosts = asyncComponent(() => import('../Posts'))
+const AsyncContactUs = asyncComponent(() => import('../ContactUs'))
+const AsyncAboutUs = asyncComponent(() => import('../AboutUs'))
+const AsyncTerms = asyncComponent(() => import('../Terms'))
+const AsyncAdvertise = asyncComponent(() => import('../Advertise'))
+const AsyncPrivacy = asyncComponent(() => import('../Privacy'))
+const AsyncActivists = asyncComponent(() => import('../Activists'))
 
 const routes = (
   <Switch>
@@ -23,8 +24,10 @@ const routes = (
     <Route path='/advertise' component={ AsyncAdvertise } />
     <Route path='/privacy' component={ AsyncPrivacy } />
     <Route path='/activists' component={ AsyncActivists } />
-    <Authentication />
-  </Switch>
-);
 
-export default routes;
+    <Route path='/auth' component={ Authentication } />
+    <Route path='/account' component={ Account } />
+  </Switch>
+)
+
+export default routes

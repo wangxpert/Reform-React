@@ -1,15 +1,16 @@
 /**
  * Root Reducer
  */
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 // Import Reducers
-import { routerReducer as router } from 'react-router-redux';
+import { routerReducer as router } from 'react-router-redux'
 
-import region from './region';
-import posts from './posts';
-import activists from './activists';
-import auth from './auth';
+import region from './region'
+import posts from './posts'
+import activists from './activists'
+import auth from './auth'
+import account from './account'
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -17,5 +18,6 @@ export default combineReducers({
   region,
   posts,
   activists,
-  auth
-});
+  auth,
+  account
+})

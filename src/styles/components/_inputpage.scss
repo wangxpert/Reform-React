@@ -1,0 +1,36 @@
+.inputpage {
+  border: $inputpage-borders;
+  background-color: $inputpage-bg;
+  padding: $inputpage-padding-y $inputpage-padding-x;
+  box-shadow: $inputpage-box-shadow;
+
+  .title {
+    color: $inputpage-title-color;
+    font-size: $inputpage-title-font-size;
+  }
+
+  .form {
+    margin: 0 15px
+
+    label {
+      text-align: right;
+      vertical-align: bottom;
+    }
+
+    input {
+      border-radius: 0;
+      border-width: 1.5px;
+      // font-size: 18px
+      // padding: 5px 16px
+      vertical-align: bottom;
+    }
+
+    .avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+  }
+}
