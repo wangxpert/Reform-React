@@ -18,8 +18,8 @@ export const getUserInformationFailed = (err) =>
 export const uploadAvatarRequested = (file) =>
   ({ type: Types.UPLOAD_AVATAR_REQUESTED, file: file })
 
-export const uploadAvatarSucceeded = () =>
-  ({ type: Types.UPLOAD_AVATAR_SUCCEEDED })
+export const uploadAvatarSucceeded = (result) =>
+  ({ type: Types.UPLOAD_AVATAR_SUCCEEDED, result })
 
 export const uploadAvatarFailed = (err) =>
   ({ type: Types.UPLOAD_AVATAR_FAILED, err })

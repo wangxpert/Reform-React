@@ -14,7 +14,6 @@
 
     label {
       text-align: right;
-      vertical-align: bottom;
     }
 
     input {
@@ -22,11 +21,12 @@
       border-width: 1.5px;
       // font-size: 18px
       // padding: 5px 16px
-      vertical-align: bottom;
     }
 
     .avatar {
       width: 160px;
+      height: 160px;
+      min-width: 160px;
       height: 160px;
       border-radius: 50%;
       object-fit: cover;

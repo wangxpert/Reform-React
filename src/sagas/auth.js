@@ -21,29 +21,14 @@ function* requestValidateUserInfo(action) {
 }
 
 // Saga: will be fired on SIGNUP_REQUESTED actions
-function handleValidationResult(result) {
-  const fieldName = {
-    phone: 'Phone Number',
-    email: 'Email',
-    alias: 'User Name',
-    zipcode: 'ZIP Code'
-  }
-  for (let field in result) {
-    if (result[field] === 'in_use') {
-      throw Error(`${fieldName[field]} is in use.`)
-    } else if (result[field] === 'invalid') {
-      throw Error(`${fieldName[field]} is not valid.`)
-    }
-  }
-  return true
-}
+
 
 function* requestSignup(action) {
    try {
      yield put(Actions.validateSignUpInfoRequested(action.info))
      const actResult = yield take([Types.VALIDATE_SIGNUP_INFO_SUCCEEDED, Types.VALIDATE_SIGNUP_INFO_FAILED])
      if (actResult.type === Types.VALIDATE_SIGNUP_INFO_SUCCEEDED) {
-       const validateResult = handleValidationResult(actResult.result)
+       const validateResult = Api.handleValidationResult(actResult.result)
        if (validateResult === true) {
          const userName = yield call(Api.requestSignup, action.info)
          yield put(Actions.signupSucceeded(userName))

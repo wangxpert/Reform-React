@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
 
 // Import Actions
-import { uploadAvatarRequested } from '../../../actions/account'
+import { uploadAvatarRequested, updateUserInformationRequested } from '../../../actions/account'
 
 // Import Assets
 
@@ -28,12 +28,20 @@ class Profile extends Component {
 
     const user = props.account.user
 
+    var name = user ? user.name : ' '
+    if (!name)
+      name=' '
+
+    name = name.split(' ')
+
     this.state = {
       userName: user ? user.preferred_username : '',
+      firstName: name[0],
+      lastName: name[1],
       email: user ? user.email : '',
       phoneNumber: user ? user.phone_number : '',
       zipCode: user ? user['custom:zipcode'] : '',
-      avatar: '',
+      avatar: user? `https://${ user.picture }`: '',
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
@@ -47,17 +55,30 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    // this.props.dispatch(getUserInformationRequested())
+
   }
 
   componentWillReceiveProps(nextProps) {
+
+    if (nextProps.account.state !== 'GET_USER_INFORMATION_SUCCEEDED')
+      return
+
     const { user } = nextProps.account
 
     if (user) {
+      var name = user.name
+      if (!name)
+        name=' '
+
+      name = name.split(' ')
+
       this.setState({
         userName: user.preferred_username,
+        firstName: name[0],
+        lastName: name[1],
         email: user.email,
         phoneNumber: user.phone_number,
+        avatar: `https://${ user.picture }`,
         zipCode: user['custom:zipcode'],
         password: '',
         confirmPassword: ''
@@ -77,7 +98,7 @@ class Profile extends Component {
 
   validateInput() {
     const state = this.state
-    if (state.password !== state.confirmPassword) {
+    if (state.newPassword !== state.confirmPassword) {
       NotificationManager.error('Password must match the confirm password.', "Password doesn't match...")
       return false
     }
@@ -87,9 +108,23 @@ class Profile extends Component {
   onSave(e) {
     e.preventDefault()
 
-    if (this.state.avatarFile) {
-      this.props.dispatch(uploadAvatarRequested(this.state.avatarFile))
-    }
+    if (this.props.account.state === 'UPDATING_USER_INFORMATION')
+      return
+
+    this.validateInput()
+
+    const { user } = this.props.account
+    const name = `${ this.state.firstName } ${ this.state.lastName }`
+
+    this.props.dispatch(updateUserInformationRequested({
+      userName: ( this.state.userName !== user.preferred_username ) ? this.state.userName : undefined,
+      name: ( name !== user.name ) ? name : undefined,
+      zipCode: (this.state.zipCode !== user['custom:zipcode']) ? this.state.zipCode : undefined,
+      oldPassword: this.state.currentPassword,
+      newPassword: this.state.newPassword,
+      oldAvatar: this.props.account.user.picture,
+      avatarFile: this.state.avatarFile
+    }))
   }
 
   onAvatar(e) {
@@ -119,69 +154,93 @@ class Profile extends Component {
 
     return (
       <div className="inputpage my-3">
-        <h1 className="title mt-3"> Manage Your account </h1>
+        <h1 className="title py-3 mt-3 mb-4 text-center"> Manage Your account </h1>
         <form className="form" onSubmit={ this.onSave }>
 
-          <div className="form-group row mb-3">
-            <label htmlFor="avatar" className="col-form-label"></label>
-            <div className="ml-auto col-sm-12 text-center">
+          <div className="form-group row mb-md-5">
+
+            <div className="col-12 col-md-auto ml-lg-5 mr-lg-2 text-center">
               <img src={ this.state.avatar ? this.state.avatar : '/img/user.png' } alt="avatar" className="img-thumbnail avatar" id="avatar" onClick={ this.onAvatar }/>
               <input ref={input => this.filePicker = input} type="file" name="pic" accept="image/*" hidden onChange={ this.onFilePick } />
+            </div>
+
+            <div className="col-12 col-md mt-sm-3 mt-md-5">
+              <div className="form-group row">
+                <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">First Name:</label>
+                <div className="ml-auto col-md">
+                  <input className="form-control col" type="text" name="firstName" id="first_name" autoFocus value={ this.state.firstName } onChange={ this.onChange } />
+                </div>
+              </div>
+              <div className="form-group row">
+                <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">Last Name:</label>
+                <div className="ml-auto col-md">
+                  <input className="form-control col" type="text" name="lastName" id="last_name" autoFocus value={ this.state.lastName } onChange={ this.onChange } />
+                </div>
+              </div>
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="email" className="col-auto col-sm-3 col-form-label">Email:</label>
-            <div className="ml-auto col-sm-9">
+            <label htmlFor="Username" className="col-auto col-md-3 col-form-label">User Name:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="text" name="userName" id="username" autoFocus value={ this.state.userName } onChange={ this.onChange } required />
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="email" className="col-auto col-md-3 col-form-label">Email:</label>
+            <div className="ml-auto col-md-9">
               <input className="form-control" type="email" name="email" id="email" value={ this.state.email } readOnly />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="Username" className="col-auto col-sm-3 col-form-label">User Name:</label>
-            <div className="ml-auto col-sm-9">
-              <input className="form-control" type="text" name="userName" id="username" autoFocus value={ this.state.userName } onChange={ this.onChange } />
+            <label htmlFor="phone_number" className="col-auto col-md-3 col-form-label">Phone Number:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="text" name="phoneNumber" id="phone_number" value={ this.state.phoneNumber } onChange={ this.onChange } readOnly />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="phone_number" className="col-auto col-sm-3 col-form-label">Phone Number:</label>
-            <div className="ml-auto col-sm-9">
-              <input className="form-control" type="text" name="phoneNumber" id="phone_number" value={ this.state.phoneNumber } onChange={ this.onChange } />
+            <label htmlFor="zip_code" className="col-auto col-md-3 col-form-label">ZIP Code:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="text" name="zipCode" id="zip_code" value={ this.state.zipCode } onChange={ this.onChange } required
+              required pattern="(\d){5}" title="ZIP code must have 5 digits." />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="zip_code" className="col-auto col-sm-3 col-form-label">ZIP Code:</label>
-            <div className="ml-auto col-sm-9">
-              <input className="form-control" type="text" name="zipCode" id="zip_code" value={ this.state.zipCode } onChange={ this.onChange } />
+            <label htmlFor="current_password" className="col-auto col-md-3 col-form-label">Old Password:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="password" name="currentPassword" id="current_password" value={ this.state.currentPassword } onChange={ this.onChange }
+               pattern="^(?=.*[A-Z])^(?=.*[\d])^(?=.*[a-z])(.){8,}" title="Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number."/>
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="current_password" className="col-auto col-sm-3 col-form-label">Current Password:</label>
-            <div className="ml-auto col-sm-9">
-              <input className="form-control" type="password" name="currentPassword" id="current_password" value={ this.state.currentPassword } onChange={ this.onChange } />
+            <label htmlFor="new_password" className="col-auto col-md-3 col-form-label">New Password:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="password" name="newPassword" id="new_password" value={ this.state.newPassword } onChange={ this.onChange }
+              pattern="^(?=.*[A-Z])^(?=.*[\d])^(?=.*[a-z])(.){8,}" title="Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number." />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="new_password" className="col-auto col-sm-3 col-form-label">New Password:</label>
-            <div className="ml-auto col-sm-9">
-              <input className="form-control" type="password" name="newPassword" id="new_password" value={ this.state.newPassword } onChange={ this.onChange } />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="confirm_password" className="col-auto col-sm-3 col-form-label">Confirm Password:</label>
-            <div className="ml-auto col-sm-9">
-              <input className="form-control" type="password" name="confirmPassword" id="confirm_password" value={ this.state.confirmPassword } onChange={ this.onChange } />
+            <label htmlFor="confirm_password" className="col-auto col-md-3 col-form-label">Re-Password:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="password" name="confirmPassword" id="confirm_password" value={ this.state.confirmPassword } onChange={ this.onChange }
+               pattern="^(?=.*[A-Z])^(?=.*[\d])^(?=.*[a-z])(.){8,}" title="Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number." />
             </div>
           </div>
 
           <div className="row py-3">
             <div className="ml-auto col-12 text-right">
-              <Button title="Save Change" type="submit" />
+              <Button type="submit">
+                { this.props.account.state === 'UPDATING_USER_INFORMATION' ?
+                  (<ThreeBounce size={12} color='white' />) :
+                  (<div><i className="fa fa-save"></i> Save Change</div>)
+                }
+              </Button>
             </div>
           </div>
         </form>

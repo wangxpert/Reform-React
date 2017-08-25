@@ -30,15 +30,15 @@ export default function MobileApps(props) {
         <p className="post-text">{ post.text }</p>
         <div className="p-3 row">
           <button className="btn btn-secondary post-button col" onClick={ e => props.onUpvote(post) }><i className="fa fa-thumbs-up" aria-hidden="true"></i>
-            &nbsp&nbsp{ post.upvotes }
+            &nbsp;&nbsp;{ post.upvotes }
             { props.state === 'UPVOTING_POST'
               ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
               : '  Support'
             }
           </button>
-          <button className="btn btn-secondary post-button col" onClick={ warnAlert }><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp&nbsp{ post.downvotes } { "Don't Support" }</button>
-          <button className="btn btn-secondary post-button col" onClick={ warnAlert }><i className="fa fa-comments" aria-hidden="true"></i>&nbsp&nbsp{ post.comments } Comments</button>
-          <button className="btn btn-secondary post-button col" onClick={ warnAlert }><i className="fa fa-user-times" aria-hidden="true"></i>&nbsp&nbspReport</button>
+          <button className="btn btn-secondary post-button col" onClick={ warnAlert }><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;&nbsp;{ post.downvotes } { "Don't Support" }</button>
+          <button className="btn btn-secondary post-button col" onClick={ warnAlert }><i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;{ post.comments } Comments</button>
+          <button className="btn btn-secondary post-button col" onClick={ warnAlert }><i className="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;Report</button>
         </div>
       </div>
 
@@ -62,14 +62,14 @@ export default function MobileApps(props) {
   <hr width="100%" />
   <div className="text-center mx-auto">
     /<button className="btn btn-secondary mr-3" onClick={ e => props.onUpvote(post) }><i className="fa fa-thumbs-up" aria-hidden="true"></i>
-      &nbsp&nbsp{ post.upvotes }
+      &nbsp;&nbsp;{ post.upvotes }
       { props.state === 'UPVOTING_POST'
         ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
         : '  Support'
       }
     </button>
-    <button className="btn btn-secondary mr-3" onClick={ warnAlert }><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp&nbsp{ post.downvotes } { "Don't Support" }</button>
-    <button className="btn btn-secondary" onClick={ warnAlert }><i className="fa fa-comments" aria-hidden="true"></i>&nbsp&nbsp{ post.comments } Comments</button>
+    <button className="btn btn-secondary mr-3" onClick={ warnAlert }><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;&nbsp;{ post.downvotes } { "Don't Support" }</button>
+    <button className="btn btn-secondary" onClick={ warnAlert }><i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;{ post.comments } Comments</button>
   </div>
 </li>
 */

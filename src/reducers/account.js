@@ -30,12 +30,26 @@ export const uploadAvatarRequested = (state = initialState, action) => {
 }
 
 export const uploadAvatarSucceeded = (state = initialState, action) => {
-  return { ...state, state: 'UPLOAD_AVATAR_SUCCEEDED' }
+  return { ...state, state: 'UPLOAD_AVATAR_SUCCEEDED', result: action.result }
 }
 
 export const uploadAvatarFailed = (state = initialState, action) => {
   return { ...state, state: 'UPLOAD_AVATAR_FAILED', err: action.err }
 }
+
+// Update User Information
+export const updateUserInformationRequested = (state = initialState, action) => {
+  return { ...state, state: 'UPDATING_USER_INFORMATION' }
+}
+
+export const updateUserInformationSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_USER_INFORMATION_SUCCEEDED', result: action.result }
+}
+
+export const updateUserInformationFailed = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_USER_INFORMATION_FAILED', err: action.err }
+}
+
 
 // map action types to reducer functions
 export const handlers = {
@@ -46,7 +60,11 @@ export const handlers = {
 
   [Types.UPLOAD_AVATAR_REQUESTED]: uploadAvatarRequested,
   [Types.UPLOAD_AVATAR_SUCCEEDED]: uploadAvatarSucceeded,
-  [Types.UPLOAD_AVATAR_FAILED]: uploadAvatarFailed
+  [Types.UPLOAD_AVATAR_FAILED]: uploadAvatarFailed,
+
+  [Types.UPDATE_USER_INFORMATION_REQUESTED]: updateUserInformationRequested,
+  [Types.UPDATE_USER_INFORMATION_SUCCEEDED]: updateUserInformationSucceeded,
+  [Types.UPDATE_USER_INFORMATION_FAILED]: updateUserInformationFailed
 }
 
 /* Selectors */

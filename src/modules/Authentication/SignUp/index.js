@@ -207,7 +207,7 @@ class SignUp extends Component {
               </div>
               <div className="col">
                 <div className="form-check mt-3 mb-2 mr-sm-2 mb-sm-0 text-center">
-                  <Link to="/auth/login">Already have a account? &nbspLogin</Link>
+                  <Link to="/auth/login">Already have a account? &nbsp;Login</Link>
                 </div>
               </div>
             </div>

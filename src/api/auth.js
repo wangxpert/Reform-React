@@ -20,8 +20,31 @@ function newCognitoUser(userName) {
   return new CognitoUser(userData)
 }
 
+export function handleValidationResult(result) {
+  const fieldName = {
+    phone: 'Phone Number',
+    email: 'Email',
+    alias: 'User Name',
+    zipcode: 'ZIP Code'
+  }
+  for (let field in result) {
+    if (result[field] === 'in_use') {
+      throw Error(`${fieldName[field]} is in use.`)
+    } else if (result[field] === 'invalid') {
+      throw Error(`${fieldName[field]} is not valid.`)
+    }
+  }
+  return true
+}
+
 export function validateSignUpInfo(email, alias, phone, zipCode) {
-  return callApi(`accounts/available?email=${ email }&alias=${ alias }&phone=${ phone }&zipcode=${ zipCode } `)
+  var url = 'accounts/available?'
+  if (email) url += `email=${ email }`
+  if (alias) url += `alias=${ alias }`
+  if (phone) url += `phone=${ phone }`
+  if (zipCode) url+= `zipcode=${ zipCode }`
+
+  return callApi(url)
 }
 
 export function upvotePost(state, city, department, post, idToken) {

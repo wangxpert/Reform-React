@@ -42,4 +42,4 @@ $sidebar-nav-link-active-bg:        lighten($sidebar-bg, 5%);
 $sidebar-nav-link-active-icon-color: $brand-primary;
 
 $inputpage-bg: $card-bg;
-$inputpage-title-color: $text-primary;
+$inputpage-title-color: lighten($text-primary, 10%);

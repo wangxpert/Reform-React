@@ -76,7 +76,7 @@ class Header extends Component {
           <li className="nav-item">
             <Dropdown isOpen={ this.state.dropdownOpen } toggle={ this.toggle }>
               <a onClick={ this.toggle } className="nav-link dropdown-toggle nav-link" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded={ this.state.dropdownOpen }>
-                <img src={ '/img/user.png' } className="img-avatar" alt="User"/>
+                <img src={ (user && user.picture ) ? `https://${ user.picture }` : '/img/user.png' } className="img-avatar" alt="User"/>
                 <span className="hidden-md-down">{ user && user.preferred_username }</span>
               </a>
               <DropdownMenu className="dropdown-menu-right">
