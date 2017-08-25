@@ -47,7 +47,7 @@ function* requestConfirmUser(action) {
      const result = yield call(Api.requestConfirmUser, action.userName, action.verificationCode)
      yield put(Actions.confirmUserSucceeded(result))
      NotificationManager.success('You account is confirmed. Enjoy.', 'Confirm User')
-     yield put('/auth/login')
+     yield put(push('/auth/login'))
 
    } catch (e) {
      NotificationManager.error(e.message, 'Error...')
