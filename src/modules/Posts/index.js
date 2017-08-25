@@ -83,7 +83,7 @@ class Posts extends Component {
 
     if (auth.state === 'LOGGED') {
       if (posts.state !== 'UPVOTING_POST')
-      dispatch(upvotePostRequested(post.state, post.city, post.department, post.post, auth.user.idToken.jwtToken))
+      dispatch(upvotePostRequested(post.state, post.city, post.department, post.post, auth.session.idToken.jwtToken))
     } else {
       NotificationManager.warning('You have to login to upvote.', 'Not permitted')
     }
