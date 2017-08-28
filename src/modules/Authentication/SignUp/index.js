@@ -83,7 +83,7 @@ class SignUp extends Component {
   render() {
 
     return (
-      <div className="row py-3">
+      <div className="row py-3 py-md-5 my-md-5">
         <div className="px-4 py-4 mx-auto">
           <form className="form-horizontal" onSubmit={ this.onSignUp.bind(this) }>
             <div className="row mb-5">

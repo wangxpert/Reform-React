@@ -6,6 +6,7 @@
   padding: $sidebar-padding;
   overflow-y: auto;
   overflow-x: hidden;
+  z-index: $zindex-sidebar;
   @include borders($sidebar-borders);
 
   .sidebar-nav {

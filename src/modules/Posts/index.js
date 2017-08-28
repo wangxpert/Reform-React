@@ -20,8 +20,6 @@ import {
 import './styles/styles.css'
 
 // Import components
-import AlertBox from './components/AlertBox'
-import MobileApps from './components/MobileApps'
 import CategorySelector from './components/CategorySelector'
 import DepartmentBanner from './components/DepartmentBanner'
 import PostBlock from './components/PostBlock'
@@ -38,7 +36,7 @@ class Posts extends Component {
     super(props)
 
     this.state = {
-      showAlert: true
+
     }
   }
 
@@ -100,40 +98,31 @@ class Posts extends Component {
     }
 
     return (
-      <div className='row page-layout__viewport'>
+      <div>
+        <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
+          selectedState={ region.selectedState } selectedCity={ region.selectedCity } selectedDepartment = { region.selectedDepartment }
+          selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
 
+        <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/>
 
-        <div className="col-8">
-          <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
-            selectedState={ region.selectedState } selectedCity={ region.selectedCity } selectedDepartment = { region.selectedDepartment }
-            selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
-
-          <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/>
-
-          {/* Department Posts */}
-          <ul className="col px-0">
-            { (posts.posts && posts.posts.length) ?
-              (
-                <InfiniteScroll
-                    pageStart={0}
-                    loadMore={ this.loadPosts.bind(this) }
-                    hasMore={ posts.lastKey !== undefined }
-                    loader={ <div className="loader">Loading ...</div> }
-                >
-                  { renderPosts }
-                </InfiniteScroll>
-              ) : (
-                <h6 className='ml-2' > Sorry, there are no posts yet for this category. </h6>
-              )
-            }
-          </ul>
-        </div>
-
-        <div className="col-4">
-          { this.state.showAlert && <AlertBox closeAlert={e => (this.setState({ showAlert: false }))} /> }
-          <MobileApps />
-        </div>
-
+        {/* Department Posts */}
+        <ul className="col px-0">
+          { (posts.posts && posts.posts.length) ?
+            (
+              <InfiniteScroll
+                  pageStart={ 0 }
+                  loadMore={ this.loadPosts.bind(this) }
+                  hasMore={ posts.lastKey !== undefined }
+                  loader={ <div className="loader">Loading ...</div> }
+                  useWindow={ true }
+              >
+                { renderPosts }
+              </InfiniteScroll>
+            ) : (
+              <h6 className='ml-2' > Sorry, there are no posts yet for this category. </h6>
+            )
+          }
+        </ul>
       </div>
     )
   }

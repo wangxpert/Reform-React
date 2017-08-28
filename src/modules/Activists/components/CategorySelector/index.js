@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 // Import Assets
-import HomepageBannerImg from '../../../../assets/homepage-banner.jpg'
 
 export default class CategorySelector extends Component {
 
@@ -52,7 +51,6 @@ export default class CategorySelector extends Component {
     return (
       <ul className="list-group media-list media-list-stream mb-4">
         <li className="media">
-          <img className="postsview_img" src={HomepageBannerImg} alt="" />
         </li>
         <li className="media list-group-item p-4">
           <div className="container">

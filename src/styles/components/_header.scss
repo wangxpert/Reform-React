@@ -1,5 +1,6 @@
 .app-header {
   background-color: $header-bg;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, .3);
   color: $header-text-color;
   flex-direction: row;
   height: $header-height;

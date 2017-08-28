@@ -28,8 +28,8 @@
     flex-direction: row;
     overflow-x: hidden;
 
-    .main {
-      font-size: $main-font-size;
+    .main-content {
+      font-size: $main-content-font-size;
       flex: 1;
     }
 
@@ -74,14 +74,22 @@
     }
   }
 
-  .main, .app-footer {
+  .main-content, .app-footer {
     margin-left: $sidebar-width;
+  }
+
+  .main-content .tabbar {
+    padding-left: $sidebar-width;
   }
 
   &.sidebar-hidden {
 
-    .main, .app-footer {
+    .main-content, .app-footer {
       margin-left: 0;
+    }
+
+    .main-content .tabbar {
+      padding-left: 0;
     }
   }
 }
@@ -100,13 +108,13 @@
 
   &.sidebar-fixed {
 
-    .main, .app-footer {
+    .main-content, .app-footer {
       margin-left: $sidebar-compact-width;
     }
 
     &.sidebar-hidden {
 
-      .main, .app-footer {
+      .main-content, .app-footer {
         margin-left: 0;
       }
     }
@@ -119,9 +127,10 @@
 .app-header,
 .app-footer,
 .sidebar,
-.main {
+.tabbar,
+.main-content {
   transition-duration: $layout-transition-speed, $layout-transition-speed;
-  transition-property: margin-left, margin-right;
+  transition-property: margin-left, margin-right, padding-left, padding-right;
 }
 
 //
@@ -179,7 +188,7 @@
     }
   }
 
-  .main, .app-footer {
+  .main-content, .app-footer {
     margin-left: 0 !important;
   }
 
@@ -194,7 +203,7 @@
       }
     }
 
-    .main {
+    .main-content-content {
       margin-right: - $mobile-sidebar-width !important;
       margin-left: $mobile-sidebar-width !important;
     }

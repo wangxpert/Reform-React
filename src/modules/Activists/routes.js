@@ -9,7 +9,7 @@ const AsyncActivist = asyncComponent(() => import('./components/Activist'))
 
 const routes = (
   <Switch>
-    <Route exact path='/activists/' component={ AsyncActivistList } />
+    <Route exact path='/activists' component={ AsyncActivistList } />
     <Route path='/activists/:activist' component={ AsyncActivist } />
   </Switch>
 )

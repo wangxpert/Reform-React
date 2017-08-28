@@ -44,8 +44,8 @@ class App extends Component {
         <Header />
         <div className="app-body">
           <SideBar />
-          <main className="main">
-            <div className="container p-md-5">
+          <main className="main-content">
+            <div className="container">
               { routes }
             </div>
           </main>

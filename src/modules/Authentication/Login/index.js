@@ -55,7 +55,7 @@ class Login extends Component {
   render() {
 
     return (
-      <div className="row py-4">
+      <div className="row py-4 py-md-5 my-md-5">
         <div className="px-4 py-4 mx-auto">
           <form className="form-horizontal" onSubmit={ this.onLogin.bind(this) }>
             <div className="row mb-5">

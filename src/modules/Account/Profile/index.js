@@ -10,16 +10,15 @@ import {
   ThreeBounce
 } from 'better-react-spinkit'
 import { NotificationManager } from 'react-notifications'
-import { Link } from 'react-router-dom'
 import Button from '../../../components/Button'
 
 // Import Actions
-import { uploadAvatarRequested, updateUserInformationRequested } from '../../../actions/account'
+import { updateUserInformationRequested } from '../../../actions/account'
 
 // Import Assets
 
 // Import Utils
-import { capitalize, normalizePhoneNumber } from '../../../utils/input'
+import { capitalize } from '../../../utils/input'
 
 class Profile extends Component {
 
@@ -114,7 +113,7 @@ class Profile extends Component {
     this.validateInput()
 
     const { user } = this.props.account
-    const name = `${ this.state.firstName } ${ this.state.lastName }`
+    const name = `${ capitalize(this.state.firstName) } ${ capitalize(this.state.lastName) }`
 
     this.props.dispatch(updateUserInformationRequested({
       userName: ( this.state.userName !== user.preferred_username ) ? this.state.userName : undefined,
@@ -153,7 +152,7 @@ class Profile extends Component {
   render() {
 
     return (
-      <div className="inputpage my-3">
+      <div className="inputpage my-3 my-md-5">
         <h1 className="title py-3 mt-3 mb-4 text-center"> Manage Your account </h1>
         <form className="form" onSubmit={ this.onSave }>
 
@@ -168,13 +167,13 @@ class Profile extends Component {
               <div className="form-group row">
                 <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">First Name:</label>
                 <div className="ml-auto col-md">
-                  <input className="form-control col" type="text" name="firstName" id="first_name" autoFocus value={ this.state.firstName } onChange={ this.onChange } />
+                  <input className="form-control col" type="text" name="firstName" id="first_name" autoFocus style={{ textTransform: 'capitalize' }} value={ this.state.firstName } onChange={ this.onChange } />
                 </div>
               </div>
               <div className="form-group row">
                 <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">Last Name:</label>
                 <div className="ml-auto col-md">
-                  <input className="form-control col" type="text" name="lastName" id="last_name" autoFocus value={ this.state.lastName } onChange={ this.onChange } />
+                  <input className="form-control col" type="text" name="lastName" id="last_name" autoFocus style={{ textTransform: 'capitalize' }} value={ this.state.lastName } onChange={ this.onChange } />
                 </div>
               </div>
             </div>
@@ -205,7 +204,7 @@ class Profile extends Component {
             <label htmlFor="zip_code" className="col-auto col-md-3 col-form-label">ZIP Code:</label>
             <div className="ml-auto col-md-9">
               <input className="form-control" type="text" name="zipCode" id="zip_code" value={ this.state.zipCode } onChange={ this.onChange } required
-              required pattern="(\d){5}" title="ZIP code must have 5 digits." />
+              pattern="(\d){5}" title="ZIP code must have 5 digits." />
             </div>
           </div>
 
