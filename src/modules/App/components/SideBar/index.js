@@ -47,7 +47,7 @@ class SideBar extends Component {
                     <Link to={'/activists/manage'} className="nav-link"><i className=""></i> Manage Activism Page</Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={'/activists/manage'} className="nav-link"><i className=""></i> Create Activism Page</Link>
+                    <Link to={'/activists/create'} className="nav-link"><i className=""></i> Create Activism Page</Link>
                   </li>
                 </ul>
               )}

@@ -1,13 +1,13 @@
-import callApi from '../utils/apiCaller'
+import callApi, { API_URL } from '../utils/apiCaller'
 
 export function fetchStates() {
-  return callApi('states')
+  return callApi(API_URL, 'states')
 }
 
 export function fetchCities(state) {
-  return callApi(`states/${state}/cities`)
+  return callApi(API_URL, `states/${state}/cities`)
 }
 
 export function fetchDepartments(state, city) {
-  return callApi(`states/${state}/cities/${city}/departments`)
+  return callApi(API_URL, `states/${state}/cities/${city}/departments`)
 }

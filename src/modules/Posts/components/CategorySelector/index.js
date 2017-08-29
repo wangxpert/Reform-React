@@ -57,45 +57,42 @@ export default class CategorySelector extends Component {
       departOptions = this.props.departments.Items.map(this.makeDepartmentOption)
 
     return (
-      <ul className="list-group media-list media-list-stream mb-4">
-        <li className="media">
-
-        </li>
-        <li className="media list-group-item p-4">
-          <div className="container">
-            {/* State Picker */}
-            <div className="form-group row">
-              <label htmlFor="location-input" className="col-3 col-form-label">State</label>
-              <div className="col-9">
-                <select name="state" className="form-control postsview_select" value={ this.props.selectedState } onChange={ e => this.props.selectState(e.target.value) }>
-                  { stateOptions }
-                </select>
-                {/* <p>Selected state is {this.props.selectedState}</p> */}
-              </div>
-            </div>
-            {/* City Picker */}
-            <div className="form-group row">
-              <label htmlFor="location-input" className="col-3 col-form-label">City</label>
-              <div className="col-9" id="locations">
-                <select className="form-control" id="the_locations" value={ this.props.selectedCity } onChange={ e => this.props.selectCity( e.target.value ) }>
-                  { cityOptions }
-                </select>
-                {/* <p>Selected city is {this.props.selectedCity}</p> */}
-              </div>
-            </div>
-            {/* Department Picker */}
-            <div className="form-group row" id="categoryDropdownDiv">
-              <label htmlFor="example-text-input" className="col-3 col-form-label">Category</label>
-              <div className="col-9" id="departments">
-                <select className="form-control" id="the_departments" value={ this.props.selectedDepartment } onChange={ e => this.props.selectDepartment(e.target.value) }>
-                  { departOptions }
-                </select>
-                {/* <p>Selected department is {this.props.selectedDepartment}</p> */}
-              </div>
+      <div className="pt-5 pb-1 px-3">
+        <div className="container">
+          {/* State Picker */}
+          <div className="form-group row">
+            <label htmlFor="location-input" className="col-3 col-form-label">State</label>
+            <div className="col-9">
+              <select name="state" className="form-control postsview_select" value={ this.props.selectedState } onChange={ e => this.props.selectState(e.target.value) }>
+                { stateOptions }
+              </select>
+              {/* <p>Selected state is {this.props.selectedState}</p> */}
             </div>
           </div>
-        </li>
-     </ul>
+          {/* City Picker */}
+          <div className="form-group row">
+            <label htmlFor="location-input" className="col-3 col-form-label">City</label>
+            <div className="col-9" id="locations">
+              <select className="form-control" id="the_locations" value={ this.props.selectedCity } onChange={ e => this.props.selectCity( e.target.value ) }>
+                { cityOptions }
+              </select>
+              {/* <p>Selected city is {this.props.selectedCity}</p> */}
+            </div>
+          </div>
+          {/* Department Picker */}
+          <div className="form-group row" id="categoryDropdownDiv">
+            <label htmlFor="example-text-input" className="col-3 col-form-label">Category</label>
+            <div className="col-9" id="departments">
+              <select className="form-control" id="the_departments" value={ this.props.selectedDepartment } onChange={ e => this.props.selectDepartment(e.target.value) }>
+                { departOptions }
+              </select>
+              {/* <p>Selected department is {this.props.selectedDepartment}</p> */}
+            </div>
+          </div>
+        </div>
+        <br/>
+        <hr />
+     </div>
     )
   }
 }

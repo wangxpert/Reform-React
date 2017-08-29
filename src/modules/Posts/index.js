@@ -21,7 +21,7 @@ import './styles/styles.css'
 
 // Import components
 import CategorySelector from './components/CategorySelector'
-import DepartmentBanner from './components/DepartmentBanner'
+// import DepartmentBanner from './components/DepartmentBanner'
 import PostBlock from './components/PostBlock'
 
 import InfiniteScroll from 'react-infinite-scroller'
@@ -98,15 +98,15 @@ class Posts extends Component {
     }
 
     return (
-      <div>
+      <div className="posts">
         <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
           selectedState={ region.selectedState } selectedCity={ region.selectedCity } selectedDepartment = { region.selectedDepartment }
           selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
 
-        <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/>
+        { /* <DepartmentBanner banner = { this.state.department ? this.state.department.banner : null }/> */ }
 
         {/* Department Posts */}
-        <ul className="col px-0">
+        <ul className="col px-auto">
           { (posts.posts && posts.posts.length) ?
             (
               <InfiniteScroll

@@ -16,9 +16,10 @@
       text-align: right;
     }
 
-    input {
+    input, select, textarea {
       border-radius: 0;
       border-width: 1.5px;
+      display: inline-block;
       // font-size: 18px
       // padding: 5px 16px
     }

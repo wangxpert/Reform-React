@@ -48,8 +48,9 @@ class Profile extends Component {
 
     this.onChange = this.onChange.bind(this)
     this.onAvatar = this.onAvatar.bind(this)
-    this.onFilePick = this.onFilePick.bind(this)
     this.onSave = this.onSave.bind(this)
+    this.onVideo = this.onVideo.bind(this)
+    this.onPickVideo = this.onPickVideo.bind(this)
   }
 
   componentDidMount() {
@@ -129,7 +130,7 @@ class Profile extends Component {
     this.filePicker.click()
   }
 
-  onFilePick(e) {
+  onVideo(e) {
     e.preventDefault()
 
     const file = e.target.files[0]
@@ -148,86 +149,70 @@ class Profile extends Component {
     }
   }
 
+  onPickVideo(e) {
+    this.videoPicker.click()
+  }
+
   render() {
 
     return (
       <div className="inputpage my-3 my-md-5">
-        <h1 className="title py-3 mt-3 mb-4 text-center"> Manage Your account </h1>
+        <h1 className="title py-3 mt-3 mb-4 text-center"> Create an Activism Page </h1>
         <form className="form" onSubmit={ this.onSave }>
 
-          <div className="form-group row mb-md-5">
-
-            <div className="col-12 col-md-auto ml-lg-5 mr-lg-2 text-center">
-              <img src={ this.state.avatar ? this.state.avatar : '/img/user.png' } alt="avatar" className="img-thumbnail avatar" id="avatar" onClick={ this.onAvatar }/>
-              <input ref={input => this.filePicker = input} type="file" name="pic" accept="image/*" hidden onChange={ this.onFilePick } />
+          <div className="form-group row">
+            <label htmlFor="page_tier" className="col-auto col-md-3 col-form-label">Page Tier:</label>
+            <div className="ml-auto col-md-9">
+              <select className="form-control" name="pageTier" id="username" autoFocus value={ this.state.userName } onChange={ this.onChange } required >
+              </select>
             </div>
+          </div>
 
-            <div className="col-12 col-md mt-sm-3 mt-md-5">
-              <div className="form-group row">
-                <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">First Name:</label>
-                <div className="ml-auto col-md">
-                  <input className="form-control col" type="text" name="firstName" id="first_name" autoFocus style={{ textTransform: 'capitalize' }} value={ this.state.firstName } onChange={ this.onChange } />
+          <div className="form-group row">
+            <label htmlFor="subscription_plan" className="col-auto col-md-3 col-form-label">Subscription Plan:</label>
+            <div className="ml-auto col-md-9">
+              <select className="form-control" name="email" id="email" value={ this.state.email } >
+              </select>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="location" className="col-auto col-md-3 col-form-label">Location:</label>
+            <div className="ml-auto col-md-9">
+              <div className="row">
+                <div className="col-6 pr-0" id="location">
+                  <select className="form-control" name="state" id="state" value={ this.state.state } >
+                  </select>
+                </div>
+                <div className="col-6 pl-0" id="location">
+                  <select className="form-control" name="state" id="city" value={ this.state.city } >
+                  </select>
                 </div>
               </div>
-              <div className="form-group row">
-                <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">Last Name:</label>
-                <div className="ml-auto col-md">
-                  <input className="form-control col" type="text" name="lastName" id="last_name" autoFocus style={{ textTransform: 'capitalize' }} value={ this.state.lastName } onChange={ this.onChange } />
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="description" className="col-auto col-md-3 col-form-label">Description:</label>
+            <div className="ml-auto col-md-9">
+              <textarea className="form-control" style={{ height: '160px' }} name="description" id="description" value={ this.state.description } onChange={ this.onChange } />
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="upload_video" className="col-auto col-md-3 col-form-label">Upload Video:</label>
+            <div className="ml-auto col-md-9">
+              <div className="row">
+                <div className="col">
+                  <input className="form-control" type="text" name="video" id="video" value={ this.state.video } onChange={ this.onChange } placeholder={ '60 seconds or less' }/>
                 </div>
+                <div className="col-auto pr-3" >
+                  <Button type="button" onClick={ this.onPickVideo }>
+                    ...
+                  </Button>
+                </div>
+                <input ref={input => this.videoPicker = input} type="file" name="pic" accept="video/*" hidden onChange={ this.onVideoPick } />
               </div>
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="username" className="col-auto col-md-3 col-form-label">User Name:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="text" name="userName" id="username" autoFocus value={ this.state.userName } onChange={ this.onChange } required />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="email" className="col-auto col-md-3 col-form-label">Email:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="email" name="email" id="email" value={ this.state.email } readOnly />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="phone_number" className="col-auto col-md-3 col-form-label">Phone Number:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="text" name="phoneNumber" id="phone_number" value={ this.state.phoneNumber } onChange={ this.onChange } readOnly />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="zip_code" className="col-auto col-md-3 col-form-label">ZIP Code:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="text" name="zipCode" id="zip_code" value={ this.state.zipCode } onChange={ this.onChange } required
-              pattern="(\d){5}" title="ZIP code must have 5 digits." />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="current_password" className="col-auto col-md-3 col-form-label">Old Password:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="password" name="currentPassword" id="current_password" value={ this.state.currentPassword } onChange={ this.onChange }
-               pattern="^(?=.*[A-Z])^(?=.*[\d])^(?=.*[a-z])(.){8,}" title="Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number."/>
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="new_password" className="col-auto col-md-3 col-form-label">New Password:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="password" name="newPassword" id="new_password" value={ this.state.newPassword } onChange={ this.onChange }
-              pattern="^(?=.*[A-Z])^(?=.*[\d])^(?=.*[a-z])(.){8,}" title="Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number." />
-            </div>
-          </div>
-
-          <div className="form-group row">
-            <label htmlFor="confirm_password" className="col-auto col-md-3 col-form-label">Re-Password:</label>
-            <div className="ml-auto col-md-9">
-              <input className="form-control" type="password" name="confirmPassword" id="confirm_password" value={ this.state.confirmPassword } onChange={ this.onChange }
-               pattern="^(?=.*[A-Z])^(?=.*[\d])^(?=.*[a-z])(.){8,}" title="Minimum 8 characters, at least one uppercase letter, one lowercase letter, and one number." />
             </div>
           </div>
 

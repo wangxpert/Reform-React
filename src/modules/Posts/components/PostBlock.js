@@ -15,7 +15,7 @@ export default function MobileApps(props) {
 
   return (
 
-    <div className="post my-5 pt-3">
+    <div className="post my-5 pt-3 mx-auto text-center">
       <div className="media p-3">
         <div className="media-left mx-3">
           <img src={ `https://${ post.picture }` } className="media-object post-avatar" alt="User Avatar" />

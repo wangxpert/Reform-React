@@ -6,7 +6,7 @@ export default function ActivistBlock(props) {
 
   return (
     <div key={ activist.activismid }>
-      <Link to={ `/activists/${ activist.activismid }` } className='alert-link'>
+      <Link to={ `/activists/pages/${ activist.activismid }` } className='alert-link'>
         <li className='media list-group-item p-3 mb-2'>
           { activist.images && activist.images[0] &&
             <img className='media-object rounded-circle mr-3 activismview_avatar' src={ `https://${activist.images[0]}` } alt=""/>
