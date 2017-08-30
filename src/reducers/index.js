@@ -11,6 +11,7 @@ import posts from './posts'
 import activists from './activists'
 import auth from './auth'
 import account from './account'
+import manageActivism from './manage_activism'
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -19,5 +20,6 @@ export default combineReducers({
   posts,
   activists,
   auth,
-  account
+  account,
+  manageActivism
 })

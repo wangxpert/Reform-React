@@ -9,6 +9,8 @@ import Account from '../Account'
 
 import Main from '../Main'
 
+import routesAcitivism from '../Activists/manage_routes'
+
 const AsyncContactUs = asyncComponent(() => import('../ContactUs'))
 const AsyncAboutUs = asyncComponent(() => import('../AboutUs'))
 const AsyncTerms = asyncComponent(() => import('../Terms'))
@@ -24,7 +26,11 @@ const routes = (
     <Route path='/privacy' component={ AsyncPrivacy } />
     <Route path='/auth' component={ Authentication } />
     <Route path='/account' component={ Account } />
-    <Main />
+
+    { routesAcitivism }
+
+    <Route path='/' component={ Main } />
+
   </Switch>
 )
 

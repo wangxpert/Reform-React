@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // Import styles
@@ -9,81 +8,96 @@ import {
   ThreeBounce
 } from 'better-react-spinkit'
 import { NotificationManager } from 'react-notifications'
+
 import Button from '../../../components/Button'
+import ImagePicker from '../../../components/ImagePicker'
+import PreviewImage from './components/PreviewImage'
 
 // Import Actions
-import { updateUserInformationRequested } from '../../../actions/account'
+import { uploadImageRequested, deleteImageRequested, createActivismPageReuested } from '../../../actions/manage_activism'
+
+import {
+  statesFetchRequested,
+  citiesFetchRequested,
+  selectState,
+  selectCity,
+} from '../../../actions/region'
 
 // Import Assets
 
 // Import Utils
-import { capitalize } from '../../../utils/input'
 
-class Profile extends Component {
+class PageManage extends Component {
 
   constructor(props) {
     super(props)
 
-    const user = props.account.user
-
-    var name = user ? user.name : ' '
-    if (!name)
-      name=' '
-
-    name = name.split(' ')
-
     this.state = {
-      userName: user ? user.preferred_username : '',
-      firstName: name[0],
-      lastName: name[1],
-      email: user ? user.email : '',
-      phoneNumber: user ? user.phone_number : '',
-      zipCode: user ? user['custom:zipcode'] : '',
-      avatar: user? `https://${ user.picture }`: '',
-      currentPassword: '',
-      newPassword: '',
-      confirmPassword: '',
-      avatarFile: null
+      title: '',
+      level: 1,
+      state: '',
+      city: '',
+      description: '',
+      videoFile: null,
+      video: ''
     }
 
     this.onChange = this.onChange.bind(this)
-    this.onAvatar = this.onAvatar.bind(this)
     this.onSave = this.onSave.bind(this)
     this.onVideo = this.onVideo.bind(this)
     this.onPickVideo = this.onPickVideo.bind(this)
+    this.onDropAccepted = this.onDropAccepted.bind(this)
+    this.onState = this.onState.bind(this)
+    this.onCity = this.onCity.bind(this)
+    this.onDeleteImage = this.onDeleteImage.bind(this)
   }
 
   componentDidMount() {
-
+    if (!this.props.states)
+      this.props.statesFetchRequested()
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.states !== this.props.states && nextProps.states) {
+      this.setState({ state: nextProps.states.Items[0].stateid })
+      this.props.selectState(nextProps.states.Items[0].stateid)
 
-    if (nextProps.account.state !== 'GET_USER_INFORMATION_SUCCEEDED')
-      return
+      this.props.citiesFetchRequested(nextProps.states.Items[0].stateid)
+    }
 
-    const { user } = nextProps.account
-
-    if (user) {
-      var name = user.name
-      if (!name)
-        name=' '
-
-      name = name.split(' ')
-
-      this.setState({
-        userName: user.preferred_username,
-        firstName: name[0],
-        lastName: name[1],
-        email: user.email,
-        phoneNumber: user.phone_number,
-        avatar: `https://${ user.picture }`,
-        zipCode: user['custom:zipcode'],
-        password: '',
-        confirmPassword: ''
-      })
+    if (nextProps.cities !== this.props.cities && nextProps.cities) {
+      this.setState({ city: nextProps.cities.Items[0].city })
+      this.props.selectCity(nextProps.cities.Items[0].city)
     }
   }
+
+  makeStateOption(state) {
+    return (
+      <option key={ state.stateid } value={ state.stateid }>{ state.name }</option>
+    )
+  }
+
+  makeCityOption(city) {
+    return (
+      <option key={ city.city } value={ city.city }>{ city.name }</option>
+    )
+  }
+
+  onState(e) {
+    const state = e.target.value
+
+    this.setState({ state: state })
+    this.props.selectState(state)
+    this.props.citiesFetchRequested(state)
+  }
+
+  onCity(e) {
+    const city = e.target.value
+
+    this.setState({ city: city })
+    this.props.selectCity(city)
+  }
+
 
   onChange(e) {
     const target = e.target
@@ -107,27 +121,18 @@ class Profile extends Component {
   onSave(e) {
     e.preventDefault()
 
-    if (this.props.account.state === 'UPDATING_USER_INFORMATION')
+    if (this.props.state === 'CREATING_ACTIVISM_PAGE')
       return
 
-    this.validateInput()
-
-    const { user } = this.props.account
-    const name = `${ capitalize(this.state.firstName) } ${ capitalize(this.state.lastName) }`
-
-    this.props.dispatch(updateUserInformationRequested({
-      userName: ( this.state.userName !== user.preferred_username ) ? this.state.userName : undefined,
-      name: ( name !== user.name ) ? name : undefined,
-      zipCode: (this.state.zipCode !== user['custom:zipcode']) ? this.state.zipCode : undefined,
-      oldPassword: this.state.currentPassword,
-      newPassword: this.state.newPassword,
-      oldAvatar: this.props.account.user.picture,
-      avatarFile: this.state.avatarFile
-    }))
-  }
-
-  onAvatar(e) {
-    this.filePicker.click()
+    this.props.createActivismPage({
+      title: this.state.title,
+      level: this.state.level,
+      state: this.state.state,
+      city: this.state.city,
+      content: this.state.description,
+      images: this.props.images,
+      videoFile: this.state.videoFile
+    }, this.props.auth.session.idToken.jwtToken)
   }
 
   onVideo(e) {
@@ -136,24 +141,44 @@ class Profile extends Component {
     const file = e.target.files[0]
 
     if (file) {
-      let reader = new FileReader()
-
-      reader.onloadend = () => {
-        this.setState({
-          avatarFile: file,
-          avatar: reader.result
-        })
-      }
-
-      reader.readAsDataURL(file)
+      this.setState({
+        videoFile: file,
+        video: file.name
+      })
     }
+
   }
 
   onPickVideo(e) {
     this.videoPicker.click()
   }
 
+  onDropAccepted(accept) {
+    accept.map((e) => this.props.uploadImageRequested(e))
+  }
+
+  onDeleteImage(index) {
+    this.props.deleteImageRequested(this.props.images[index])
+  }
+
   render() {
+
+    console.log(this.state)
+
+    var stateOptions = null
+    var cityOptions = null
+
+    if (this.props.states)
+      stateOptions = this.props.states.Items.map(this.makeStateOption)
+
+    if (this.props.cities)
+      cityOptions = this.props.cities.Items.map(this.makeCityOption)
+
+    const renderPreviews = this.props.images.map((e, index) => (
+      <div key={ index } className="col-4 col-sm-4 col-md-3 col-lg-2 p-1">
+        <PreviewImage src={ `https://${ e }` } onDelete={ e => this.onDeleteImage(index) } />
+      </div>
+    ))
 
     return (
       <div className="inputpage my-3 my-md-5">
@@ -161,17 +186,19 @@ class Profile extends Component {
         <form className="form" onSubmit={ this.onSave }>
 
           <div className="form-group row">
-            <label htmlFor="page_tier" className="col-auto col-md-3 col-form-label">Page Tier:</label>
+            <label htmlFor="level" className="col-auto col-md-3 col-form-label">Page Title:</label>
             <div className="ml-auto col-md-9">
-              <select className="form-control" name="pageTier" id="username" autoFocus value={ this.state.userName } onChange={ this.onChange } required >
-              </select>
+              <input className="form-control" type="text" name="title" id="title" value={ this.state.title } onChange={ this.onChange } placeholder={ '' } required autoFocus />
             </div>
           </div>
 
           <div className="form-group row">
-            <label htmlFor="subscription_plan" className="col-auto col-md-3 col-form-label">Subscription Plan:</label>
+            <label htmlFor="level" className="col-auto col-md-3 col-form-label">Page Tier:</label>
             <div className="ml-auto col-md-9">
-              <select className="form-control" name="email" id="email" value={ this.state.email } >
+              <select className="form-control" name="level" id="level" value={ this.state.level } onChange={ this.onChange } required >
+                <option value={1}>County</option>
+                <option value={2}>State</option>
+                <option value={3}>City</option>
               </select>
             </div>
           </div>
@@ -181,11 +208,13 @@ class Profile extends Component {
             <div className="ml-auto col-md-9">
               <div className="row">
                 <div className="col-6 pr-0" id="location">
-                  <select className="form-control" name="state" id="state" value={ this.state.state } >
+                  <select className="form-control" name="state" id="state" value={ this.state.state } onChange={ this.onState } disabled={ this.state.level < 2 } >
+                    { this.state.level > 1 && stateOptions }
                   </select>
                 </div>
                 <div className="col-6 pl-0" id="location">
-                  <select className="form-control" name="state" id="city" value={ this.state.city } >
+                  <select className="form-control" name="state" id="city" value={ this.state.city } onChange={ this.onCity } disabled={ this.state.level < 3 }>
+                    { this.state.level > 2 && cityOptions }
                   </select>
                 </div>
               </div>
@@ -193,9 +222,20 @@ class Profile extends Component {
           </div>
 
           <div className="form-group row">
+            <label htmlFor="images" className="col-auto col-md-3 col-form-label">Images:</label>
+            <div className="ml-auto col-md-9">
+              <ImagePicker onDropAccepted={ this.onDropAccepted } uploading={ this.props.state === 'UPLOADING_FILE' }>
+                <div className="row px-3">
+                  { renderPreviews }
+                </div>
+              </ImagePicker>
+            </div>
+          </div>
+
+          <div className="form-group row">
             <label htmlFor="description" className="col-auto col-md-3 col-form-label">Description:</label>
             <div className="ml-auto col-md-9">
-              <textarea className="form-control" style={{ height: '160px' }} name="description" id="description" value={ this.state.description } onChange={ this.onChange } />
+              <textarea className="form-control" style={{ height: '160px' }} name="description" id="description" value={ this.state.description } onChange={ this.onChange } required />
             </div>
           </div>
 
@@ -211,7 +251,7 @@ class Profile extends Component {
                     ...
                   </Button>
                 </div>
-                <input ref={input => this.videoPicker = input} type="file" name="pic" accept="video/*" hidden onChange={ this.onVideoPick } />
+                <input ref={input => this.videoPicker = input} type="file" name="pic" accept="video/*" hidden onChange={ this.onVideo } />
               </div>
             </div>
           </div>
@@ -219,9 +259,9 @@ class Profile extends Component {
           <div className="row py-3">
             <div className="ml-auto col-12 text-right">
               <Button type="submit">
-                { this.props.account.state === 'UPDATING_USER_INFORMATION' ?
+                { this.props.account.state === 'CREATING_ACTIVISM_PAGE' ?
                   (<ThreeBounce size={12} color='white' />) :
-                  (<div><i className="fa fa-save"></i> Save Change</div>)
+                  (<div><i className="fa"></i> Create </div>)
                 }
               </Button>
             </div>
@@ -232,15 +272,28 @@ class Profile extends Component {
   }
 }
 
-Profile.propTypes = {
-  dispatch: PropTypes.func.isRequired
-}
-
 // Retrieve data from store as props
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
-    account: store.account
+    account: state.account,
+    states: state.region.states,
+    cities: state.region.cities,
+    images: state.manageActivism.images,
+    state: state.manageActivism.state,
+    auth: state.auth
   }
 }
 
-export default connect(mapStateToProps)(Profile)
+function mapDispatchToProps(dispatch) {
+  return {
+    statesFetchRequested: () => dispatch(statesFetchRequested()),
+    citiesFetchRequested: (state) => dispatch(citiesFetchRequested(state)),
+    selectState: (state) => dispatch(selectState(state)),
+    selectCity: (city) => dispatch(selectCity(city)),
+    uploadImageRequested: (file) => dispatch(uploadImageRequested(file)),
+    deleteImageRequested: (file) => dispatch(deleteImageRequested(file)),
+    createActivismPage: (info, idToken) => dispatch(createActivismPageReuested(info, idToken))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PageManage)

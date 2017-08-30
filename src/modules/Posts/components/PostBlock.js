@@ -25,7 +25,7 @@ export default function MobileApps(props) {
           <span>{ `${ post.cityname } / ${ post.departmentname }` }</span>
         </div>
       </div>
-      <img src={ `https://${ post.media }` } className="post-media" alt="Post Media" />
+      { post.media && <img src={ `https://${ post.media }` } className="post-media" alt="Post Media" /> }
       <div className="px-4 pt-3 pb-1">
         <p className="post-text">{ post.text }</p>
         <div className="p-3 row">

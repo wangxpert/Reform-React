@@ -9,3 +9,4 @@ export const AWS_IDENTITY_POOL_ID = 'us-east-1:a1728f0a-7d87-4a31-a50f-e4d445c66
 export const AWS_S3 = 's3.amazonaws.com'
 export const AWS_S3_BUCKET_NAME = 'media-reformcow-com'
 export const AWS_S3_AVATAR_FOLDER = 'avatars'
+export const AWS_S3_ACTIVISM_FOLDER = 'actvism'

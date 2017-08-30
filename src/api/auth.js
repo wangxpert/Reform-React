@@ -5,7 +5,7 @@
   AuthenticationDetails
 } from 'amazon-cognito-identity-js'
 
-import callApi from '../utils/apiCaller'
+import callApi, { API_URL } from '../utils/apiCaller'
 
 import { AWS_COGNITO_POOL } from '../config'
 
@@ -44,11 +44,11 @@ export function validateSignUpInfo(email, alias, phone, zipCode) {
   if (phone) url += `phone=${ phone }`
   if (zipCode) url+= `zipcode=${ zipCode }`
 
-  return callApi(url)
+  return callApi(API_URL, url)
 }
 
 export function upvotePost(state, city, department, post, idToken) {
-  return callApi(`states/${state}/cities/${city}/departments/${department}/posts/${post}/upvote`, 'put', {}, idToken)
+  return callApi(API_URL, `states/${state}/cities/${city}/departments/${department}/posts/${post}/upvote`, 'put', {}, idToken)
 }
 
 
@@ -204,6 +204,16 @@ export function getCurrentUser() {
 
   return cognitoUser
 }
+
+export function getUser() {
+  var cognitoUser = getCurrentUser()
+  cognitoUser.getSession((err, result) => {
+    if (err) console.log(err)
+  })
+
+  return cognitoUser
+}
+
 
 export function getSession() {
   var cognitoUser = getCurrentUser()

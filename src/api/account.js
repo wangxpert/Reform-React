@@ -1,22 +1,11 @@
-import { getCurrentUser } from './auth'
-import AWS from 'aws-sdk'
+import { getUser } from './auth'
+import { uploadFile, deleteFile } from './assets'
 
 import {
  CognitoUserAttribute
 } from 'amazon-cognito-identity-js'
 
-import { AWS_CONFIG_REGION, AWS_IDENTITY_POOL_ID, AWS_COGNITO_POOL, AWS_S3_BUCKET_NAME, AWS_S3_AVATAR_FOLDER } from '../config'
-
-import uuidv1 from 'uuid/v1'
-
-export function getUser() {
-  var cognitoUser = getCurrentUser()
-  cognitoUser.getSession((err, result) => {
-    if (err) console.log(err)
-  })
-
-  return cognitoUser
-}
+import { AWS_S3_AVATAR_FOLDER } from '../config'
 
 export function getUserInformation() {
   var cognitoUser = getUser()
@@ -39,73 +28,11 @@ export function getUserInformation() {
 }
 
 export function deleteAvatar(file) {
-  var cognitoUser = getUser()
-
-  AWS.config.region = AWS_CONFIG_REGION
-
-  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId : AWS_IDENTITY_POOL_ID, // your identity pool id here
-      Logins : {
-          // Change the key below according to the specific region your user pool is in.
-          [`cognito-idp.${ AWS_CONFIG_REGION }.amazonaws.com/${ AWS_COGNITO_POOL.UserPoolId }`] : cognitoUser.signInUserSession.getIdToken().getJwtToken()
-      }
-  })
-
-  var s3 = new AWS.S3({
-    apiVersion: cognitoUser.pool.client.config.apiVersion,
-    params: { Bucket: AWS_S3_BUCKET_NAME }
-  })
-
-  const key = encodeURIComponent(AWS_S3_AVATAR_FOLDER) + '/' + file
-  return new Promise((resolve, reject) =>
-    s3.deleteObject({ Key: key }, (err, data) => {
-      if (err) reject(err)
-      else resolve(data)
-    })
-  ).then(response => {
-      return response
-    }, err => {
-      throw err
-    }
-  )
-
+  return deleteFile(AWS_S3_AVATAR_FOLDER, file)
 }
 
 export function uploadAvatar(file) {
-  var cognitoUser = getUser()
-
-  AWS.config.region = AWS_CONFIG_REGION
-
-  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-      IdentityPoolId : AWS_IDENTITY_POOL_ID, // your identity pool id here
-      Logins : {
-          // Change the key below according to the specific region your user pool is in.
-          [`cognito-idp.${ AWS_CONFIG_REGION }.amazonaws.com/${ AWS_COGNITO_POOL.UserPoolId }`] : cognitoUser.signInUserSession.getIdToken().getJwtToken()
-      }
-  })
-
-  var s3 = new AWS.S3({
-    apiVersion: cognitoUser.pool.client.config.apiVersion,
-    params: { Bucket: AWS_S3_BUCKET_NAME }
-  })
-
-  const key = encodeURIComponent(AWS_S3_AVATAR_FOLDER) + '/' + uuidv1()
-
-  return new Promise((resolve, reject) =>
-    s3.upload({
-      Key: key,
-      Body: file,
-      ACL: 'public-read'
-    }, function(err, data) {
-      if (err) reject(err)
-      resolve(data)
-    })
-  ).then(response => {
-      return response
-    }, err => {
-      throw err
-    }
-  )
+  return uploadFile(AWS_S3_AVATAR_FOLDER, file)
 }
 
 export function updateUserInformation(info) {

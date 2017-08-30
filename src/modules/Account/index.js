@@ -14,7 +14,7 @@ const Account = (props) => {
   }
 
   return (
-    <Switch>
+    <Switch path='/account'>
       <Route path='/account/profile' component={ AsyncProfile } />
     </Switch>
   )

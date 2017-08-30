@@ -98,7 +98,7 @@ class Posts extends Component {
     }
 
     return (
-      <div className="posts">
+      <div className="posts mb-5">
         <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
           selectedState={ region.selectedState } selectedCity={ region.selectedCity } selectedDepartment = { region.selectedDepartment }
           selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />

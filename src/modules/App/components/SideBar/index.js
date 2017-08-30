@@ -44,10 +44,10 @@ class SideBar extends Component {
               { this.isLogged() && (
                 <ul className="nav-dropdown-items">
                   <li className="nav-item">
-                    <Link to={'/activists/manage'} className="nav-link"><i className=""></i> Manage Activism Page</Link>
+                    <Link to={'/activism/manage'} className="nav-link"><i className=""></i> Manage Activism Page</Link>
                   </li>
                   <li className="nav-item">
-                    <Link to={'/activists/create'} className="nav-link"><i className=""></i> Create Activism Page</Link>
+                    <Link to={'/activism/create'} className="nav-link"><i className=""></i> Create Activism Page</Link>
                   </li>
                 </ul>
               )}
