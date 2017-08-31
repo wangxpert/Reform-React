@@ -39,10 +39,10 @@ export function handleValidationResult(result) {
 
 export function validateSignUpInfo(email, alias, phone, zipCode) {
   var url = 'accounts/available?'
-  if (email) url += `email=${ email }`
-  if (alias) url += `alias=${ alias }`
-  if (phone) url += `phone=${ phone }`
-  if (zipCode) url+= `zipcode=${ zipCode }`
+  if (email) url += `email=${ email }&`
+  if (alias) url += `alias=${ alias }&`
+  if (phone) url += `phone=${ phone }&`
+  if (zipCode) url+= `zipcode=${ zipCode }&`
 
   return callApi(API_URL, url)
 }

@@ -14,7 +14,7 @@ import ImagePicker from '../../../components/ImagePicker'
 import PreviewImage from './components/PreviewImage'
 
 // Import Actions
-import { uploadImageRequested, deleteImageRequested, createActivismPageReuested } from '../../../actions/manage_activism'
+import { createActivismPageReuested } from '../../../actions/manage_activism'
 
 import {
   statesFetchRequested,
@@ -38,6 +38,8 @@ class PageManage extends Component {
       state: '',
       city: '',
       description: '',
+      images: [],
+      imageFiles: [],
       videoFile: null,
       video: ''
     }
@@ -127,10 +129,10 @@ class PageManage extends Component {
     this.props.createActivismPage({
       title: this.state.title,
       level: this.state.level,
-      state: this.state.state,
-      city: this.state.city,
+      state: (this.state.level > 1) ? this.state.state : undefined,
+      city: (this.state.level > 2) ? this.state.city : undefined,
       content: this.state.description,
-      images: this.props.images,
+      imageFiles: this.state.imageFiles,
       videoFile: this.state.videoFile
     }, this.props.auth.session.idToken.jwtToken)
   }
@@ -154,17 +156,32 @@ class PageManage extends Component {
   }
 
   onDropAccepted(accept) {
-    accept.map((e) => this.props.uploadImageRequested(e))
+    accept.forEach(e => {
+      const images = this.state.images
+      const imageFiles = this.state.imageFiles
+
+      imageFiles.push(e)
+      images.push(e.preview)
+
+      this.setState({
+        images, imageFiles
+      })
+    })
   }
 
   onDeleteImage(index) {
-    this.props.deleteImageRequested(this.props.images[index])
+    const images = this.state.images
+    const imageFiles = this.state.imageFiles
+
+    imageFiles.splice(index, 1)
+    images.splice(index, 1)
+
+    this.setState({
+      images, imageFiles
+    })
   }
 
   render() {
-
-    console.log(this.state)
-
     var stateOptions = null
     var cityOptions = null
 
@@ -174,9 +191,9 @@ class PageManage extends Component {
     if (this.props.cities)
       cityOptions = this.props.cities.Items.map(this.makeCityOption)
 
-    const renderPreviews = this.props.images.map((e, index) => (
+    const renderPreviews = this.state.images.map((e, index) => (
       <div key={ index } className="col-4 col-sm-4 col-md-3 col-lg-2 p-1">
-        <PreviewImage src={ `https://${ e }` } onDelete={ e => this.onDeleteImage(index) } />
+        <PreviewImage src={ e } onDelete={ e => this.onDeleteImage(index) } />
       </div>
     ))
 
@@ -224,7 +241,7 @@ class PageManage extends Component {
           <div className="form-group row">
             <label htmlFor="images" className="col-auto col-md-3 col-form-label">Images:</label>
             <div className="ml-auto col-md-9">
-              <ImagePicker onDropAccepted={ this.onDropAccepted } uploading={ this.props.state === 'UPLOADING_FILE' }>
+              <ImagePicker onDropAccepted={ this.onDropAccepted } >
                 <div className="row px-3">
                   { renderPreviews }
                 </div>
@@ -259,7 +276,7 @@ class PageManage extends Component {
           <div className="row py-3">
             <div className="ml-auto col-12 text-right">
               <Button type="submit">
-                { this.props.account.state === 'CREATING_ACTIVISM_PAGE' ?
+                { this.props.state === 'CREATING_ACTIVISM_PAGE' ?
                   (<ThreeBounce size={12} color='white' />) :
                   (<div><i className="fa"></i> Create </div>)
                 }
@@ -278,7 +295,6 @@ function mapStateToProps(state) {
     account: state.account,
     states: state.region.states,
     cities: state.region.cities,
-    images: state.manageActivism.images,
     state: state.manageActivism.state,
     auth: state.auth
   }
@@ -290,8 +306,6 @@ function mapDispatchToProps(dispatch) {
     citiesFetchRequested: (state) => dispatch(citiesFetchRequested(state)),
     selectState: (state) => dispatch(selectState(state)),
     selectCity: (city) => dispatch(selectCity(city)),
-    uploadImageRequested: (file) => dispatch(uploadImageRequested(file)),
-    deleteImageRequested: (file) => dispatch(deleteImageRequested(file)),
     createActivismPage: (info, idToken) => dispatch(createActivismPageReuested(info, idToken))
   }
 }

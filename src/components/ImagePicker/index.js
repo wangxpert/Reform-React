@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 
 // Import Components
 import DropZone from 'react-dropzone'
-import Button from '../Button'
+// import Button from '../Button'
 
-import {
-  ThreeBounce
-} from 'better-react-spinkit'
+// import {
+//   ThreeBounce
+// } from 'better-react-spinkit'
 
 // Import styles
 import './styles.css'
@@ -21,13 +21,9 @@ class ImagePicker extends Component {
         accept="image/*"
         onDropAccepted={ this.props.onDropAccepted }>
         { this.props.children }
-        <div className="m-1">
-          <Button type="button">
-            { this.props.uploading ?
-              (<ThreeBounce size={12} color='white' />) :
-              (' Add ')
-            }
-          </Button>
+
+        <div className="description">
+          Click or drop file here.
         </div>
       </DropZone>
     )
