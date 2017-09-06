@@ -1,9 +1,8 @@
-.main {
-  padding-top: $tabbar-height;
+.posts, .activism-pages {
 
   .tabbar {
-    border-bottom: 1px solid $app-bg;
-    background: $tabbar-bg;
+
+    background: trasparent;
     line-height: $tabbar-height;
     left: 0;
     height: $tabbar-height;
@@ -14,6 +13,8 @@
   }
 
   .tab {
+    background: $tabbar-bg;
+    border-bottom: 1px solid $app-bg;
     box-sizing: border-box;
     color: $tab-color;
     cursor: pointer;

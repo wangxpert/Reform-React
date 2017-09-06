@@ -1,18 +1,24 @@
 $brand-primary: #02447b;
-$primary-bg: #02447b;
+$bg-primary: #02447b;
+$bg-secondary: #fff;
+$bg-third: #02b2fb;
+
 $app-bg: #f5f8fa;
 $card-bg: #fff;
 
 $text-primary: #292b2c;
 $text-secondary: #fff;
+$text-third: #666;
+$text-fourth: #02b2fb;
 
+$gray-dark:                 #666;
 $gray-light:                #BCC5D0;
 $gray-lighter:              #E3E8EC;
 $gray-lightest:             #F1F3F8;
 
 $text-muted: $gray-light !default;
 
-$header-bg: $primary-bg;
+$header-bg: $bg-primary;
 $header-text-color: $text-secondary;
 $brand-text-color: $text-secondary;
 
@@ -49,3 +55,6 @@ $tab-color: $text-secondary;
 $tab-active-color: $text-secondary;
 
 $posts-container-bg: #fff;
+$activism-pages-container-bg: #fff;
+
+$activism-page-bg: #fff;

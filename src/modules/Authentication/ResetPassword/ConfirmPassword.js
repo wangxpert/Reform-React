@@ -11,7 +11,7 @@ import {
 } from 'better-react-spinkit'
 
 // Import Actions
-import { confirmPasswordRequested } from '../../../actions/auth'
+import { confirmPasswordRequested } from '../../../redux/actions/auth'
 
 // Import Assets
 

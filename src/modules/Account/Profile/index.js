@@ -12,7 +12,7 @@ import { NotificationManager } from 'react-notifications'
 import Button from '../../../components/Button'
 
 // Import Actions
-import { updateUserInformationRequested } from '../../../actions/account'
+import { updateUserInformationRequested } from '../../../redux/actions/account'
 
 // Import Assets
 
@@ -152,7 +152,7 @@ class Profile extends Component {
 
     return (
       <div className="inputpage my-3 my-md-5">
-        <h1 className="title py-3 mt-3 mb-4 text-center"> Manage Your account </h1>
+        <h1 className="title py-3 mt-3 mb-4"> Manage Your account </h1>
         <form className="form" onSubmit={ this.onSave }>
 
           <div className="form-group row mb-md-5">

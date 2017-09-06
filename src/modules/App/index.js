@@ -13,13 +13,15 @@ import Header from './components/Header'
 // import Footer from './components/Footer'
 import SideBar from './components/SideBar'
 
+import Ads from '../Ads'
+
 
 // Import routes
 import routes from './routes'
 
 // Import Actions
-import { getSessionRequested } from '../../actions/auth'
-import { getUserInformationRequested } from '../../actions/account'
+import { getSessionRequested } from '../../redux/actions/auth'
+import { getUserInformationRequested } from '../../redux/actions/account'
 
 class App extends Component {
 
@@ -46,7 +48,14 @@ class App extends Component {
           <SideBar />
           <main className="main-content">
             <div className="container">
-              { routes }
+              <div className="row">
+                <div className="col-12 col-md-8">
+                  { routes }
+                </div>
+                <div className="col-0 hidden-sm-down col-md-4 pt-5">
+                  <Ads />
+                </div>
+              </div>
             </div>
           </main>
         </div>
@@ -62,7 +71,7 @@ App.propTypes = {
 }
 
 // Retrieve data from store as props
-function mapStateToProps(store) {
+function mapStateToProps(state) {
   return {
 
   }

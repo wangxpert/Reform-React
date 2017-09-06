@@ -1,0 +1,99 @@
+.activism-pages {
+  background: $activism-pages-container-bg;
+  padding-bottom: 10px;
+  border: $activism-pages-container-border;
+
+  .page-block {
+    cursor: pointer;
+    // max-width: $post-block-max-width;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .3);
+
+    &:hover {
+      box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+    }
+
+    .page-title {
+
+    }
+
+    .page-description {
+
+    }
+
+    .page-image {
+      border-radius: 50%;
+      width: 64px;
+      height: 64px;
+    }
+  }
+}
+
+.activism-page {
+  border: $activism-page-borders;
+  background-color: $activism-page-bg;
+  padding: $activism-page-padding;
+  box-shadow: $activism-page-shadow;
+
+  .content-container {
+    height: 27vh;
+    overflow-y: scroll;
+  }
+
+  .activity-container {
+    // box-shadow: 0 0 6px rgba(0, 0, 0, .3);
+    background: $bg-secondary;
+    border: 1px solid $bg-third;
+    color: $text-third;
+
+    .container-title {
+      background-color: $bg-third;
+      color: $text-secondary;
+    }
+  }
+
+  .inform-container {
+    color: $text-third;
+
+    input {
+      border-radius: 0;
+      border: none;
+      border-bottom: 2px solid $gray-dark;
+      display: inline-block;
+      width: 100%;
+      padding: 3px 3px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: $bg-third;
+      outline: none;
+    }
+  }
+
+  .comments-container {
+    background: $bg-secondary;
+    // box-shadow: 0 0 6px rgba(0, 0, 0, .3);
+    border: 1px solid $bg-third;
+
+    .title {
+      background: $bg-third;
+      color: $text-secondary;
+      font-size: 20px;
+    }
+
+    .comment {
+      box-shadow: 0 0 3px rgba(0, 0, 0, .3);
+
+      .avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .user-name {
+        font-size: 20px;
+      }
+    }
+  }
+}

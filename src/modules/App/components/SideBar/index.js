@@ -39,8 +39,8 @@ class SideBar extends Component {
               )}
             </li>
 
-            <li className={ this.activeRoute("/activists") }>
-              <Link to={'/activists'} className="nav-link"><i className=""></i> Activists</Link>
+            <li className={ this.activeRoute("/activism") }>
+              <Link to={'/activism'} className="nav-link"><i className=""></i> Activists</Link>
               { this.isLogged() && (
                 <ul className="nav-dropdown-items">
                   <li className="nav-item">

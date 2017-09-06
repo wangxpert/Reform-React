@@ -13,7 +13,7 @@ import { NotificationManager } from 'react-notifications'
 import { Link } from 'react-router-dom'
 
 // Import Actions
-import { signupRequested } from '../../../actions/auth'
+import { signupRequested } from '../../../redux/actions/auth'
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png'

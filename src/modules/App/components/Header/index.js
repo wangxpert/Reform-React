@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { Dropdown, DropdownMenu, DropdownItem } from 'reactstrap'
 
 // Import Actions
-import { logoutRequested } from '../../../../actions/auth'
+import { logoutRequested } from '../../../../redux/actions/auth'
 
 // Import Styles
 import './styles.css'

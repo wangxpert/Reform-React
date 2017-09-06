@@ -7,9 +7,9 @@ import React from 'react'
 import { render } from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import App from './App'
-import { configureStore } from './store'
+import { configureStore } from './redux/store'
 import registerServiceWorker from './registerServiceWorker'
-import sagas from './sagas'
+import sagas from './redux/sagas'
 
 // Initialize store
 const { store, history } = configureStore(window.__INITIAL_STATE__)

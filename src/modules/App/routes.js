@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 // Import Components
 import asyncComponent from '../../components/AsyncComponent'
@@ -7,29 +7,30 @@ import asyncComponent from '../../components/AsyncComponent'
 import Authentication from '../Authentication'
 import Account from '../Account'
 
-import Main from '../Main'
-
-import routesAcitivism from '../Activists/manage_routes'
-
 const AsyncContactUs = asyncComponent(() => import('../ContactUs'))
 const AsyncAboutUs = asyncComponent(() => import('../AboutUs'))
 const AsyncTerms = asyncComponent(() => import('../Terms'))
 const AsyncAdvertise = asyncComponent(() => import('../Advertise'))
 const AsyncPrivacy = asyncComponent(() => import('../Privacy'))
+const AsyncPost = asyncComponent(() => import('../Post'))
+const AsyncActivism = asyncComponent(() => import('../Activism'))
 
 const routes = (
-  <Switch>
+  <Switch path='/'>
     <Route path='/contactus' component={ AsyncContactUs } />
     <Route path='/aboutus' component={ AsyncAboutUs } />
     <Route path='/terms' component={ AsyncTerms } />
     <Route path='/advertise' component={ AsyncAdvertise } />
     <Route path='/privacy' component={ AsyncPrivacy } />
+
     <Route path='/auth' component={ Authentication } />
     <Route path='/account' component={ Account } />
 
-    { routesAcitivism }
+    <Route path='/post' component={ AsyncPost } />
+    <Route path='/activism' component={ AsyncActivism } />
 
-    <Route path='/' component={ Main } />
+    <Redirect exact path='/' to='/post' />
+    <Redirect path='*' to='/' />
 
   </Switch>
 )

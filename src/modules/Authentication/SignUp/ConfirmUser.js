@@ -12,7 +12,7 @@ import {
 } from 'better-react-spinkit'
 
 // Import Actions
-import { confirmUserRequested, resendCodeRequested } from '../../../actions/auth'
+import { confirmUserRequested, resendCodeRequested } from '../../../redux/actions/auth'
 
 // Import Assets
 

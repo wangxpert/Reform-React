@@ -11,7 +11,7 @@ import {
 } from 'better-react-spinkit'
 
 // Import Actions
-import { loginRequested } from '../../../actions/auth'
+import { loginRequested } from '../../../redux/actions/auth'
 
 // Import Assets
 import imgLogo from '../../../assets/reformcow_96px.png'
