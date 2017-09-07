@@ -3,18 +3,23 @@ import PropTypes from 'prop-types'
 
 // Import Styles
 import 'react-responsive-carousel/lib/styles/carousel.css'
+import 'video-react/dist/video-react.css'
 
 // Import Components
 import { Carousel } from 'react-responsive-carousel'
+import { Player } from 'video-react'
+import { NotificationManager } from 'react-notifications'
 
 import {
   Circle
 } from 'better-react-spinkit'
 
 import Button from '../../../components/Button'
+import AddCommentDialog from './components/AddCommentDialog'
+import Comment from './components/Comment'
 
 const btnStyle = { padding: '3px 30px', marginRight: '16px' }
-const btnStyle2 = { margin: '0', width: '100%', margin: '1px 1px' }
+const btnStyle2 = { width: '100%', margin: '1px 1px' }
 const spinnerStyle = { display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }
 
 class Page extends Component {
@@ -23,7 +28,8 @@ class Page extends Component {
     super(props)
 
     this.state = {
-      email: ''
+      email: '',
+      showDialog: false
     }
 
     this.onChange = this.onChange.bind(this)
@@ -32,12 +38,16 @@ class Page extends Component {
     this.upvotePage = this.upvotePage.bind(this)
     this.downvotePage = this.downvotePage.bind(this)
     this.flagPage = this.flagPage.bind(this)
+    this.followPage = this.followPage.bind(this)
+
+    this.toggleAddCommentDialog = this.toggleAddCommentDialog.bind(this)
+    this.isLogged = this.isLogged.bind(this)
   }
 
   componentWillMount() {
     const pageId = this.props.match.params.pageId
     this.props.getActivismPage(pageId)
-    this.props.getActivismPageComments(pageId, 50)
+    this.props.getActivismPageComments(pageId)
   }
 
   onChange(e) {
@@ -55,74 +65,102 @@ class Page extends Component {
     this.props.addUserEmailToActivismPage(this.props.page.id, this.state.email)
   }
 
-  addComment(e) {
-    e.preventDefault()
-    this.props.addComment(this.props.page.id, '', this.props.auth.session.idToken.jwtToken)
+  addComment(content) {
+    this.toggleAddCommentDialog()
+    this.props.addComment(this.props.page.id, content, this.props.auth.session.idToken.jwtToken)
   }
 
   upvotePage(e) {
+    if (!this.isLogged()) return
+
     if (this.props.state === 'UPVOTING_ACTIVISM_PAGE')
       return
 
-    const page = this.props.page
-    const idToken = this.props.auth.session.idToken.jwtToken
-
-    this.props.upvotePage(page.id, idToken)
+    this.props.upvotePage(this.props.page.id, this.props.auth.session.idToken.jwtToken)
   }
 
   downvotePage(e) {
+    if (!this.isLogged()) return
+
     if (this.props.state === 'DOWNVOTING_ACTIVISM_PAGE')
       return
 
-    const page = this.props.page
-    const idToken = this.props.auth.session.idToken.jwtToken
-
-    this.props.downvotePage(page.id, idToken)
+    this.props.downvotePage(this.props.page.id, this.props.auth.session.idToken.jwtToken)
   }
 
   flagPage(e) {
+    if (!this.isLogged()) return
+
     if (this.props.state === 'FLAGGING_ACTIVISM_PAGE')
       return
 
-    const page = this.props.page
-    const idToken = this.props.auth.session.idToken.jwtToken
+    this.props.flagPage(this.props.page.id, this.props.auth.session.idToken.jwtToken)
+  }
 
-    this.props.flagPage(page.id, idToken)
+  followPage(e) {
+    if (!this.isLogged()) return
+
+    if (this.props.state === 'FOLLOWING_ACTIVISM_PAGE')
+      return
+
+    this.props.followPage(this.props.page.id, this.props.auth.session.idToken.jwtToken)
+  }
+
+  toggleAddCommentDialog() {
+    if (!this.isLogged()) return
+
+    this.setState({ showDialog: !this.state.showDialog })
+  }
+
+  isLogged() {
+    if (!this.props.auth.session) {
+      NotificationManager.error('You have to login to do this action.', "Error...")
+      return false
+    }
+    return true
   }
 
   render() {
     const page = this.props.page
-    const idToken = this.props.auth.session.idToken.jwtToken
+    const idToken = this.props.auth.session ?  this.props.auth.session.idToken.jwtToken : null
 
     if (!page)
       return null
 
+    let tier = 'National'
+    if (page.level === 2) {
+      tier = `State - ${ page.statename }`
+    } else if (page.level === 3) {
+      tier = `City - ${ page.statename }/${ page.cityname }`
+    }
+
     const previewImages = page.images.map((e, index) => (
       <div key={ index }>
-        <img src={ `https://${ page.images[0] }` } alt="preview" />
+        <img src={ `https://${ e }` } alt="preview" />
       </div>
     ))
 
     return (
       <div className="activism-page my-3 my-md-5">
-        <Button className="float-right" onClick={ this.upvotePage }>
-          <i className="fa fa-thumbs-up" aria-hidden="true"></i>
-          { this.props.state === 'UPVOTING_ACTIVISM_PAGE'
+        <AddCommentDialog isOpen={ this.state.showDialog } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
+        <Button className="float-right" onClick={ this.followPage }>
+          <i className="fa fa-user-plus" aria-hidden="true"></i>
+          { this.props.state === 'FOLLOWING_ACTIVISM_PAGE'
             ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
-            : ` ${ page.upvotes } Follow`
+            : ` ${ page.followers ? page.followers : '' } Follow`
           }
         </Button>
         <h1 className="title mt-3">{ page.title }</h1>
 
         <div className="row">
           <div className="col mb-3">
-            National/State/City - Designation
+            { tier }
           </div>
         </div>
-        
+
         <div className="row">
-          <div className="col-12 col-lg-4">
-            <Carousel axis="horizontal" showThumbs={ true } showArrows={ true }>
+          <div className="col-12 col-lg-5">
+            <Carousel axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
               { previewImages }
             </Carousel>
             {/*
@@ -148,7 +186,12 @@ class Page extends Component {
             */}
           </div>
 
-          <div className="col-12 col-lg-8">
+          <div className="col-12 col-lg-7">
+            { page.videos[0] &&
+              <Player className="mb-2">
+                <source src={ `https://${ page.videos[0] }` } />
+              </Player>
+            }
             <div className="content-container">
               { page.content }
             </div>
@@ -202,47 +245,32 @@ class Page extends Component {
                 <i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp; { page.comments } Comments
               </div>
               <div className="py-3 col ml-auto">
-                <Button style={ btnStyle } onClick={ this.addComment } >
+                <Button style={ btnStyle } onClick={ e => this.toggleAddCommentDialog() } >
                   <small>+ COMMENT</small>
                 </Button>
               </div>
 
-              {/*<div className="comment my-3 mx-3 pt-3">
-                <div className="media pt-3 ml-3">
-                  <div className="media-left mx-3">
-                    <img src={ `https://${ page.images[0] }` } className="media-object img-thumbnail avatar" alt="User Avatar"/>
-                  </div>
-                  <div className="media-body">
-                    <div className="media-heading user-name"><strong>{ 'User' }</strong></div>
-
-                    <span>{ '2018 / 1 / 3' }</span>
-                  </div>
-
-                </div>
-
-                <div className="px-4 pt-3 pb-1">
-                  <p className="">{ 'abcde asdkjsdfl; ;asflsdljdsfljk ldsfldfasljk;dafsljasdf asdf asdf asdf asdf asdf asdfasdfsdfasdfasdfasdfddfdfdfasd asd fdas' }</p>
-                  <div className="p-3 row">
-                    <button className="btn btn-secondary post-button col"><i className="fa fa-thumbs-up" aria-hidden="true"></i>
-
-                      { this.props === 'UPVOTING_POST'
-                        ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
-                        : '  Support'
-                      }
-                    </button>
-                    <button className="btn btn-secondary post-button col"><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;&nbsp;{ '111' } { "Don't Support" }</button>
-                    <button className="btn btn-secondary post-button col"><i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;{ '222' } Comments</button>
-                    <button className="btn btn-secondary post-button col"><i className="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;Report</button>
-                  </div>
-                </div>
-              </div> */}
+              <Comment className="my-3 mx-3 pt-3" comment={{
+                  "commentid": "P3WE6537Z",
+                  "activismid": "P3WGETKBY",
+                  "username": "james@avai.com",
+                  "useralias": "Jamie #1",
+                  "usercity": "Austin",
+                  "userstate": "Texas",
+                  "content": "A test activism page comment.",
+                  "timestamp": "2017-09-05T17:01:11.806Z",
+                  "upvotes": 0,
+                  "downvotes": 0,
+                  "flags": 0
+                }} state={ this.props.state }
+                upvote={ () => { if (this.isLogged()) this.props.upvoteComment('P3WGETKBY', 'P3WE6537Z', idToken) } }
+                downvote={ () => { if (this.isLogged()) this.props.downvoteComment('P3WE6537Z', 'P3WGETKBY', idToken) } }
+                flag={ () => { if (this.isLogged()) this.props.flagComment('P3WE6537Z', 'P3WGETKBY', idToken) } }/>
 
             </div>
           </div>
-
         </div>
       </div>
-
     )
   }
 }
@@ -260,6 +288,10 @@ Page.propTypes = {
   upvotePage: PropTypes.func,
   downvotePage: PropTypes.func,
   flagPage: PropTypes.func,
+  followPage: PropTypes.func,
+  upvoteComment: PropTypes.func,
+  downvoteComment: PropTypes.func,
+  flagComment: PropTypes.func
 }
 
 export default Page

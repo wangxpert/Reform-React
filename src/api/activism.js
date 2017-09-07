@@ -58,14 +58,14 @@ export function addCommentToActivismPage(pageId, content, idToken) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/create`, 'post', { content }, idToken)
 }
 
-export function upvoteComment(pageId, commentId) {
-  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/{ commentId }/upvote`, 'put')
+export function upvoteComment(pageId, commentId, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }/upvote`, 'put', null, idToken)
 }
 
-export function downvoteComment(pageId, commentId) {
-  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/{ commentId }/downvote`, 'put')
+export function downvoteComment(pageId, commentId, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }/downvote`, 'put', null, idToken)
 }
 
-export function flagComment(pageId, commentId) {
-  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/{ commentId }/flag`, 'put')
+export function flagComment(pageId, commentId, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }/flag`, 'put', idToken)
 }

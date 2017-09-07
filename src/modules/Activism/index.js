@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 // Import Components
@@ -14,10 +15,21 @@ const Activism = (props) => {
     <Switch path='/activism'>
       <Route exact path='/activism/pages' component={ AsyncActivistList } />
       <Route path='/activism/pages/:pageId' component={ AsyncView } />
-      <Route path='/activism/create' component={ AsyncCreate } />
       <Redirect exact path='/activism' to='/activism/pages' />
+
+      { props.auth.state === 'NOT_LOGGED' && <Redirect to='/auth/login' /> }
+
+      <Route path='/activism/create' component={ AsyncCreate } />
+
     </Switch>
   )
 }
 
-export default Activism
+// Retrieve data from store as props
+function mapStateToProps(store) {
+  return {
+    auth: store.auth
+  }
+}
+
+export default connect(mapStateToProps)(Activism)

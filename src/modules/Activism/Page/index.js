@@ -1,8 +1,8 @@
-import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // Import Actions
 import * as Actions from '../../../redux/actions/activism'
+import { NotificationManager } from 'react-notifications'
 
 // Import View
 import Page from './Page'
@@ -25,6 +25,10 @@ function mapDispatchToProps(dispatch) {
     upvotePage: (pageId, idToken) => dispatch(Actions.upvoteActivismPageRequested(pageId, idToken)),
     downvotePage: (pageId, idToken) => dispatch(Actions.downvoteActivismPageRequested(pageId, idToken)),
     flagPage: (pageId, idToken) => dispatch(Actions.flagActivismPageRequested(pageId, idToken)),
+    followPage: (pageId, idToken) => dispatch(Actions.followActivismPageRequested(pageId, idToken)),
+    upvoteComment: (pageId, commentId, idToken) => dispatch(Actions.upvoteCommentRequested(pageId, commentId, idToken)),
+    downvoteComment: (pageId, commentId, idToken) => dispatch(Actions.downvoteCommentRequested(pageId, commentId, idToken)),
+    flagComment: (pageId, commentId, idToken) => dispatch(Actions.flagCommentRequested(pageId, commentId, idToken))
   }
 }
 

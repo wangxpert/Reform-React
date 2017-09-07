@@ -106,7 +106,7 @@ export const addCommentToActivismPageFailed = (err) =>
 
 // Upvote Comment
 export const upvoteCommentRequested = (pageId, commentId, idToken) =>
-  ({ type: Types.UPVOTE_COMMENT_REQUESTED, pageId, idToken })
+  ({ type: Types.UPVOTE_COMMENT_REQUESTED, pageId, commentId, idToken })
 
 export const upvoteCommentSucceeded = (result) =>
   ({ type: Types.UPVOTE_COMMENT_SUCCEEDED, result })
@@ -116,7 +116,7 @@ export const upvoteCommentFailed = (err) =>
 
 // Downvote Comment
 export const downvoteCommentRequested = (pageId, commentId, idToken) =>
-  ({ type: Types.DOWNVOTE_COMMENT_REQUESTED, pageId, idToken })
+  ({ type: Types.DOWNVOTE_COMMENT_REQUESTED, pageId, commentId, idToken })
 
 export const downvoteCommentSucceeded = (result) =>
   ({ type: Types.DOWNVOTE_COMMENT_SUCCEEDED, result })
@@ -126,7 +126,7 @@ export const downvoteCommentFailed = (err) =>
 
 // Flag Comment
 export const flagCommentRequested = (pageId, commentId, idToken) =>
-  ({ type: Types.FLAG_COMMENT_REQUESTED, pageId, idToken })
+  ({ type: Types.FLAG_COMMENT_REQUESTED, pageId, commentId, idToken })
 
 export const flagCommentSucceeded = (result) =>
   ({ type: Types.FLAG_COMMENT_SUCCEEDED, result })

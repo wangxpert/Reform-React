@@ -4,7 +4,7 @@ import Types from '../actions/types'
 import * as Actions  from '../actions/activism'
 
 import * as Api from '../../api/activism'
-import { uploadFile, deleteFile } from '../../api/assets'
+import { uploadFile } from '../../api/assets'
 
 import { AWS_S3_ACTIVISM_FOLDER, AWS_S3_BUCKET_NAME, AWS_S3 } from '../../config'
 
@@ -57,7 +57,7 @@ function* createActivismPage(action) {
     NotificationManager.success('New Activism Page is created.', 'Create Activism Page')
   } catch (e) {
     yield put(Actions.createActivismPageFailed(e))
-    NotificationManager.error(e.errorMessage, 'Error...')
+    NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
   }
 }
 
@@ -117,11 +117,23 @@ function* flagActivismPage(action) {
    }
 }
 
+// Saga: will be fired on FOLLOW_ACTIVISM_PAGE actions
+function* followActivismPage(action) {
+   try {
+      const result = yield call(Api.followActivismPage, action.pageId, action.idToken)
+      yield put(Actions.followActivismPageSucceeded(result))
+   } catch (e) {
+      yield put(Actions.followActivismPageFailed(e))
+      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
 // Saga: will be fired on ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED actions
 function* addCommentToActivismPage(action) {
    try {
       const result = yield call(Api.addCommentToActivismPage, action.pageId, action.content, action.idToken)
       yield put(Actions.addCommentToActivismPageSucceeded(result))
+      NotificationManager.success('New comment is added successfully.', 'Add comment')
    } catch (e) {
       yield put(Actions.addCommentToActivismPageFailed(e))
       NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
@@ -131,7 +143,7 @@ function* addCommentToActivismPage(action) {
 // Saga: will be fired on UPVOTE_COMMENT actions
 function* upvoteComment(action) {
    try {
-      const result = yield call(Api.upvoteComment, action.pageId, action.commentId)
+      const result = yield call(Api.upvoteComment, action.pageId, action.commentId, action.idToken)
       yield put(Actions.upvoteCommentSucceeded(result))
    } catch (e) {
       yield put(Actions.upvoteCommentFailed(e))
@@ -142,7 +154,7 @@ function* upvoteComment(action) {
 // Saga: will be fired on DOWNVOTE_COMMENT actions
 function* downvoteComment(action) {
    try {
-      const result = yield call(Api.upvoteComment, action.pageId, action.commentId)
+      const result = yield call(Api.downvoteComment, action.pageId, action.commentId, action.idToken)
       yield put(Actions.downvoteCommentSucceeded(result))
    } catch (e) {
       yield put(Actions.downvoteCommentFailed(e))
@@ -153,7 +165,7 @@ function* downvoteComment(action) {
 // Saga: will be fired on FLAG_COMMENT actions
 function* flagComment(action) {
    try {
-      const result = yield call(Api.upvoteComment, action.pageId, action.commentId)
+      const result = yield call(Api.flagComment, action.pageId, action.commentId, action.idToken)
       yield put(Actions.flagCommentSucceeded(result))
    } catch (e) {
       yield put(Actions.flagCommentFailed(e))
@@ -174,6 +186,7 @@ export function* activismSaga() {
   yield takeLatest(Types.DOWNVOTE_ACTIVISM_PAGE_REQUESTED, downvoteActivismPage)
   yield takeLatest(Types.ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED, addCommentToActivismPage)
   yield takeLatest(Types.FLAG_ACTIVISM_PAGE_REQUESTED, flagActivismPage)
+  yield takeLatest(Types.FOLLOW_ACTIVISM_PAGE_REQUESTED, followActivismPage)
   yield takeLatest(Types.UPVOTE_COMMENT_REQUESTED, upvoteComment)
   yield takeLatest(Types.DOWNVOTE_COMMENT_REQUESTED, downvoteComment)
   yield takeLatest(Types.FLAG_COMMENT_REQUESTED, flagComment)

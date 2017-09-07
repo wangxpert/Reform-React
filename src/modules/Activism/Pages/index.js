@@ -62,7 +62,7 @@ class ActivistList extends Component {
   }
 
   selectCity(city) {
-    const { dispatch, region } = this.props
+    const { dispatch } = this.props
 
     dispatch(selectCity(city))
     setTimeout(this.fetchList)

@@ -1,39 +1,91 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+// Import components
+import {
+  Circle
+} from 'better-react-spinkit'
+
 export default class Comment extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.onUpvote = this.onUpvote.bind(this)
+    this.onDownvote = this.onDownvote.bind(this)
+    this.onReport = this.onReport.bind(this)
+  }
+
+  onUpvote() {
+    if (this.props.state === 'UPVOTING_COMMENT')
+      return
+
+    this.props.upvote()
+  }
+
+  onDownvote() {
+    if (this.props.state === 'DOWNVOTING_COMMENT')
+      return
+
+    this.props.downvote()
+  }
+
+  onReport() {
+    if (this.props.state === 'DOWNVOTING_COMMENT')
+      return
+
+    this.props.flag()
+  }
+
   render() {
+    const { comment } = this.props
     return (
-      <div className={ `comment ${ this.props.className } my-3 mx-3 pt-3` }>
+      <div className={ `comment ${ this.props.className }` }>
         <div className="media pt-3 ml-3">
           <div className="media-left mx-3">
-            <img src={ `https://${ page.images[0] }` } className="media-object img-thumbnail avatar" alt="User Avatar"/>
+            <img src={ '/img/user.png' } className="media-object img-thumbnail avatar" alt=""/>
           </div>
           <div className="media-body">
-            <div className="media-heading user-name"><strong>{ 'User' }</strong></div>
+            <div className="media-heading user-name"><strong>{ comment.useralias }</strong></div>
 
-            <span>{ '2018 / 1 / 3' }</span>
+            <span>{ new Date(comment.timestamp).toDateString() }</span>
           </div>
 
         </div>
 
         <div className="px-4 pt-3 pb-1">
-          <p className="">{ 'abcde asdkjsdfl; ;asflsdljdsfljk ldsfldfasljk;dafsljasdf asdf asdf asdf asdf asdf asdfasdfsdfasdfasdfasdfddfdfdfasd asd fdas' }</p>
+          <p className="">{ comment.content }</p>
           <div className="p-3 row">
-            <button className="btn btn-secondary post-button col"><i className="fa fa-thumbs-up" aria-hidden="true"></i>
-
-              { this.props === 'UPVOTING_POST'
+            <button className="btn btn-secondary post-button col" onClick={ this.onUpvote }>
+              <i className="fa fa-thumbs-up" aria-hidden="true"></i>
+              { this.props.state === 'UPVOTING_COMMENT'
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
-                : '  Support'
+                : ` ${ comment.upvotes } Support`
               }
             </button>
-            <button className="btn btn-secondary post-button col"><i className="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;&nbsp;{ '111' } { "Don't Support" }</button>
-            <button className="btn btn-secondary post-button col"><i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;{ '222' } Comments</button>
-            <button className="btn btn-secondary post-button col"><i className="fa fa-user-times" aria-hidden="true"></i>&nbsp;&nbsp;Report</button>
+            <button className="btn btn-secondary post-button col" onClick={ this.onDownvote }>
+              <i className="fa fa-thumbs-down" aria-hidden="true"></i>
+              { this.props.state === 'DOWNVOTING_COMMENT'
+                ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
+                : ` ${ comment.downvotes } Don't support`
+              }
+            </button>
+            <button className="btn btn-secondary post-button col" onClick={ this.onReport }>
+              <i className="fa fa-user-times" aria-hidden="true"></i>
+              { this.props.state === 'FLAGGING_COMMENT'
+                ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
+                : ` ${ comment.flags } Report`
+              }
+            </button>
           </div>
         </div>
       </div>
     )
   }
+}
+
+Comment.propTypes = {
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired,
+  flag: PropTypes.func.isRequired
 }

@@ -68,8 +68,23 @@ class PageManage extends Component {
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities) {
-      this.setState({ city: nextProps.cities.Items[0].city })
-      this.props.selectCity(nextProps.cities.Items[0].city)
+      let city = nextProps.cities.Count ? nextProps.cities.Items[0].city : ''
+      this.setState({ city: city })
+      this.props.selectCity(city)
+    }
+
+    if (nextProps.state !== this.props.state && nextProps.state === 'CREATE_ACTIVISM_PAGE_SUCCEEDED') {
+      this.setState({
+        title: '',
+        level: 1,
+        state: '',
+        city: '',
+        description: '',
+        images: [],
+        imageFiles: [],
+        videoFile: null,
+        video: ''
+      })
     }
   }
 
@@ -188,8 +203,9 @@ class PageManage extends Component {
     if (this.props.states)
       stateOptions = this.props.states.Items.map(this.makeStateOption)
 
-    if (this.props.cities)
+    if (this.props.cities) {
       cityOptions = this.props.cities.Items.map(this.makeCityOption)
+    }
 
     const renderPreviews = this.state.images.map((e, index) => (
       <div key={ index } className="col-4 col-sm-4 col-md-3 col-lg-2 p-1">

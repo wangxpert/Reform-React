@@ -9,7 +9,7 @@ function PageBlock(props) {
     <div className="media page-block my-3 mx-auto p-3" onClick={ props.onClick }>
       <img className="mr-3 page-image img-thumbnail" src={ `https://${ activist.images[0] }` } alt="" />
       <div className="media-body">
-        <h5 className="mt-0 page-title">Media heading</h5>
+        <h5 className="mt-0 page-title">{ activist.title }</h5>
         <span className="page-description">
           {
             (activist.content.length > DESCRIPTION_MAX_LENGTH) ? `${ activist.content.substr(0, DESCRIPTION_MAX_LENGTH) }...` : activist.content

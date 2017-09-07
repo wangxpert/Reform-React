@@ -120,6 +120,21 @@ export const flagActivismPageFailed = (state = initialState, action) => {
   return { ...state, state: 'FLAG_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
+// Follow Activism Page
+export const followActivismPageRequested = (state = initialState, action) => {
+  return { ...state, state: 'FOLLOWING_ACTIVISM_PAGE' }
+}
+
+export const followActivismPageSucceeded = (state = initialState, action) => {
+  let activismPage = state.activismPage
+  activismPage.followers = action.result.followers
+  return { ...state, state: 'FOLLOW_ACTIVISM_PAGE_SUCCEEDED', activismPage, result: action.result }
+}
+
+export const followActivismPageFailed = (state = initialState, action) => {
+  return { ...state, state: 'FOLLOW_ACTIVISM_PAGE_FAILED', err: action.err }
+}
+
 // Add comment to Activism Page
 export const addCommentToActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'ADDING_COMMENT_TO_ACTIVISM_PAGE' }
@@ -139,6 +154,9 @@ export const upvoteCommentRequested = (state = initialState, action) => {
 }
 
 export const upvoteCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let comment = comments.find(e => e.commentid === action.result.commentid)
+  comment.upvotes = action.result.updates.upvotes
   return { ...state, state: 'UPVOTE_COMMENT_REQUESTED', result: action.result }
 }
 
@@ -152,6 +170,9 @@ export const downvoteCommentRequested = (state = initialState, action) => {
 }
 
 export const downvoteCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let comment = comments.find(e => e.commentid === action.result.commentid)
+  comment.downvotes = action.result.updates.downvotes
   return { ...state, state: 'DOWNVOTE_COMMENT_REQUESTED', result: action.result }
 }
 
@@ -166,6 +187,9 @@ export const flagCommentRequested = (state = initialState, action) => {
 
 export const flagCommentSucceeded = (state = initialState, action) => {
   return { ...state, state: 'FLAG_COMMENT_REQUESTED', result: action.result }
+  let comments = state.comments
+  let comment = comments.find(e => e.commentid === action.result.commentid)
+  comment.flags = action.result.updates.flags
 }
 
 export const flagCommentFailed = (state = initialState, action) => {
@@ -205,6 +229,10 @@ export const handlers = {
   [Types.FLAG_ACTIVISM_PAGE_REQUESTED]: flagActivismPageRequested,
   [Types.FLAG_ACTIVISM_PAGE_SUCCEEDED]: flagActivismPageSucceeded,
   [Types.FLAG_ACTIVISM_PAGE_FAILED]: flagActivismPageFailed,
+
+  [Types.FOLLOW_ACTIVISM_PAGE_REQUESTED]: followActivismPageRequested,
+  [Types.FOLLOW_ACTIVISM_PAGE_SUCCEEDED]: followActivismPageSucceeded,
+  [Types.FOLLOW_ACTIVISM_PAGE_FAILED]: followActivismPageFailed,
 
   [Types.ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED]: addCommentToActivismPageRequested,
   [Types.ADD_COMMENT_TO_ACTIVISM_PAGE_SUCCEEDED]: addCommentToActivismPageSucceeded,
