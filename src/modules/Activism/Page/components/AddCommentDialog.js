@@ -53,4 +53,10 @@ class AddCommentDialog extends Component {
   }
 }
 
+AddCommentDialog.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  toggle: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired
+}
+
 export default AddCommentDialog

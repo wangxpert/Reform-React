@@ -2,7 +2,6 @@ import { connect } from 'react-redux'
 
 // Import Actions
 import * as Actions from '../../../redux/actions/activism'
-import { NotificationManager } from 'react-notifications'
 
 // Import View
 import Page from './Page'
