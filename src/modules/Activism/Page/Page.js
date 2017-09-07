@@ -140,6 +140,16 @@ class Page extends Component {
       </div>
     ))
 
+    let comments = null
+
+    if (this.props.comments && this.props.comments.Items.length)
+      comments = this.props.comments.Items.map((e, index) => (
+        <Comment key={ index } className="my-3 mx-3 pt-3" comment={ e } state={ this.props.state } currentComment={ this.props.currentComment }
+          upvote={ () => { if (this.isLogged()) this.props.upvoteComment(e.activismid, e.commentid, idToken) } }
+          downvote={ () => { if (this.isLogged()) this.props.downvoteComment(e.activismid, e.commentid, idToken) } }
+          flag={ () => { if (this.isLogged()) this.props.flagComment(e.activismid, e.commentid, idToken) } }/>
+        ))
+
     return (
       <div className="activism-page my-3 my-md-5">
         <AddCommentDialog isOpen={ this.state.showDialog } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
@@ -250,22 +260,7 @@ class Page extends Component {
                 </Button>
               </div>
 
-              <Comment className="my-3 mx-3 pt-3" comment={{
-                  "commentid": "P3WE6537Z",
-                  "activismid": "P3WGETKBY",
-                  "username": "james@avai.com",
-                  "useralias": "Jamie #1",
-                  "usercity": "Austin",
-                  "userstate": "Texas",
-                  "content": "A test activism page comment.",
-                  "timestamp": "2017-09-05T17:01:11.806Z",
-                  "upvotes": 0,
-                  "downvotes": 0,
-                  "flags": 0
-                }} state={ this.props.state }
-                upvote={ () => { if (this.isLogged()) this.props.upvoteComment('P3WGETKBY', 'P3WE6537Z', idToken) } }
-                downvote={ () => { if (this.isLogged()) this.props.downvoteComment('P3WE6537Z', 'P3WGETKBY', idToken) } }
-                flag={ () => { if (this.isLogged()) this.props.flagComment('P3WE6537Z', 'P3WGETKBY', idToken) } }/>
+              { comments }
 
             </div>
           </div>
@@ -280,6 +275,8 @@ Page.propTypes = {
   auth: PropTypes.object,
   page: PropTypes.object,
   state: PropTypes.string,
+  comments: PropTypes.object,
+  currentComment: PropTypes.string,
 
   getActivismPage: PropTypes.func,
   addUserEmailToActivismPage: PropTypes.func,

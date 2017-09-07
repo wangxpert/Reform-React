@@ -67,5 +67,5 @@ export function downvoteComment(pageId, commentId, idToken) {
 }
 
 export function flagComment(pageId, commentId, idToken) {
-  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }/flag`, 'put', idToken)
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }/flag`, 'put', null, idToken)
 }

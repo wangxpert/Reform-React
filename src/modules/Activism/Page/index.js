@@ -12,7 +12,9 @@ function mapStateToProps(state) {
   return {
     auth: state.auth,
     page: state.activism.activismPage,
-    state: state.activism.state
+    state: state.activism.state,
+    comments: state.activism.comments,
+    currentComment: state.activism.commentId
   }
 }
 

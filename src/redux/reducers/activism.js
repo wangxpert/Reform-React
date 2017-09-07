@@ -81,7 +81,7 @@ export const upvoteActivismPageRequested = (state = initialState, action) => {
 export const upvoteActivismPageSucceeded = (state = initialState, action) => {
   let activismPage = state.activismPage
   activismPage.upvotes = action.result.updates.upvotes
-  activismPage.downvotes = action.result.updates.downvotes
+  if (action.result.updates.downvotes !== undefined) activismPage.downvotes = action.result.updates.downvotes
   return { ...state, state: 'UPVOTE_ACTIVISM_PAGE_SUCCEEDED', activismPage, result: action.result }
 }
 
@@ -96,7 +96,7 @@ export const downvoteActivismPageRequested = (state = initialState, action) => {
 
 export const downvoteActivismPageSucceeded = (state = initialState, action) => {
   let activismPage = state.activismPage
-  activismPage.upvotes = action.result.updates.upvotes
+  if (action.result.updates.upvotes !== undefined) activismPage.upvotes = action.result.updates.upvotes
   activismPage.downvotes = action.result.updates.downvotes
   return { ...state, state: 'DOWNVOTE_ACTIVISM_PAGE_SUCCEEDED', activismPage, result: action.result }
 }
@@ -141,7 +141,10 @@ export const addCommentToActivismPageRequested = (state = initialState, action) 
 }
 
 export const addCommentToActivismPageSucceeded = (state = initialState, action) => {
-  return { ...state, state: 'ADD_COMMENT_TO_ACTIVISM_PAGE_SUCCEEDED', result: action.result }
+  let comments = state.comments
+  comments.Items.unshift(action.result.comment)
+
+  return { ...state, state: 'ADD_COMMENT_TO_ACTIVISM_PAGE_SUCCEEDED', comments, result: action.result }
 }
 
 export const addCommentToActivismPageFailed = (state = initialState, action) => {
@@ -150,14 +153,15 @@ export const addCommentToActivismPageFailed = (state = initialState, action) => 
 
 // Upvote Comment
 export const upvoteCommentRequested = (state = initialState, action) => {
-  return { ...state, state: 'UPVOTING_COMMENT' }
+  return { ...state, state: 'UPVOTING_COMMENT', commentId: action.commentId }
 }
 
 export const upvoteCommentSucceeded = (state = initialState, action) => {
   let comments = state.comments
-  let comment = comments.find(e => e.commentid === action.result.commentid)
+  let comment = comments.Items.find(e => e.commentid === action.result.commentid)
   comment.upvotes = action.result.updates.upvotes
-  return { ...state, state: 'UPVOTE_COMMENT_REQUESTED', result: action.result }
+  if (action.result.updates.downvotes !== undefined) comment.downvotes = action.result.updates.downvotes
+  return { ...state, state: 'UPVOTE_COMMENT_REQUESTED', comments, result: action.result }
 }
 
 export const upvoteCommentFailed = (state = initialState, action) => {
@@ -166,14 +170,15 @@ export const upvoteCommentFailed = (state = initialState, action) => {
 
 // Downvote Comment
 export const downvoteCommentRequested = (state = initialState, action) => {
-  return { ...state, state: 'DOWNVOTING_COMMENT' }
+  return { ...state, state: 'DOWNVOTING_COMMENT', commentId: action.commentId }
 }
 
 export const downvoteCommentSucceeded = (state = initialState, action) => {
   let comments = state.comments
-  let comment = comments.find(e => e.commentid === action.result.commentid)
+  let comment = comments.Items.find(e => e.commentid === action.result.commentid)
+  if (action.result.updates.upvotes !== undefined) comment.upvotes = action.result.updates.upvotes
   comment.downvotes = action.result.updates.downvotes
-  return { ...state, state: 'DOWNVOTE_COMMENT_REQUESTED', result: action.result }
+  return { ...state, state: 'DOWNVOTE_COMMENT_REQUESTED', comments, result: action.result }
 }
 
 export const downvoteCommentFailed = (state = initialState, action) => {
@@ -182,14 +187,14 @@ export const downvoteCommentFailed = (state = initialState, action) => {
 
 // flag Comment
 export const flagCommentRequested = (state = initialState, action) => {
-  return { ...state, state: 'FLAGGING_COMMENT' }
+  return { ...state, state: 'FLAGGING_COMMENT', commentId: action.commentId }
 }
 
 export const flagCommentSucceeded = (state = initialState, action) => {
-  return { ...state, state: 'FLAG_COMMENT_REQUESTED', result: action.result }
   let comments = state.comments
-  let comment = comments.find(e => e.commentid === action.result.commentid)
+  let comment = comments.Items.find(e => e.commentid === action.result.commentid)
   comment.flags = action.result.updates.flags
+  return { ...state, state: 'FLAG_COMMENT_REQUESTED', comments, result: action.result }
 }
 
 export const flagCommentFailed = (state = initialState, action) => {

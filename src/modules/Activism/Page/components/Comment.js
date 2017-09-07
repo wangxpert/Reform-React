@@ -43,7 +43,7 @@ export default class Comment extends Component {
       <div className={ `comment ${ this.props.className }` }>
         <div className="media pt-3 ml-3">
           <div className="media-left mx-3">
-            <img src={ '/img/user.png' } className="media-object img-thumbnail avatar" alt=""/>
+            <img src={ comment.useravatar ? `https://${ comment.useravatar }` : '/img/user.png' } className="media-object img-thumbnail avatar" alt=""/>
           </div>
           <div className="media-body">
             <div className="media-heading user-name"><strong>{ comment.useralias }</strong></div>
@@ -58,21 +58,21 @@ export default class Comment extends Component {
           <div className="p-3 row">
             <button className="btn btn-secondary post-button col" onClick={ this.onUpvote }>
               <i className="fa fa-thumbs-up" aria-hidden="true"></i>
-              { this.props.state === 'UPVOTING_COMMENT'
+              { this.props.state === 'UPVOTING_COMMENT' && this.props.comment.commentid === this.props.currentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
                 : ` ${ comment.upvotes } Support`
               }
             </button>
             <button className="btn btn-secondary post-button col" onClick={ this.onDownvote }>
               <i className="fa fa-thumbs-down" aria-hidden="true"></i>
-              { this.props.state === 'DOWNVOTING_COMMENT'
+              { this.props.state === 'DOWNVOTING_COMMENT' && this.props.comment.commentid === this.props.currentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
                 : ` ${ comment.downvotes } Don't support`
               }
             </button>
             <button className="btn btn-secondary post-button col" onClick={ this.onReport }>
               <i className="fa fa-user-times" aria-hidden="true"></i>
-              { this.props.state === 'FLAGGING_COMMENT'
+              { this.props.state === 'FLAGGING_COMMENT' && this.props.comment.commentid === this.props.currentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
                 : ` ${ comment.flags } Report`
               }

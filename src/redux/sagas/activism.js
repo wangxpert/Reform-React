@@ -80,7 +80,7 @@ function* getActivismPageComments(action) {
       yield put(Actions.getActivismpageCommentsSucceeded(result))
    } catch (e) {
       yield put(Actions.getActivismPageCommentsFailed(e))
-      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+      // NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
    }
 }
 
