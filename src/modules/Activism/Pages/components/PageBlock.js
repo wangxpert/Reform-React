@@ -7,7 +7,7 @@ function PageBlock(props) {
 
   return (
     <div className="media page-block my-3 mx-auto p-3" onClick={ props.onClick }>
-      <img className="mr-3 page-image img-thumbnail" src={ `https://${ activist.images[0] }` } alt="" />
+      <img className="mr-3 page-image img-thumbnail" src={ activist.images.length ? `https://${ activist.images[0] }` : '' } alt="" />
       <div className="media-body">
         <h5 className="mt-0 page-title">{ activist.title }</h5>
         <span className="page-description">

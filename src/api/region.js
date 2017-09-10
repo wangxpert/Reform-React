@@ -1,7 +1,10 @@
 import callApi, { API_URL } from '../utils/apiCaller'
 
-export function fetchStates() {
-  return callApi(API_URL, 'states')
+export function fetchStates(includeAdmin = false) {
+  let url = 'states'
+  if (includeAdmin === true) url +='?admin=1'
+
+  return callApi(API_URL, url)
 }
 
 export function fetchCities(state) {

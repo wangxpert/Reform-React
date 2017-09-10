@@ -79,7 +79,7 @@
   }
 
   .main-content .tabbar {
-    padding-left: $sidebar-width;
+
   }
 
   &.sidebar-hidden {
@@ -89,7 +89,7 @@
     }
 
     .main-content .tabbar {
-      padding-left: 0;
+      
     }
   }
 }
@@ -130,7 +130,7 @@
 .tabbar,
 .main-content {
   transition-duration: $layout-transition-speed, $layout-transition-speed;
-  transition-property: margin-left, margin-right, padding-left, padding-right;
+  transition-property: margin-left, margin-right, padding-left, padding-right, left;
 }
 
 //

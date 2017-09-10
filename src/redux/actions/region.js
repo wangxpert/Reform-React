@@ -1,8 +1,8 @@
 import Types from './types'
 
 // Get State List
-export const statesFetchRequested = () =>
-  ({ type: Types.STATES_FETCH_REQUESTED })
+export const statesFetchRequested = (includeAdmin = false) =>
+  ({ type: Types.STATES_FETCH_REQUESTED, includeAdmin })
 
 export const statesFetchSucceeded = (states) =>
   ({ type: Types.STATES_FETCH_SUCCEEDED, states: states })

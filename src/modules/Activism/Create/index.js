@@ -14,7 +14,7 @@ import ImagePicker from '../../../components/ImagePicker'
 import PreviewImage from './components/PreviewImage'
 
 // Import Actions
-import { createActivismPageReuested } from '../../../redux/actions/activism'
+import { createActivismPageRequested } from '../../../redux/actions/activism'
 
 import {
   statesFetchRequested,
@@ -229,7 +229,7 @@ class PageManage extends Component {
             <label htmlFor="level" className="col-auto col-md-3 col-form-label">Page Tier:</label>
             <div className="ml-auto col-md-9">
               <select className="form-control" name="level" id="level" value={ this.state.level } onChange={ this.onChange } required >
-                <option value={1}>County</option>
+                <option value={1}>Country</option>
                 <option value={2}>State</option>
                 <option value={3}>City</option>
               </select>
@@ -322,7 +322,7 @@ function mapDispatchToProps(dispatch) {
     citiesFetchRequested: (state) => dispatch(citiesFetchRequested(state)),
     selectState: (state) => dispatch(selectState(state)),
     selectCity: (city) => dispatch(selectCity(city)),
-    createActivismPage: (info, idToken) => dispatch(createActivismPageReuested(info, idToken))
+    createActivismPage: (info, idToken) => dispatch(createActivismPageRequested(info, idToken))
   }
 }
 

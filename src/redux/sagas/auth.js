@@ -21,8 +21,6 @@ function* requestValidateUserInfo(action) {
 }
 
 // Saga: will be fired on SIGNUP_REQUESTED actions
-
-
 function* requestSignup(action) {
    try {
      yield put(Actions.validateSignUpInfoRequested(action.info))
@@ -85,7 +83,7 @@ function* requestLogin(action) {
      yield put(Actions.loginSucceeded(session))
      NotificationManager.success(`Welcome ${ action.userName }`, 'Welcome')
      yield put(getUserInformationRequested())
-     yield put(push('/'))
+     // yield put(push('/post/posts'))
    } catch (e) {
      yield put(Actions.loginFailed(e))
 
@@ -124,7 +122,7 @@ function* requestResetPassword(action) {
   try {
     const data = yield call(Api.requestResetPassword, action.userName)
     yield put(Actions.resetPasswordRequestSucceeded(data))
-    yield put(push(`/password/confirm/${ action.userName }`))
+    yield put(push(`/auth/password/confirm/${ action.userName }`))
   } catch (e) {
     NotificationManager.error(e.message, 'Error...')
     yield put(Actions.resetPasswordRequestFailed(e))

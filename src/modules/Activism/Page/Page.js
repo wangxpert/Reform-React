@@ -169,10 +169,12 @@ class Page extends Component {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-5">
-            <Carousel axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
-              { previewImages }
-            </Carousel>
+          <div className="col-12 col-lg-5 mb-3" >
+            <div className="image-container">
+              <Carousel axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
+                { previewImages }
+              </Carousel>
+            </div>
             {/*
             <div className="activity-container mb-3">
               <div className="container-title text-center py-1">
@@ -252,7 +254,7 @@ class Page extends Component {
           <div className="col-12 mt-1">
             <div className="comments-container">
               <div className="title text-center p-1">
-                <i className="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp; { page.comments } Comments
+                <i className="fa fa-comments" aria-hidden="true"></i> { this.props.comments ? this.props.comments.Count : 0 } Comments
               </div>
               <div className="py-3 col ml-auto">
                 <Button style={ btnStyle } onClick={ e => this.toggleAddCommentDialog() } >

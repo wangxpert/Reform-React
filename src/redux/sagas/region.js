@@ -5,7 +5,7 @@ import * as Api from '../../api/region'
 // worker Saga: will be fired on STATES_FETCH_REQUESTED actions
 function* fetchStates(action) {
    try {
-      const states = yield call(Api.fetchStates)
+      const states = yield call(Api.fetchStates, action.includeAdmin)
       yield put({ type: "STATES_FETCH_SUCCEEDED", states: states })
    } catch (e) {
       yield put({ type: "STATES_FETCH_FAILED", err: e.message })

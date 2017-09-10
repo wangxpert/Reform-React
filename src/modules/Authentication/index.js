@@ -22,8 +22,8 @@ const Authentication = (props) => {
       <Route path='/auth/login' component={ AsyncLogin } />
       <Route path='/auth/signup' component={ AsyncSignUp } />
       <Route path='/auth/confirm/:userName' component={ AsyncConfirmUser } />
-      <Route path='/password/reset' component={ AsyncResetPassword } />
-      <Route path='/password/confirm/:userName' component={ AsyncConfirmPassword } />
+      <Route path='/auth/password/reset' component={ AsyncResetPassword } />
+      <Route path='/auth/password/confirm/:userName' component={ AsyncConfirmPassword } />
     </Switch>
   )
 }

@@ -4,10 +4,9 @@
 
     background: trasparent;
     line-height: $tabbar-height;
-    left: 0;
     height: $tabbar-height;
     position: fixed;
-    right: 0;
+    width: 100%;
     top: $header-height;
     z-index: $zindex-tabbar;
   }

@@ -35,7 +35,7 @@ export const getActivismPageFailed = (state = initialState, action) => {
 }
 
 // Create Activism Page
-export const createActivismPageReuested = (state = initialState, action) => {
+export const createActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'CREATING_ACTIVISM_PAGE' }
 }
 
@@ -211,7 +211,7 @@ export const handlers = {
   [Types.GET_ACTIVISM_PAGE_SUCCEEDED]: getActivismPageSucceeded,
   [Types.GET_ACTIVISM_PAGE_FAILED]: getActivismPageFailed,
 
-  [Types.CREATE_ACTIVISM_PAGE_REQUESTED]: createActivismPageReuested,
+  [Types.CREATE_ACTIVISM_PAGE_REQUESTED]: createActivismPageRequested,
   [Types.CREATE_ACTIVISM_PAGE_SUCCEEDED]: createActivismPageSucceeded,
   [Types.CREATE_ACTIVISM_PAGE_FAILED]: createActivismPageFailed,
 

@@ -49,9 +49,6 @@ class Login extends Component {
     this.props.loginRequested(this.state.email, this.state.password, this.state.remember)
   }
 
-  onForgotPassword(e) {
-  }
-
   render() {
 
     return (
@@ -99,7 +96,7 @@ class Login extends Component {
                       Remember me
                     </span>
                   </label>*/}
-                  <Link className="float-right" to="/password/reset">Forgot Your Password?</Link>
+                  <Link className="float-right" to="/auth/password/reset">Forgot Your Password?</Link>
                 </div>
               </div>
             </div>

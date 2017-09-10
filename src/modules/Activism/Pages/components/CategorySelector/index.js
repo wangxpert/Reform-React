@@ -31,7 +31,9 @@ export default class CategorySelector extends Component {
     }*/
   }
 
-  makeStateOption(state) {
+  makeStateOption(state, index) {
+    // if (index === 0) return null // remove admin country
+
     return (
       <option key={ state.stateid } value={ state.stateid }>{ state.name }</option>
     )

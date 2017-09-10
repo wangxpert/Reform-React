@@ -17,7 +17,7 @@ class TabBar extends Component {
 
     return (
       <div className="tabbar">
-        <div className="container">
+        <div className="container mr-3" style={{ marginLeft: '-16px' }}>
           <div className="row">
             <div className="col-12 col-md-8">
               <div className={ `col-6 tab ${ page === 'post' ? 'active' : '' }` } onClick={ e => this.onTab('/post') }>

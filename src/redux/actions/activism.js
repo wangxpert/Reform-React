@@ -25,7 +25,7 @@ export const getActivismPageFailed = (err) =>
   ({ type: Types.GET_ACTIVISM_PAGE_FAILED, err })
 
 // Create Activism PageManage
-export const createActivismPageReuested = (info, idToken) =>
+export const createActivismPageRequested = (info, idToken) =>
   ({ type: Types.CREATE_ACTIVISM_PAGE_REQUESTED, info, idToken })
 
 export const createActivismPageSucceeded = (result) =>

@@ -164,14 +164,14 @@ class Profile extends Component {
 
             <div className="col-12 col-md mt-sm-3 mt-md-5">
               <div className="form-group row">
-                <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">First Name:</label>
-                <div className="ml-auto col-md">
+                <label htmlFor="name" className="col-auto text-center col-lg-4 col-form-label">First Name:</label>
+                <div className="ml-auto col-sm">
                   <input className="form-control col" type="text" name="firstName" id="first_name" autoFocus style={{ textTransform: 'capitalize' }} value={ this.state.firstName } onChange={ this.onChange } />
                 </div>
               </div>
               <div className="form-group row">
-                <label htmlFor="name" className="col-auto text-center col-md-4 col-lg-3 col-form-label">Last Name:</label>
-                <div className="ml-auto col-md">
+                <label htmlFor="name" className="col-auto text-center col-lg-4 col-form-label">Last Name:</label>
+                <div className="ml-auto col-sm">
                   <input className="form-control col" type="text" name="lastName" id="last_name" autoFocus style={{ textTransform: 'capitalize' }} value={ this.state.lastName } onChange={ this.onChange } />
                 </div>
               </div>

@@ -8,7 +8,7 @@ import { push } from 'react-router-redux'
 
 import PageBlock from './components/PageBlock'
 import CategorySelector from './components/CategorySelector'
-import TabBar from '../../Post/components/TabBar'
+import TabBar from '../../Post/Posts/components/TabBar'
 
 // Import Actions
 import {
@@ -39,8 +39,10 @@ class ActivistList extends Component {
   }
 
   componentWillMount() {
-    const { dispatch, region } = this.props
-    if (!region.states) dispatch(statesFetchRequested())
+    // const { dispatch, region } = this.props
+    // if (!region.states)
+    const { dispatch } = this.props
+    dispatch(statesFetchRequested(true))
     this.fetchList()
   }
 
