@@ -10,6 +10,7 @@ import Page from './Page'
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    user: state.account.user,
     page: state.activism.activismPage,
     state: state.activism.state,
     comments: state.activism.comments,

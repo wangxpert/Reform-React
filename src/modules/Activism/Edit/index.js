@@ -1,11 +1,10 @@
 import { connect } from 'react-redux'
 
 // Import View
-import Create from './Create'
+import Edit from './Edit'
 
 // Import Actions
-import { createActivismPageRequested } from '../../../redux/actions/activism'
-import { push } from 'react-router-redux'
+import * as Actions from '../../../redux/actions/activism'
 
 import {
   statesFetchRequested,
@@ -21,20 +20,20 @@ function mapStateToProps(state) {
     states: state.region.states,
     cities: state.region.cities,
     state: state.activism.state,
-    result: state.activism.result,
-    auth: state.auth
+    auth: state.auth,
+    page: state.activism.activismPage,
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    getActivismPage: (pageId) => dispatch(Actions.getActivismPageRequested(pageId)),
     statesFetchRequested: () => dispatch(statesFetchRequested()),
     citiesFetchRequested: (state) => dispatch(citiesFetchRequested(state)),
     selectState: (state) => dispatch(selectState(state)),
     selectCity: (city) => dispatch(selectCity(city)),
-    createActivismPage: (info, idToken) => dispatch(createActivismPageRequested(info, idToken)),
-    changeLocation: (path) => dispatch(push(path))
+    createActivismPage: (info, idToken) => dispatch(Actions.createActivismPageRequested(info, idToken))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Create)
+export default connect(mapStateToProps, mapDispatchToProps)(Edit)

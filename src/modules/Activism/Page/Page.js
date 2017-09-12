@@ -15,6 +15,7 @@ import {
 } from 'better-react-spinkit'
 
 import Button from '../../../components/Button'
+import ConfirmDialog from '../../../components/YesNoDialog'
 import AddCommentDialog from './components/AddCommentDialog'
 import Comment from './components/Comment'
 
@@ -29,12 +30,14 @@ class Page extends Component {
 
     this.state = {
       email: '',
-      showDialog: false
+      showCreateComment: false
     }
 
     this.onChange = this.onChange.bind(this)
     this.addUserEmail = this.addUserEmail.bind(this)
     this.addComment = this.addComment.bind(this)
+    this.editComment = this.editComment.bind(this)
+    this.deleteComment = this.deleteComment.bind(this)
     this.upvotePage = this.upvotePage.bind(this)
     this.downvotePage = this.downvotePage.bind(this)
     this.flagPage = this.flagPage.bind(this)
@@ -68,6 +71,12 @@ class Page extends Component {
   addComment(content) {
     this.toggleAddCommentDialog()
     this.props.addComment(this.props.page.id, content, this.props.auth.session.idToken.jwtToken)
+  }
+
+  editComment(commentId) {
+  }
+
+  deleteComment(commentId) {
   }
 
   upvotePage(e) {
@@ -109,7 +118,7 @@ class Page extends Component {
   toggleAddCommentDialog() {
     if (!this.isLogged()) return
 
-    this.setState({ showDialog: !this.state.showDialog })
+    this.setState({ showCreateComment: !this.state.showCreateComment })
   }
 
   isLogged() {
@@ -144,15 +153,16 @@ class Page extends Component {
 
     if (this.props.comments && this.props.comments.Items.length)
       comments = this.props.comments.Items.map((e, index) => (
-        <Comment key={ index } className="my-3 mx-3 pt-3" comment={ e } state={ this.props.state } currentComment={ this.props.currentComment }
+        <Comment key={ index } className="my-3 mx-3 pt-3" comment={ e } state={ this.props.state } currentComment={ this.props.currentComment } user={ this.props.user }
           upvote={ () => { if (this.isLogged()) this.props.upvoteComment(e.activismid, e.commentid, idToken) } }
           downvote={ () => { if (this.isLogged()) this.props.downvoteComment(e.activismid, e.commentid, idToken) } }
-          flag={ () => { if (this.isLogged()) this.props.flagComment(e.activismid, e.commentid, idToken) } }/>
+          flag={ () => { if (this.isLogged()) this.props.flagComment(e.activismid, e.commentid, idToken) } }
+          editComment={ this.editComment } deleteComment={ this.deleteComment }/>
         ))
 
     return (
       <div className="activism-page my-3 my-md-5">
-        <AddCommentDialog isOpen={ this.state.showDialog } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
+        <AddCommentDialog isOpen={ this.state.showCreateComment } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
         <Button className="float-right" onClick={ this.followPage }>
           <i className="fa fa-user-plus" aria-hidden="true"></i>
           { this.props.state === 'FOLLOWING_ACTIVISM_PAGE'

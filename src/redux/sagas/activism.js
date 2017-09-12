@@ -4,7 +4,7 @@ import Types from '../actions/types'
 import * as Actions  from '../actions/activism'
 
 import * as Api from '../../api/activism'
-import { uploadFile } from '../../api/assets'
+import { uploadFile, deleteFile } from '../../api/assets'
 
 import { AWS_S3_ACTIVISM_FOLDER, AWS_S3_BUCKET_NAME, AWS_S3 } from '../../config'
 
@@ -36,27 +36,74 @@ function* getActivismPage(action) {
 // Saga: will be fired on CREATE_ACTIVISM_PAGE_REQUESTED actions
 function* createActivismPage(action) {
   try {
-    let info = action.info
-    if (info.videoFile) {
-      let video = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, info.videoFile)
-      info.video = `${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ video.key }`
+    let data = action.data
+    if (data.videoFile) {
+      let video = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, data.videoFile)
+      data.video = `${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ video.key }`
     }
 
-    info.images = []
-    if (info.imageFiles) {
-      for (let i = 0; i < info.imageFiles.length; i++) {
-        let image = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, info.imageFiles[i])
-        info.images.push(`${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ image.key }`)
+    data.images = []
+    if (data.imageFiles) {
+      for (let i = 0; i < data.imageFiles.length; i++) {
+        let image = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, data.imageFiles[i])
+        data.images.push(`${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ image.key }`)
       }
     }
 
-    var result = yield call(Api.createActivismPage, info, action.idToken)
+    console.log(data.images)
+
+    var result = yield call(Api.createActivismPage, data, action.idToken)
 
     yield put(Actions.createActivismPageSucceeded(result))
 
     NotificationManager.success('New Activism Page is created.', 'Create Activism Page')
   } catch (e) {
     yield put(Actions.createActivismPageFailed(e))
+    NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+  }
+}
+
+// Saga: will be fired on UPDATE_ACTIVISM_PAGE_REQUESTED actions
+function* updateActivismPage(action) {
+  try {
+    let data = action.data
+
+    if (data.videoFile) {
+      let video = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, data.videoFile)
+      data.video = `${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ video.key }`
+    }
+
+    if (data.oldVideo) {
+      let path = data.oldVideo.split('/')
+      deleteFile(AWS_S3_ACTIVISM_FOLDER, path[path.length - 1])
+    }
+
+    data.images = []
+    if (data.imageFiles) {
+      for (let i = 0; i < data.imageFiles.length; i++) {
+        let file = data.imageFiles[i]
+        if (typeof file === 'string') {
+          data.images.push(file)
+          data.oldImages.splice(data.oldImages.indexOf(file), 1)
+        } else {
+          let image = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, data.imageFiles[i])
+          data.images.push(`${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ image.key }`)
+        }
+      }
+    }
+
+    for (let i = 0; i < data.oldImages.length; i++) {
+      let path = data.oldImages[i].split('/')
+      deleteFile(AWS_S3_ACTIVISM_FOLDER, path[path.length - 1])
+    }
+
+    var result = yield call(Api.updateActivismPage, data, action.idToken)
+
+    yield put(Actions.updateActivismPageSucceeded(result))
+
+    NotificationManager.success('Successfully Saved !', 'Edit Activism Page')
+  } catch (e) {
+    yield put(Actions.updateActivismPageFailed(e))
     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
   }
 }
@@ -180,6 +227,7 @@ export function* activismSaga() {
   yield takeLatest(Types.ACTIVISTS_FETCH_REQUESTED, fetchActivists)
   yield takeLatest(Types.GET_ACTIVISM_PAGE_REQUESTED, getActivismPage)
   yield takeLatest(Types.CREATE_ACTIVISM_PAGE_REQUESTED, createActivismPage)
+  yield takeLatest(Types.UPDATE_ACTIVISM_PAGE_REQUESTED, updateActivismPage)
   yield takeLatest(Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED, addUserEmailToActivismPage)
   yield takeLatest(Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED, getActivismPageComments)
   yield takeLatest(Types.UPVOTE_ACTIVISM_PAGE_REQUESTED, upvoteActivismPage)

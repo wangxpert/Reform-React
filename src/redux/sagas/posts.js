@@ -67,6 +67,7 @@ function* createPost(action) {
      console.log(data)
      const result = yield call(Api.createPost, data, action.idToken)
      yield put(Actions.createPostSucceeded(result))
+     NotificationManager.success('Your post is created successfully.', 'Success')
    } catch (e) {
      yield put(Actions.createPostFailed(e))
      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')

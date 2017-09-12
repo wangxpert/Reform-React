@@ -6,6 +6,11 @@ import {
   Circle
 } from 'better-react-spinkit'
 
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import EditIcon from 'material-ui/svg-icons/navigation/menu';
+
 export default class Comment extends Component {
 
   constructor(props) {
@@ -37,10 +42,31 @@ export default class Comment extends Component {
     this.props.flag()
   }
 
+  onEditComment(commentId) {
+    this.props.editComment(commentId)
+  }
+
+  onDeleteComment(commentId) {
+    this.props.deleteComment(commentId)
+  }
+
   render() {
-    const { comment } = this.props
+    const { comment, user } = this.props
+
     return (
       <div className={ `comment ${ this.props.className }` }>
+        { (user && comment.username === user.email) &&
+          <div className="float-right pr-3">
+            <IconMenu
+              iconButtonElement={<IconButton><EditIcon /></IconButton>}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+            >
+              <MenuItem primaryText="Edit" onClick={ () => this.onEditComment(comment.commentid) } />
+              <MenuItem primaryText="Delete" onClick={ () => this.onDeleteComment(comment.commentid) } />
+            </IconMenu>
+          </div>
+        }
         <div className="media pt-3 ml-3">
           <div className="media-left mx-3">
             <img src={ comment.useravatar ? `https://${ comment.useravatar }` : '/img/user.png' } className="media-object img-thumbnail avatar" alt=""/>

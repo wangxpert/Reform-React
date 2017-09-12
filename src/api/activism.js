@@ -4,11 +4,11 @@ export function fetchActivists(state, city, includingStates, includingCities, li
 
   var url = 'activism?co=us'
   if (includingStates === true) {
-    url += '&ic'
+    url += '&ic=1'
   } else {
     url += `&st=${ state }`
     if (includingCities === true) {
-      url += '&ic'
+      url += '&ic=1'
     } else {
       url += `&ct=${ city }`
     }
@@ -22,12 +22,20 @@ export function getActivismPage(pageId) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }`)
 }
 
-export function createActivismPage(info, idToken) {
+export function createActivismPage(data, idToken) {
   let url = 'activism/create?'
-  if (info.state) url += `st=${ info.state }&`
-  if (info.city) url += `ct=${ info.city }&`
+  if (data.state) url += `st=${ data.state }&`
+  if (data.city) url += `ct=${ data.city }&`
 
-  return callApi(ACTIVISM_API_URL, url, 'POST', info, idToken)
+  return callApi(ACTIVISM_API_URL, url, 'POST', data, idToken)
+}
+
+export function updateActivismPage(data, idToken) {
+  let url = 'activism/create?'
+  if (data.state) url += `st=${ data.state }&`
+  if (data.city) url += `ct=${ data.city }&`
+
+  return callApi(ACTIVISM_API_URL, url, 'PUT', data, idToken)
 }
 
 export function addUserEmailToActivismPage(pageId, email) {

@@ -47,6 +47,19 @@ export const createActivismPageFailed = (state = initialState, action) => {
   return { ...state, state: 'CREATE_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
+// Update Activism Page
+export const updateActivismPageRequested = (state = initialState, action) => {
+  return { ...state, state: 'UPDATING_ACTIVISM_PAGE' }
+}
+
+export const updateActivismPageSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_ACTIVISM_PAGE_SUCCEEDED', result: action.result }
+}
+
+export const updateActivismPageFailed = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_ACTIVISM_PAGE_FAILED', err: action.err }
+}
+
 // Add User Email to Activism Page
 export const addUserEmailToActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'ADDING_USER_EMAIL_TO_ACTIVISM_PAGE' }
@@ -214,6 +227,10 @@ export const handlers = {
   [Types.CREATE_ACTIVISM_PAGE_REQUESTED]: createActivismPageRequested,
   [Types.CREATE_ACTIVISM_PAGE_SUCCEEDED]: createActivismPageSucceeded,
   [Types.CREATE_ACTIVISM_PAGE_FAILED]: createActivismPageFailed,
+
+  [Types.UPDATE_ACTIVISM_PAGE_REQUESTED]: updateActivismPageRequested,
+  [Types.UPDATE_ACTIVISM_PAGE_SUCCEEDED]: updateActivismPageSucceeded,
+  [Types.UPDATE_ACTIVISM_PAGE_FAILED]: updateActivismPageFailed,
 
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED]: addUserEmailToActivismPageRequested,
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_SUCCEEDED]: addUserEmailToActivismPageSucceeded,

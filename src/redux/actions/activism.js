@@ -24,15 +24,25 @@ export const getActivismPageSucceeded = (result) =>
 export const getActivismPageFailed = (err) =>
   ({ type: Types.GET_ACTIVISM_PAGE_FAILED, err })
 
-// Create Activism PageManage
-export const createActivismPageRequested = (info, idToken) =>
-  ({ type: Types.CREATE_ACTIVISM_PAGE_REQUESTED, info, idToken })
+// Create Activism Page
+export const createActivismPageRequested = (data, idToken) =>
+  ({ type: Types.CREATE_ACTIVISM_PAGE_REQUESTED, data, idToken })
 
 export const createActivismPageSucceeded = (result) =>
   ({ type: Types.CREATE_ACTIVISM_PAGE_SUCCEEDED, result })
 
 export const createActivismPageFailed = (err) =>
   ({ type: Types.CREATE_ACTIVISM_PAGE_FAILED, err })
+
+// Update Activism Page
+export const updateActivismPageRequested = (data, idToken) =>
+  ({ type: Types.UPDATE_ACTIVISM_PAGE_REQUESTED, data, idToken })
+
+export const updateActivismPageSucceeded = (result) =>
+  ({ type: Types.UPDATE_ACTIVISM_PAGE_SUCCEEDED, result })
+
+export const updateActivismPageFailed = (err) =>
+  ({ type: Types.UPDATE_ACTIVISM_PAGE_FAILED, err })
 
 // Add User Email to Activism Page
 export const addUserEmailToActivismPageRequested = (pageId, email) =>

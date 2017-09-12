@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Core from './modules/App'
 
 // Base stylesheet
@@ -17,9 +18,11 @@ import 'react-notifications/lib/notifications.css'
 export default function App(props) {
   return (
     <Provider store={props.store}>
-      <ConnectedRouter history={props.history}>
-        <Route path="/" component={Core} />
-      </ConnectedRouter>
+      <MuiThemeProvider>
+        <ConnectedRouter history={props.history}>
+          <Route path="/" component={Core} />
+        </ConnectedRouter>
+      </MuiThemeProvider>
     </Provider>
   )
 }
