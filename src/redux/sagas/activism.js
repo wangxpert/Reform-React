@@ -81,11 +81,11 @@ function* updateActivismPage(action) {
     if (data.videoFile) {
       let video = yield call(uploadFile, AWS_S3_ACTIVISM_FOLDER, data.videoFile)
       data.video = `${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ video.key }`
-    }
 
-    if (data.oldVideo) {
-      let path = data.oldVideo.split('/')
-      deleteFile(AWS_S3_ACTIVISM_FOLDER, path[path.length - 1])
+      if (data.oldVideo) {
+        let path = data.oldVideo.split('/')
+        deleteFile(AWS_S3_ACTIVISM_FOLDER, path[path.length - 1])
+      }
     }
 
     data.images = []
@@ -107,7 +107,7 @@ function* updateActivismPage(action) {
       deleteFile(AWS_S3_ACTIVISM_FOLDER, path[path.length - 1])
     }
 
-    var result = yield call(Api.updateActivismPage, data, action.idToken)
+    var result = yield call(Api.updateActivismPage, action.pageId, data, action.idToken)
 
     yield put(Actions.updateActivismPageSucceeded(result))
 
@@ -118,15 +118,15 @@ function* updateActivismPage(action) {
   }
 }
 
-// Saga: will be fired on DELETE_PAGE_REQUESTED actions
+// Saga: will be fired on DELETE_ACTIVISM_PAGE_REQUESTED actions
 function* deletePage(action) {
    try {
-      const result = yield call(Api.deletePage, action.pageId, action.idToken)
-      yield put(Actions.deletePageSucceeded(result))
+      const result = yield call(Api.deleteActivismPage, action.pageId, action.idToken)
+      yield put(Actions.deleteActivismPageSucceeded(result))
       yield put(goBack())
       NotificationManager.success('The page is deleted.', 'Delete Activism Page')
    } catch (e) {
-      yield put(Actions.deletePageFailed(e))
+      yield put(Actions.deleteActivismPageFailed(e))
       NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
    }
 }
@@ -276,7 +276,7 @@ export function* activismSaga() {
   yield takeLatest(Types.GET_ACTIVISM_PAGE_REQUESTED, getActivismPage)
   yield takeLatest(Types.CREATE_ACTIVISM_PAGE_REQUESTED, createActivismPage)
   yield takeLatest(Types.UPDATE_ACTIVISM_PAGE_REQUESTED, updateActivismPage)
-  yield takeLatest(Types.DELETE_PAGE_REQUESTED, deletePage)
+  yield takeLatest(Types.DELETE_ACTIVISM_PAGE_REQUESTED, deletePage)
   yield takeLatest(Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED, addUserEmailToActivismPage)
   yield takeLatest(Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED, getActivismPageComments)
   yield takeLatest(Types.UPVOTE_ACTIVISM_PAGE_REQUESTED, upvoteActivismPage)

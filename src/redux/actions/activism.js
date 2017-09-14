@@ -38,8 +38,8 @@ export const createActivismPageFailed = (err) =>
   ({ type: Types.CREATE_ACTIVISM_PAGE_FAILED, err })
 
 // Update Activism Page
-export const updateActivismPageRequested = (data, idToken) =>
-  ({ type: Types.UPDATE_ACTIVISM_PAGE_REQUESTED, data, idToken })
+export const updateActivismPageRequested = (pageId, data, idToken) =>
+  ({ type: Types.UPDATE_ACTIVISM_PAGE_REQUESTED, pageId, data, idToken })
 
 export const updateActivismPageSucceeded = (result) =>
   ({ type: Types.UPDATE_ACTIVISM_PAGE_SUCCEEDED, result })
@@ -48,14 +48,14 @@ export const updateActivismPageFailed = (err) =>
   ({ type: Types.UPDATE_ACTIVISM_PAGE_FAILED, err })
 
 // Delete Activism Page
-export const deletePageRequested = (pageId, idToken) =>
-  ({ type: Types.DELETE_PAGE_REQUESTED, pageId, idToken })
+export const deleteActivismPageRequested = (pageId, idToken) =>
+  ({ type: Types.DELETE_ACTIVISM_PAGE_REQUESTED, pageId, idToken })
 
-export const deletePageSucceeded = (result) =>
-  ({ type: Types.DELETE_PAGE_SUCCEEDED, result })
+export const deleteActivismPageSucceeded = (result) =>
+  ({ type: Types.DELETE_ACTIVISM_PAGE_SUCCEEDED, result })
 
-export const deletePageFailed = (err) =>
-  ({ type: Types.DELETE_PAGE_FAILED, err })
+export const deleteActivismPageFailed = (err) =>
+  ({ type: Types.DELETE_ACTIVISM_PAGE_FAILED, err })
 
 // Add User Email to Activism Page
 export const addUserEmailToActivismPageRequested = (pageId, email) =>

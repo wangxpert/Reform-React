@@ -14,7 +14,6 @@ export function deleteFile(folder, file) {
 
       AWS.config.region = AWS_CONFIG_REGION
 
-      if (AWS.config.credentials) AWS.config.credentials.clearCachedId()
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
           IdentityPoolId : AWS_IDENTITY_POOL_ID, // your identity pool id here
           Logins : {
@@ -23,17 +22,26 @@ export function deleteFile(folder, file) {
           }
       })
 
-      var s3 = new AWS.S3({
-        apiVersion: cognitoUser.pool.client.config.apiVersion,
-        params: { Bucket: AWS_S3_BUCKET_NAME }
+      AWS.config.credentials.clearCachedId()
+
+      AWS.config.credentials.refresh((error) => {
+        if (error) {
+          console.error(error);
+        } else {
+          var s3 = new AWS.S3({
+            apiVersion: cognitoUser.pool.client.config.apiVersion,
+            params: { Bucket: AWS_S3_BUCKET_NAME }
+          })
+
+          const key = encodeURIComponent(folder) + '/' + file
+
+          s3.deleteObject({ Key: key }, (err, data) => {
+            if (err) reject(err)
+            else resolve(data)
+          })
+        }
       })
 
-      const key = encodeURIComponent(folder) + '/' + file
-
-      s3.deleteObject({ Key: key }, (err, data) => {
-        if (err) reject(err)
-        else resolve(data)
-      })
     })
   ).then(response => {
       return response
@@ -53,7 +61,6 @@ export function uploadFile(folder, file) {
 
       AWS.config.region = AWS_CONFIG_REGION
 
-      if (AWS.config.credentials) AWS.config.credentials.clearCachedId()
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
           IdentityPoolId : AWS_IDENTITY_POOL_ID, // your identity pool id here
           Logins : {
@@ -62,22 +69,30 @@ export function uploadFile(folder, file) {
           }
       })
 
-      var s3 = new AWS.S3({
-        apiVersion: cognitoUser.pool.client.config.apiVersion,
-        params: { Bucket: AWS_S3_BUCKET_NAME }
-      })
+      AWS.config.credentials.clearCachedId()
 
-      const ext = file.name.split('.')
-      const key = encodeURIComponent(folder) + '/' + uuidv1() + '.' + ext[ext.length - 1]
+      AWS.config.credentials.refresh((error) => {
+        if (error) {
+            console.error(error);
+        } else {
+          var s3 = new AWS.S3({
+            apiVersion: cognitoUser.pool.client.config.apiVersion,
+            params: { Bucket: AWS_S3_BUCKET_NAME }
+          })
 
-      s3.upload({
-        Key: key,
-        Body: file,
-        ACL: 'public-read'
-      }, function(err, data) {
-        if (err) reject(err)
-        else resolve(data)
-      })
+          const ext = file.name.split('.')
+          const key = encodeURIComponent(folder) + '/' + uuidv1() + '.' + ext[ext.length - 1]
+
+          s3.upload({
+            Key: key,
+            Body: file,
+            ACL: 'public-read'
+          }, function(err, data) {
+            if (err) reject(err)
+            else resolve(data)
+          })
+        }
+      });
 
     })
   ).then(response => {

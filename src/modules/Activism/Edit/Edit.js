@@ -72,23 +72,13 @@ class Edit extends Component {
         images: page.images.map(e => `https://${ e }`),
         imageFiles: page.images.slice(),
         description: page.content,
-        video: page.videos[0],
+        video: page.videos[0] ? page.video[0] : '',
         videoFile: null
       })
     }
 
     if (nextProps.state !== this.props.state && nextProps.state === 'UPDATE_ACTIVISM_PAGE_SUCCEEDED') {
-      this.setState({
-        title: '',
-        level: 1,
-        state: '',
-        city: '',
-        description: '',
-        images: [],
-        imageFiles: [],
-        videoFile: null,
-        video: ''
-      })
+
     }
   }
 
@@ -145,17 +135,18 @@ class Edit extends Component {
     if (this.props.state === 'CREATING_ACTIVISM_PAGE')
       return
 
-    this.props.createActivismPage({
-      title: this.state.title,
-      level: this.state.level,
-      state: (this.state.level > 1) ? this.state.state : undefined,
-      city: (this.state.level > 2) ? this.state.city : undefined,
-      content: this.state.description,
-      imageFiles: this.state.imageFiles,
-      videoFile: this.state.videoFile,
-      oldImages: this.props.page.images,
-      oldVideo: this.props.page.videos[0]
-    }, this.props.auth.session.idToken.jwtToken)
+    this.props.updateActivismPage(this.props.page.id,
+      {
+        title: this.state.title,
+        level: this.state.level,
+        state: (this.state.level > 1) ? this.state.state : undefined,
+        city: (this.state.level > 2) ? this.state.city : undefined,
+        content: this.state.description,
+        imageFiles: this.state.imageFiles,
+        videoFile: this.state.videoFile,
+        oldImages: this.props.page.images,
+        oldVideo: this.props.page.videos[0]
+      }, this.props.auth.session.idToken.jwtToken)
   }
 
   onVideo(e) {

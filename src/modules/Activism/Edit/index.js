@@ -32,7 +32,7 @@ function mapDispatchToProps(dispatch) {
     citiesFetchRequested: (state) => dispatch(citiesFetchRequested(state)),
     selectState: (state) => dispatch(selectState(state)),
     selectCity: (city) => dispatch(selectCity(city)),
-    createActivismPage: (info, idToken) => dispatch(Actions.createActivismPageRequested(info, idToken))
+    updateActivismPage: (pageId, data, idToken) => dispatch(Actions.updateActivismPageRequested(pageId, data, idToken))
   }
 }
 

@@ -74,7 +74,9 @@ export const updateActivismPageRequested = (state = initialState, action) => {
 }
 
 export const updateActivismPageSucceeded = (state = initialState, action) => {
-  return { ...state, state: 'UPDATE_ACTIVISM_PAGE_SUCCEEDED', result: action.result }
+  let page = Object.assign({}, state.activismPage, action.result.updates)
+
+  return { ...state, state: 'UPDATE_ACTIVISM_PAGE_SUCCEEDED', activismPage: page, result: action.result }
 }
 
 export const updateActivismPageFailed = (state = initialState, action) => {
@@ -82,16 +84,16 @@ export const updateActivismPageFailed = (state = initialState, action) => {
 }
 
 // Delete Activism Page
-export const deletePageRequested = (state = initialState, action) => {
+export const deleteActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'DELETING_ACTIVISM_PAGE' }
 }
 
-export const deletePageSucceeded = (state = initialState, action) => {
-  return { ...state, state: 'DELETE_PAGE_SUCCEEDED', result: action.result }
+export const deleteActivismPageSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_ACTIVISM_PAGE_SUCCEEDED', result: action.result }
 }
 
-export const deletePageFailed = (state = initialState, action) => {
-  return { ...state, state: 'DELETE_PAGE_FAILED', err: action.err }
+export const deleteActivismPageFailed = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
 // Add User Email to Activism Page
@@ -302,9 +304,9 @@ export const handlers = {
   [Types.UPDATE_ACTIVISM_PAGE_SUCCEEDED]: updateActivismPageSucceeded,
   [Types.UPDATE_ACTIVISM_PAGE_FAILED]: updateActivismPageFailed,
 
-  [Types.DELETE_PAGE_REQUESTED]: deletePageRequested,
-  [Types.DELETE_PAGE_SUCCEEDED]: deletePageSucceeded,
-  [Types.DELETE_PAGE_FAILED]: deletePageFailed,
+  [Types.DELETE_ACTIVISM_PAGE_REQUESTED]: deleteActivismPageRequested,
+  [Types.DELETE_ACTIVISM_PAGE_SUCCEEDED]: deleteActivismPageSucceeded,
+  [Types.DELETE_ACTIVISM_PAGE_FAILED]: deleteActivismPageFailed,
 
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED]: addUserEmailToActivismPageRequested,
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_SUCCEEDED]: addUserEmailToActivismPageSucceeded,

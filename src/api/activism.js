@@ -34,12 +34,8 @@ export function createActivismPage(data, idToken) {
   return callApi(ACTIVISM_API_URL, url, 'POST', data, idToken)
 }
 
-export function updateActivismPage(data, idToken) {
-  let url = 'activism/create?'
-  if (data.state) url += `st=${ data.state }&`
-  if (data.city) url += `ct=${ data.city }&`
-
-  return callApi(ACTIVISM_API_URL, url, 'PUT', data, idToken)
+export function updateActivismPage(pageId, data, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }`, 'PUT', data, idToken)
 }
 
 export function addUserEmailToActivismPage(pageId, email) {
@@ -50,7 +46,7 @@ export function getActivismPageComments(pageId, limit, lastKey) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments?limit=${ limit }`, 'POST', { LastEvaluatedKey: lastKey })
 }
 
-export function deletePage(pageId, idToken) {
+export function deleteActivismPage(pageId, idToken) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }`, 'DELETE', null, idToken)
 }
 

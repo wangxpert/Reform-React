@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 
 // Import Actions
 import * as Actions from '../../../redux/actions/activism'
-import { goBack } from 'react-router-redux'
+import { push } from 'react-router-redux'
 
 // Import View
 import Page from './Page'
@@ -28,14 +28,14 @@ function mapDispatchToProps(dispatch) {
     upvotePage: (pageId, idToken) => dispatch(Actions.upvoteActivismPageRequested(pageId, idToken)),
     downvotePage: (pageId, idToken) => dispatch(Actions.downvoteActivismPageRequested(pageId, idToken)),
     flagPage: (pageId, idToken) => dispatch(Actions.flagActivismPageRequested(pageId, idToken)),
-    deletePage: (pageId, idToken) => dispatch(Actions.deletePageRequested(pageId, idToken)),
+    deletePage: (pageId, idToken) => dispatch(Actions.deleteActivismPageRequested(pageId, idToken)),
     followPage: (pageId, idToken) => dispatch(Actions.followActivismPageRequested(pageId, idToken)),
     upvoteComment: (pageId, commentId, idToken) => dispatch(Actions.upvoteCommentRequested(pageId, commentId, idToken)),
     downvoteComment: (pageId, commentId, idToken) => dispatch(Actions.downvoteCommentRequested(pageId, commentId, idToken)),
     flagComment: (pageId, commentId, idToken) => dispatch(Actions.flagCommentRequested(pageId, commentId, idToken)),
     deleteComment: (pageId, commentId, idToken) => dispatch(Actions.deleteCommentRequested(pageId, commentId, idToken)),
     editComment: (pageId, commentId, content, idToken) => dispatch(Actions.updateCommentRequested(pageId, commentId, content, idToken)),
-    backLocation: (location) => dispatch(goBack())
+    changeLocation: (location) => dispatch(push(location))
   }
 }
 

@@ -49,6 +49,7 @@ class Page extends Component {
     this.editComment = this.editComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
     this.deletePage = this.deletePage.bind(this)
+    this.editPage = this.editPage.bind(this)
     this.upvotePage = this.upvotePage.bind(this)
     this.downvotePage = this.downvotePage.bind(this)
     this.flagPage = this.flagPage.bind(this)
@@ -99,7 +100,10 @@ class Page extends Component {
 
   deletePage() {
     this.props.deletePage(this.props.page.id, this.props.auth.session.idToken.jwtToken)
-    // this.props.backLocation()
+  }
+
+  editPage() {
+    this.props.changeLocation(`/activism/update/${this.props.page.id}`)
   }
 
   upvotePage(e) {
@@ -228,7 +232,7 @@ class Page extends Component {
                 anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
                 targetOrigin={{ horizontal: 'right', vertical: 'top' }}
               >
-                <MenuItem primaryText="Edit" />
+                <MenuItem primaryText="Edit" onClick={ this.editPage }/>
                 <MenuItem primaryText="Delete" onClick={ () => this.toggleConfirmDeletePageDialog() }/>
               </IconMenu>
             </div>
