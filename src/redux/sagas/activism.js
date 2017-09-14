@@ -12,6 +12,8 @@ import { NotificationManager } from 'react-notifications'
 
 import { errorMessage } from '../../utils/error'
 
+import { goBack } from 'react-router-redux'
+
 
 // Saga: will be fired on ACTIVISTS_FETCH_REQUESTED actions
 function* fetchActivists(action) {
@@ -20,6 +22,16 @@ function* fetchActivists(action) {
       yield put({ type: "ACTIVISTS_FETCH_SUCCEEDED", activists: activists })
    } catch (e) {
       yield put({ type: "ACTIVISTS_FETCH_FAILED", err: e.message })
+   }
+}
+
+// Saga: will be fired on GET_MYPAGES_REQUESTED actions
+function* getMyPages(action) {
+   try {
+      const result = yield call(Api.getMyPages, action.limit, action.lastKey, action.idToken)
+      yield put(Actions.getMyPagesSucceeded(result))
+   } catch (e) {
+      yield put(Actions.getMyPagesFailed(e))
    }
 }
 
@@ -49,8 +61,6 @@ function* createActivismPage(action) {
         data.images.push(`${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ image.key }`)
       }
     }
-
-    console.log(data.images)
 
     var result = yield call(Api.createActivismPage, data, action.idToken)
 
@@ -108,12 +118,25 @@ function* updateActivismPage(action) {
   }
 }
 
+// Saga: will be fired on DELETE_PAGE_REQUESTED actions
+function* deletePage(action) {
+   try {
+      const result = yield call(Api.deletePage, action.pageId, action.idToken)
+      yield put(Actions.deletePageSucceeded(result))
+      yield put(goBack())
+      NotificationManager.success('The page is deleted.', 'Delete Activism Page')
+   } catch (e) {
+      yield put(Actions.deletePageFailed(e))
+      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
 // Saga: will be fired on ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED actions
 function* addUserEmailToActivismPage(action) {
    try {
       const result = yield call(Api.addUserEmailToActivismPage, action.pageId, action.email)
       yield put(Actions.addUserEmailToActivismPageSucceeded(result))
-      NotificationManager.success('Thanks for adding your email to this activism page', 'Sucesss')
+      NotificationManager.success('Thanks for adding your email to this activism page', 'Add Email')
    } catch (e) {
       yield put(Actions.addUserEmailToActivismPageFailed(e))
       NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
@@ -124,7 +147,7 @@ function* addUserEmailToActivismPage(action) {
 function* getActivismPageComments(action) {
    try {
       const result = yield call(Api.getActivismPageComments, action.pageId, action.email)
-      yield put(Actions.getActivismpageCommentsSucceeded(result))
+      yield put(Actions.getActivismPageCommentsSucceeded(result))
    } catch (e) {
       yield put(Actions.getActivismPageCommentsFailed(e))
       // NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
@@ -187,6 +210,30 @@ function* addCommentToActivismPage(action) {
    }
 }
 
+// Saga: will be fired on UPDATE_COMMENT actions
+function* updateComment(action) {
+   try {
+      const result = yield call(Api.updateComment, action.pageId, action.commentId, action.content, action.idToken)
+      yield put(Actions.updateCommentSucceeded(result))
+      NotificationManager.success('The change is saved successfully.', 'Edit comment')
+   } catch (e) {
+      yield put(Actions.updateCommentFailed(e))
+      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on DELETE_COMMENT actions
+function* deleteComment(action) {
+   try {
+      const result = yield call(Api.deleteComment, action.pageId, action.commentId, action.idToken)
+      yield put(Actions.deleteCommentSucceeded(result))
+      NotificationManager.success('The comment is deleted successfully.', 'Delete comment')
+   } catch (e) {
+      yield put(Actions.deleteCommentFailed(e))
+      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
 // Saga: will be fired on UPVOTE_COMMENT actions
 function* upvoteComment(action) {
    try {
@@ -225,14 +272,18 @@ function* flagComment(action) {
 */
 export function* activismSaga() {
   yield takeLatest(Types.ACTIVISTS_FETCH_REQUESTED, fetchActivists)
+  yield takeLatest(Types.GET_MYPAGES_REQUESTED, getMyPages)
   yield takeLatest(Types.GET_ACTIVISM_PAGE_REQUESTED, getActivismPage)
   yield takeLatest(Types.CREATE_ACTIVISM_PAGE_REQUESTED, createActivismPage)
   yield takeLatest(Types.UPDATE_ACTIVISM_PAGE_REQUESTED, updateActivismPage)
+  yield takeLatest(Types.DELETE_PAGE_REQUESTED, deletePage)
   yield takeLatest(Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED, addUserEmailToActivismPage)
   yield takeLatest(Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED, getActivismPageComments)
   yield takeLatest(Types.UPVOTE_ACTIVISM_PAGE_REQUESTED, upvoteActivismPage)
   yield takeLatest(Types.DOWNVOTE_ACTIVISM_PAGE_REQUESTED, downvoteActivismPage)
   yield takeLatest(Types.ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED, addCommentToActivismPage)
+  yield takeLatest(Types.UPDATE_COMMENT_REQUESTED, updateComment)
+  yield takeLatest(Types.DELETE_COMMENT_REQUESTED, deleteComment)
   yield takeLatest(Types.FLAG_ACTIVISM_PAGE_REQUESTED, flagActivismPage)
   yield takeLatest(Types.FOLLOW_ACTIVISM_PAGE_REQUESTED, followActivismPage)
   yield takeLatest(Types.UPVOTE_COMMENT_REQUESTED, upvoteComment)

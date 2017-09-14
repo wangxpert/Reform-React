@@ -6,9 +6,10 @@ import { Modal, ModalBody } from 'reactstrap'
 
 import Button from '../Button'
 
-const btnStyle = { width: '100%' }
+const btnStyle = { width: '100px' }
+const textStyle = { fontSize: '1.1em' }
 
-class YesNoDialog extends Component {
+class ConfirmDialog extends Component {
 
   constructor(props) {
     super(props)
@@ -17,12 +18,12 @@ class YesNoDialog extends Component {
       content: ''
     }
 
-    this.onSave = this.onSave.bind(this)
+    this.onYes = this.onYes.bind(this)
   }
 
-  onSave(e) {
+  onYes(e) {
     e.preventDefault()
-    this.props.save(this.state.content)
+    this.props.confirm()
     this.props.toggle()
   }
 
@@ -31,19 +32,19 @@ class YesNoDialog extends Component {
       <Modal isOpen={ this.props.isOpen } toggle={ this.props.toggle } className={ this.props.className } >
         <ModalBody>
           <div className="dialog-header">
-            Add Comment
+            { this.props.title }
             <i className="fa fa-times float-right close-button" onClick={ this.props.toggle  }></i>
           </div>
-          <form onSubmit={ this.onSave }>
+          <form onSubmit={ this.onYes }>
             <div className="dialog-body pb-0">
-              <div className="form-group">
-                <label className="ml-2" htmlFor="content" style={{ fontSize: '1.1em' }}>Please enter the content of comment</label>
-                <textarea className="form-control" id="content" rows="4" value={ this.state.content } onChange={ e => this.setState({ content: e.target.value }) } required></textarea>
-              </div>
+              <div className="px-1" style={ textStyle }>{ this.props.content }</div>
             </div>
-            <div className="dialog-footer">
-              <Button style={ btnStyle }>
-                Add
+            <div className="dialog-footer text-right mt-3 mb-1">
+              <Button className="mx-1 py-1" type="submit" style={ btnStyle }>
+                Yes
+              </Button>
+              <Button className="mx-1 py-1" type="button" style={ btnStyle } onClick={ this.props.toggle }>
+                No
               </Button>
             </div>
           </form>
@@ -53,10 +54,13 @@ class YesNoDialog extends Component {
   }
 }
 
-YesNoDialog.propTypes = {
+ConfirmDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+
   toggle: PropTypes.func.isRequired,
-  save: PropTypes.func.isRequired
+  confirm: PropTypes.func.isRequired
 }
 
-export default YesNoDialog
+export default ConfirmDialog

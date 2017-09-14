@@ -63,7 +63,7 @@ class Edit extends Component {
 
     if (nextProps.page !== this.props.page && nextProps.page) {
       let page = nextProps.page
-      console.log(page)
+
       this.setState({
         title: page.title,
         level: page.level,

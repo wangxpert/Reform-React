@@ -62,8 +62,8 @@ export default class Comment extends Component {
               anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
               targetOrigin={{ horizontal: 'right', vertical: 'top' }}
             >
-              <MenuItem primaryText="Edit" onClick={ () => this.onEditComment(comment.commentid) } />
-              <MenuItem primaryText="Delete" onClick={ () => this.onDeleteComment(comment.commentid) } />
+              <MenuItem primaryText="Edit" onClick={ () => this.onEditComment(comment) } />
+              <MenuItem primaryText="Delete" onClick={ () => this.onDeleteComment(comment) } />
             </IconMenu>
           </div>
         }

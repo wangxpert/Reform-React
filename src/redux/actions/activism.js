@@ -4,6 +4,9 @@ import Types from './types'
 export const resetActivists = () =>
   ({ type: Types.RESET_ACTIVISTS })
 
+export const resetMyPages = () =>
+  ({ type: Types.RESET_MYPAGES })
+
 // Get Activist List
 export const activistsFetchRequested = (state, city, includingStates, includingCities, limit = '', lastKey) =>
   ({ type: Types.ACTIVISTS_FETCH_REQUESTED, state, city, includingStates, includingCities, limit, lastKey })
@@ -44,6 +47,16 @@ export const updateActivismPageSucceeded = (result) =>
 export const updateActivismPageFailed = (err) =>
   ({ type: Types.UPDATE_ACTIVISM_PAGE_FAILED, err })
 
+// Delete Activism Page
+export const deletePageRequested = (pageId, idToken) =>
+  ({ type: Types.DELETE_PAGE_REQUESTED, pageId, idToken })
+
+export const deletePageSucceeded = (result) =>
+  ({ type: Types.DELETE_PAGE_SUCCEEDED, result })
+
+export const deletePageFailed = (err) =>
+  ({ type: Types.DELETE_PAGE_FAILED, err })
+
 // Add User Email to Activism Page
 export const addUserEmailToActivismPageRequested = (pageId, email) =>
   ({ type: Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED, pageId, email })
@@ -54,11 +67,11 @@ export const addUserEmailToActivismPageSucceeded = (result) =>
 export const addUserEmailToActivismPageFailed = (err) =>
   ({ type: Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_FAILED, err })
 
-// Get comments of Activism Page
+// Get Comments of Activism Page
 export const getActivismPageCommentsRequested = (pageId, limit = '', lastKey) =>
   ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED, pageId, limit, lastKey })
 
-export const getActivismpageCommentsSucceeded = (result) =>
+export const getActivismPageCommentsSucceeded = (result) =>
   ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED, result })
 
 export const getActivismPageCommentsFailed = (err) =>
@@ -114,6 +127,26 @@ export const addCommentToActivismPageSucceeded = (result) =>
 export const addCommentToActivismPageFailed = (err) =>
   ({ type: Types.ADD_COMMENT_TO_ACTIVISM_PAGE_FAILED, err })
 
+// Edit Comment
+export const updateCommentRequested = (pageId, commentId, content, idToken) =>
+  ({ type: Types.UPDATE_COMMENT_REQUESTED, pageId, commentId, content, idToken })
+
+export const updateCommentSucceeded = (result) =>
+  ({ type: Types.UPDATE_COMMENT_SUCCEEDED, result })
+
+export const updateCommentFailed = (err) =>
+  ({ type: Types.UPDATE_COMMENT_FAILED, err })
+
+// Delete Comment
+export const deleteCommentRequested = (pageId, commentId, idToken) =>
+  ({ type: Types.DELETE_COMMENT_REQUESTED, pageId, commentId, idToken })
+
+export const deleteCommentSucceeded = (result) =>
+  ({ type: Types.DELETE_COMMENT_SUCCEEDED, result })
+
+export const deleteCommentFailed = (err) =>
+  ({ type: Types.DELETE_COMMENT_FAILED, err })
+
 // Upvote Comment
 export const upvoteCommentRequested = (pageId, commentId, idToken) =>
   ({ type: Types.UPVOTE_COMMENT_REQUESTED, pageId, commentId, idToken })
@@ -143,3 +176,14 @@ export const flagCommentSucceeded = (result) =>
 
 export const flagCommentFailed = (err) =>
   ({ type: Types.FLAG_COMMENT_FAILED, err })
+
+
+// Get My Pages
+export const getMyPagesRequested = (limit, lastKey, idToken) =>
+  ({ type: Types.GET_MYPAGES_REQUESTED, limit, lastKey, idToken })
+
+export const getMyPagesSucceeded = (result) =>
+  ({ type: Types.GET_MYPAGES_SUCCEEDED, result })
+
+export const getMyPagesFailed = (err) =>
+  ({ type: Types.GET_MYPAGES_FAILED, err })

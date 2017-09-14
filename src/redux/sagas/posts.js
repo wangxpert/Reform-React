@@ -64,7 +64,7 @@ function* createPost(action) {
        let image = yield call(uploadFile, AWS_S3_POST_FOLDER, data.imageFile)
        data.image = `${ AWS_S3 }/${ AWS_S3_BUCKET_NAME }/${ image.key }`
      }
-     console.log(data)
+
      const result = yield call(Api.createPost, data, action.idToken)
      yield put(Actions.createPostSucceeded(result))
      NotificationManager.success('Your post is created successfully.', 'Success')

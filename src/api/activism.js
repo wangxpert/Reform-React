@@ -18,6 +18,10 @@ export function fetchActivists(state, city, includingStates, includingCities, li
   return callApi(ACTIVISM_API_URL, url, 'POST', { LastEvaluatedKey: lastKey })
 }
 
+export function getMyPages(limit, lastKey, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/me?limit=${limit}`, 'POST', { LastEvaluatedKey: lastKey }, idToken)
+}
+
 export function getActivismPage(pageId) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }`)
 }
@@ -46,6 +50,10 @@ export function getActivismPageComments(pageId, limit, lastKey) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments?limit=${ limit }`, 'POST', { LastEvaluatedKey: lastKey })
 }
 
+export function deletePage(pageId, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }`, 'DELETE', null, idToken)
+}
+
 export function upvoteActivismPage(pageId, idToken) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }/upvote`, 'PUT', null, idToken)
 }
@@ -64,6 +72,14 @@ export function followActivismPage(pageId, idToken) {
 
 export function addCommentToActivismPage(pageId, content, idToken) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/create`, 'POST', { content }, idToken)
+}
+
+export function updateComment(pageId, commentId, content, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }`, 'PUT', { content }, idToken)
+}
+
+export function deleteComment(pageId, commentId, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }`, 'DELETE', null, idToken)
 }
 
 export function upvoteComment(pageId, commentId, idToken) {

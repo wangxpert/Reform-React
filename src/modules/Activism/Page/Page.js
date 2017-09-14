@@ -10,13 +10,18 @@ import { Carousel } from 'react-responsive-carousel'
 import { Player } from 'video-react'
 import { NotificationManager } from 'react-notifications'
 
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import EditIcon from 'material-ui/svg-icons/navigation/menu';
+
 import {
   Circle
 } from 'better-react-spinkit'
 
 import Button from '../../../components/Button'
-import ConfirmDialog from '../../../components/YesNoDialog'
-import AddCommentDialog from './components/AddCommentDialog'
+import ConfirmDialog from '../../../components/ConfirmDialog'
+import InputDialog from '../../../components/InputDialog'
 import Comment from './components/Comment'
 
 const btnStyle = { padding: '3px 30px', marginRight: '16px' }
@@ -30,7 +35,12 @@ class Page extends Component {
 
     this.state = {
       email: '',
-      showCreateComment: false
+      showCreatePage: false,
+      showCreateComment: false,
+      showEditComment: false,
+      showConfirmDeleteComment: false,
+      showConfirmDeletePage: false,
+      comment: null
     }
 
     this.onChange = this.onChange.bind(this)
@@ -38,12 +48,16 @@ class Page extends Component {
     this.addComment = this.addComment.bind(this)
     this.editComment = this.editComment.bind(this)
     this.deleteComment = this.deleteComment.bind(this)
+    this.deletePage = this.deletePage.bind(this)
     this.upvotePage = this.upvotePage.bind(this)
     this.downvotePage = this.downvotePage.bind(this)
     this.flagPage = this.flagPage.bind(this)
     this.followPage = this.followPage.bind(this)
 
     this.toggleAddCommentDialog = this.toggleAddCommentDialog.bind(this)
+    this.toggleEditCommentDialog = this.toggleEditCommentDialog.bind(this)
+    this.toggleConfirmDeleteCommentDialog = this.toggleConfirmDeleteCommentDialog.bind(this)
+    this.toggleConfirmDeletePageDialog = this.toggleConfirmDeletePageDialog.bind(this)
     this.isLogged = this.isLogged.bind(this)
   }
 
@@ -73,10 +87,19 @@ class Page extends Component {
     this.props.addComment(this.props.page.id, content, this.props.auth.session.idToken.jwtToken)
   }
 
-  editComment(commentId) {
+  editComment(comment) {
+    this.setState({ comment: comment })
+    this.toggleEditCommentDialog()
   }
 
-  deleteComment(commentId) {
+  deleteComment(comment) {
+    this.setState({ comment: comment })
+    this.toggleConfirmDeleteCommentDialog()
+  }
+
+  deletePage() {
+    this.props.deletePage(this.props.page.id, this.props.auth.session.idToken.jwtToken)
+    // this.props.backLocation()
   }
 
   upvotePage(e) {
@@ -121,6 +144,24 @@ class Page extends Component {
     this.setState({ showCreateComment: !this.state.showCreateComment })
   }
 
+  toggleEditCommentDialog() {
+    if (!this.isLogged()) return
+
+    this.setState({ showEditComment: !this.state.showEditComment })
+  }
+
+  toggleConfirmDeleteCommentDialog() {
+    if (!this.isLogged()) return
+
+    this.setState({ showConfirmDeleteComment: !this.state.showConfirmDeleteComment })
+  }
+
+  toggleConfirmDeletePageDialog() {
+    if (!this.isLogged()) return
+
+    this.setState({ showConfirmDeletePage: !this.state.showConfirmDeletePage })
+  }
+
   isLogged() {
     if (!this.props.auth.session) {
       NotificationManager.error('You have to login to do this action.', "Error...")
@@ -162,15 +203,47 @@ class Page extends Component {
 
     return (
       <div className="activism-page my-3 my-md-5">
-        <AddCommentDialog isOpen={ this.state.showCreateComment } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
-        <Button className="float-right" onClick={ this.followPage }>
-          <i className="fa fa-user-plus" aria-hidden="true"></i>
-          { this.props.state === 'FOLLOWING_ACTIVISM_PAGE'
-            ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
-            : ` ${ page.followers ? page.followers : '' } Follow`
+        {/* Dialogs */}
+        <InputDialog title={ 'Add Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Add' } default={''}
+          isOpen={ this.state.showCreateComment } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
+
+        <InputDialog title={ 'Edit Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Save' } default={ this.state.comment ? this.state.comment.content : '' }
+          isOpen={ this.state.showEditComment } toggle={ this.toggleEditCommentDialog }
+          save={ content => this.props.editComment(page.id, this.state.comment.commentid, content, idToken)  } />
+
+        <ConfirmDialog title={ 'Confirm Deletion' } content={ 'Do you want to delete this page?' }
+          isOpen={ this.state.showConfirmDeletePage } toggle={ this.toggleConfirmDeletePageDialog }
+          confirm={ this.deletePage } />
+
+        <ConfirmDialog title={ 'Confirm Deletion' } content={ 'Do you want to delete the comment?' }
+          isOpen={ this.state.showConfirmDeleteComment } toggle={ this.toggleConfirmDeleteCommentDialog }
+          confirm={ () => this.props.deleteComment(page.id, this.state.comment.commentid, idToken) } />
+        {/* --- */}
+
+        <div className="float-right text-right">
+          { (this.props.user && page.username === this.props.user.email) &&
+            <div className="">
+              <IconMenu
+                iconButtonElement={<IconButton><EditIcon /></IconButton>}
+                anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+                targetOrigin={{ horizontal: 'right', vertical: 'top' }}
+              >
+                <MenuItem primaryText="Edit" />
+                <MenuItem primaryText="Delete" onClick={ () => this.toggleConfirmDeletePageDialog() }/>
+              </IconMenu>
+            </div>
           }
-        </Button>
+          <Button className="" onClick={ this.followPage }>
+            <i className="fa fa-user-plus" aria-hidden="true"></i>
+            { this.props.state === 'FOLLOWING_ACTIVISM_PAGE'
+              ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
+              : ` ${ page.followers ? page.followers : '' } Follow`
+            }
+          </Button>
+        </div>
+
         <h1 className="title mt-3">{ page.title }</h1>
+
 
         <div className="row">
           <div className="col mb-3">
@@ -181,31 +254,13 @@ class Page extends Component {
         <div className="row">
           <div className="col-12 col-lg-5 mb-3" >
             <div className="image-container">
-              <Carousel axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
-                { previewImages }
-              </Carousel>
+              { page.images.length ?
+                <Carousel axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
+                  { previewImages }
+                </Carousel>
+                : <div className="text-center p-5">No Image</div>
+              }
             </div>
-            {/*
-            <div className="activity-container mb-3">
-              <div className="container-title text-center py-1">
-                Page Activity
-              </div>
-              <div className="content row px-3 py-2">
-                <div className="col-6">
-                  Followers<br /> 201
-                </div>
-                <div className="col-6">
-                  Posts<br /> 200
-                </div>
-                <div className="col-6">
-                  Support<br /> 100
-                </div>
-                <div className="col-6">
-                  Against<br /> 80
-                </div>
-              </div>
-            </div>
-            */}
           </div>
 
           <div className="col-12 col-lg-7">

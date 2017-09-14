@@ -4,7 +4,8 @@ import Types from '../actions/types'
 
 // Initial State
 const initialState = {
-  activists: []
+  activists: [],
+  myPages: { pages: [], lastKey: undefined }
 }
 
 // Handlers
@@ -13,12 +14,32 @@ export const resetActivists = (state = initialState) => {
   return { activists: [] }
 }
 
+export const resetMyPages = (state = initialState) => {
+  return { myPages: { pages: [], lastKey: null } }
+}
+
 export const fetchActivistsSucceeded = (state = initialState, action) => {
   return { ...state, activists: [ ...state.activists, ...action.activists.Items ], lastKey: action.activists.LastEvaluatedKey }
 }
 
 export const fetchActivistsFailed = (state = initialState, action) => {
   return { ...state, err: action.err }
+}
+
+// Get My Pages
+export const getMyPagesRequested = (state = initialState, action) => {
+  return { ...state, state: 'GETTING_MYPAGES' }
+}
+
+export const getMyPagesSucceeded = (state = initialState, action) => {
+  let myPages = state.myPages
+  myPages.pages = myPages.pages.concat(action.result.Items)
+  myPages.lastKey = action.result.LastEvaluatedKey
+  return { ...state, state: 'GET_MYPAGES_SUCCEEDED', myPages, result: action.result }
+}
+
+export const getMyPagesFailed = (state = initialState, action) => {
+  return { ...state, state: 'GET_MYPAGES_FAILED', err: action.err }
 }
 
 // Get Activism Page
@@ -60,6 +81,19 @@ export const updateActivismPageFailed = (state = initialState, action) => {
   return { ...state, state: 'UPDATE_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
+// Delete Activism Page
+export const deletePageRequested = (state = initialState, action) => {
+  return { ...state, state: 'DELETING_ACTIVISM_PAGE' }
+}
+
+export const deletePageSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_PAGE_SUCCEEDED', result: action.result }
+}
+
+export const deletePageFailed = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_PAGE_FAILED', err: action.err }
+}
+
 // Add User Email to Activism Page
 export const addUserEmailToActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'ADDING_USER_EMAIL_TO_ACTIVISM_PAGE' }
@@ -78,7 +112,7 @@ export const getActivismPageCommentsRequested = (state = initialState, action) =
   return { ...state, state: 'GETTING_ACTIVISM_PAGE_COMMENTS' }
 }
 
-export const getActivismpageCommentsSucceeded = (state = initialState, action) => {
+export const getActivismPageCommentsSucceeded = (state = initialState, action) => {
   return { ...state, state: 'GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED', comments: action.result }
 }
 
@@ -164,6 +198,40 @@ export const addCommentToActivismPageFailed = (state = initialState, action) => 
   return { ...state, state: 'ADD_COMMENT_TO_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
+// Update Comment
+export const updateCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'UPDATING_COMMENT' }
+}
+
+export const updateCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let comment = comments.Items.find(e => e.commentid === action.result.comment)
+  comment.content = action.result.updates.content
+
+  return { ...state, state: 'UPDATE_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const updateCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_COMMENT_FAILED', err: action.err }
+}
+
+// Delete Comment
+export const deleteCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'DELETING_COMMENT' }
+}
+
+export const deleteCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let index = comments.Items.findIndex(e => e.commentid === action.result.comment.commentid)
+  comments.Items.splice(index, 1)
+
+  return { ...state, state: 'DELETE_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const deleteCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_COMMENT_FAILED', err: action.err }
+}
+
 // Upvote Comment
 export const upvoteCommentRequested = (state = initialState, action) => {
   return { ...state, state: 'UPVOTING_COMMENT', commentId: action.commentId }
@@ -217,6 +285,8 @@ export const flagCommentFailed = (state = initialState, action) => {
 // map action types to reducer functions
 export const handlers = {
   [Types.RESET_ACTIVISTS]: resetActivists,
+  [Types.RESET_MYPAGES]: resetMyPages,
+
   [Types.ACTIVISTS_FETCH_SUCCEEDED]: fetchActivistsSucceeded,
   [Types.ACTIVISTS_FETCH_FAILED]: fetchActivistsFailed,
 
@@ -232,12 +302,16 @@ export const handlers = {
   [Types.UPDATE_ACTIVISM_PAGE_SUCCEEDED]: updateActivismPageSucceeded,
   [Types.UPDATE_ACTIVISM_PAGE_FAILED]: updateActivismPageFailed,
 
+  [Types.DELETE_PAGE_REQUESTED]: deletePageRequested,
+  [Types.DELETE_PAGE_SUCCEEDED]: deletePageSucceeded,
+  [Types.DELETE_PAGE_FAILED]: deletePageFailed,
+
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_REQUESTED]: addUserEmailToActivismPageRequested,
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_SUCCEEDED]: addUserEmailToActivismPageSucceeded,
   [Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_FAILED]: addUserEmailToActivismPageFailed,
 
   [Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED]: getActivismPageCommentsRequested,
-  [Types.GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED]: getActivismpageCommentsSucceeded,
+  [Types.GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED]: getActivismPageCommentsSucceeded,
   [Types.GET_ACTIVISM_PAGE_COMMENTS_FAILED]: getActivismPageCommentsFailed,
 
   [Types.UPVOTE_ACTIVISM_PAGE_REQUESTED]: upvoteActivismPageRequested,
@@ -260,6 +334,14 @@ export const handlers = {
   [Types.ADD_COMMENT_TO_ACTIVISM_PAGE_SUCCEEDED]: addCommentToActivismPageSucceeded,
   [Types.ADD_COMMENT_TO_ACTIVISM_PAGE_FAILED]: addCommentToActivismPageFailed,
 
+  [Types.UPDATE_COMMENT_REQUESTED]: updateCommentRequested,
+  [Types.UPDATE_COMMENT_SUCCEEDED]: updateCommentSucceeded,
+  [Types.UPDATE_COMMENT_FAILED]: updateCommentFailed,
+
+  [Types.DELETE_COMMENT_REQUESTED]: deleteCommentRequested,
+  [Types.DELETE_COMMENT_SUCCEEDED]: deleteCommentSucceeded,
+  [Types.DELETE_COMMENT_FAILED]: deleteCommentFailed,
+
   [Types.UPVOTE_COMMENT_REQUESTED]: upvoteCommentRequested,
   [Types.UPVOTE_COMMENT_SUCCEEDED]: upvoteCommentSucceeded,
   [Types.UPVOTE_COMMENT_FAILED]: upvoteCommentFailed,
@@ -271,6 +353,10 @@ export const handlers = {
   [Types.FLAG_COMMENT_REQUESTED]: flagCommentRequested,
   [Types.FLAG_COMMENT_SUCCEEDED]: flagCommentSucceeded,
   [Types.FLAG_COMMENT_FAILED]: flagCommentFailed,
+
+  [Types.GET_MYPAGES_REQUESTED]: getMyPagesRequested,
+  [Types.GET_MYPAGES_SUCCEEDED]: getMyPagesSucceeded,
+  [Types.GET_MYPAGES_FAILED]: getMyPagesFailed,
 }
 
 /* Selectors */

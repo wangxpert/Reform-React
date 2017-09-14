@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 // Import Components
 import { Modal, ModalBody } from 'reactstrap'
 
-import Button from '../../../../components/Button'
+import Button from '../Button'
 
 const btnStyle = { width: '100%' }
 
@@ -14,10 +14,16 @@ class AddCommentDialog extends Component {
     super(props)
 
     this.state = {
-      content: ''
+      content: props.default ? props.default : ''
     }
 
     this.onSave = this.onSave.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.default !== this.props.default) {
+      this.setState({ content: nextProps.default })
+    }
   }
 
   onSave(e) {
@@ -31,19 +37,19 @@ class AddCommentDialog extends Component {
       <Modal isOpen={ this.props.isOpen } toggle={ this.props.toggle } className={ this.props.className } >
         <ModalBody>
           <div className="dialog-header">
-            Add Comment
+            { this.props.title }
             <i className="fa fa-times float-right close-button" onClick={ this.props.toggle  }></i>
           </div>
           <form onSubmit={ this.onSave }>
             <div className="dialog-body pb-0">
               <div className="form-group">
-                <label className="ml-2" htmlFor="content" style={{ fontSize: '1.1em' }}>Please enter the content of comment</label>
-                <textarea className="form-control" id="content" rows="4" value={ this.state.content } onChange={ e => this.setState({ content: e.target.value }) } required></textarea>
+                <label className="ml-2" htmlFor="content" style={{ fontSize: '1.1em' }}>{ this.props.content }</label>
+                <textarea className="form-control" id="content" rows="4" value={ this.state.content } onChange={ e => this.setState({ content: e.target.value }) } required autoFocus></textarea>
               </div>
             </div>
             <div className="dialog-footer">
               <Button style={ btnStyle }>
-                Add
+                { this.props.buttonTitle }
               </Button>
             </div>
           </form>
@@ -55,6 +61,10 @@ class AddCommentDialog extends Component {
 
 AddCommentDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  buttonTitle: PropTypes.string.isRequired,
+
   toggle: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired
 }
