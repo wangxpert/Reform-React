@@ -132,7 +132,7 @@ class Edit extends Component {
   onSave(e) {
     e.preventDefault()
 
-    if (this.props.state === 'CREATING_ACTIVISM_PAGE')
+    if (this.props.state === 'UPDATING_ACTIVISM_PAGE')
       return
 
     this.props.updateActivismPage(this.props.page.id,

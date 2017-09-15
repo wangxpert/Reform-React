@@ -205,16 +205,6 @@ export function getCurrentUser() {
   return cognitoUser
 }
 
-export function getUser() {
-  var cognitoUser = getCurrentUser()
-  cognitoUser.getSession((err, result) => {
-    if (err) console.log(err)
-  })
-
-  return cognitoUser
-}
-
-
 export function getSession() {
   var cognitoUser = getCurrentUser()
 

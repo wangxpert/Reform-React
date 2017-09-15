@@ -14,7 +14,7 @@
     overflow-y: scroll;
     display: inline-flex;
     flex-direction: column;
-    min-height: 660px;
+    min-height: 720px;
 
     -ms-overflow-style: -ms-autohiding-scrollbar;
     @include sidebar-width($sidebar-borders, $sidebar-width);

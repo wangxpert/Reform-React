@@ -1,24 +1,24 @@
 import { connect } from 'react-redux'
 
 // Import View
-import Advertise from './Advertise'
+import Feedback from './Feedback'
 
 // Import Actions
-import * as Actions from '../../redux/actions/advertise'
+import * as Actions from '../../redux/actions/feedback'
 import { push } from 'react-router-redux'
 
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
-    state: state.advertise.state
+    state: state.feedback.state
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    inquiry: (data) => dispatch(Actions.advertiseInquiryRequested(data)),
+    submitFeedback: (data) => dispatch(Actions.submitFeedbackRequested(data)),
     changeLocation: (path) => dispatch(push(path))
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Advertise)
+export default connect(mapStateToProps, mapDispatchToProps)(Feedback)

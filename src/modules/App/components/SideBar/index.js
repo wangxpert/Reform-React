@@ -58,12 +58,12 @@ class SideBar extends Component {
             </li>
 
             <li className="nav-item">
-              <Link to={'/'} className="nav-link"><i className=""></i> Whistleblowers</Link>
+              <Link to={'/whistleblower'} className="nav-link"><i className=""></i> Whistleblowers</Link>
             </li>
 
           </ul>
 
-          <ul className="nav bottom mt-auto">
+          <ul className="nav bottom mt-auto mb-5">
             <li className="nav-title">
               Other Pages
             </li>

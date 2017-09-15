@@ -1,4 +1,4 @@
-import { getUser } from './auth'
+import { getCurrentUser } from './auth'
 import { uploadFile, deleteFile } from './assets'
 
 import {
@@ -8,13 +8,18 @@ import {
 import { AWS_S3_AVATAR_FOLDER } from '../config'
 
 export function getUserInformation() {
-  var cognitoUser = getUser()
+  var cognitoUser = getCurrentUser()
 
   return new Promise((resolve, reject) =>
-    cognitoUser.getUserAttributes(function(err, result) {
-        if (err) reject(err)
-        else resolve(result)
+    cognitoUser.getSession((err, result) => {
+      if (err) return reject(err)
+
+      cognitoUser.getUserAttributes(function(err, result) {
+          if (err) reject(err)
+          else resolve(result)
+      })
     })
+
   ).then(response => {
       var user = {}
       response.forEach(e => {
@@ -36,7 +41,7 @@ export function uploadAvatar(file) {
 }
 
 export function updateUserInformation(info) {
-  var cognitoUser = getUser()
+  var cognitoUser = getCurrentUser()
 
   var attributeList = []
 
@@ -65,9 +70,13 @@ export function updateUserInformation(info) {
     }))
 
   return new Promise((resolve, reject) =>
-    cognitoUser.updateAttributes(attributeList, function(err, result) {
-      if (err) reject(err)
-      else resolve(result)
+    cognitoUser.getSession((err, result) => {
+      if (err) return reject(err)
+
+      cognitoUser.updateAttributes(attributeList, function(err, result) {
+        if (err) reject(err)
+        else resolve(result)
+      })
     })
   ).then(response => {
       return response
@@ -78,11 +87,15 @@ export function updateUserInformation(info) {
 }
 
 export function changePassword(oldPassword, newPassword) {
-  const cognitoUser = getUser()
+  const cognitoUser = getCurrentUser()
   return new Promise((resolve, reject) =>
-    cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
-      if (err) reject(err)
-      resolve(result)
+    cognitoUser.getSession((err, result) => {
+      if (err) return reject(err)
+
+      cognitoUser.changePassword(oldPassword, newPassword, function(err, result) {
+        if (err) reject(err)
+        resolve(result)
+      })
     })
   ).then(response => {
       return response
