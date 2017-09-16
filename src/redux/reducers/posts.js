@@ -77,6 +77,19 @@ export const flagPostFailed = (state = initialState, action) => {
   return { ...state, state: 'FLAG_POST_FAILED', err: action.err }
 }
 
+// Get a Post
+export const getPostRequested = (state = initialState, action) => {
+  return { ...state, state: 'GETTING_POST' }
+}
+
+export const getPostSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'GET_POST_SUCCEEDED', post: action.result }
+}
+
+export const getPostFailed = (state = initialState, action) => {
+  return { ...state, state: 'GET_POST_FAILED', err: action.err }
+}
+
 // Create a Post
 export const createPostRequested = (state = initialState, action) => {
   return { ...state, state: 'CREATING_POST' }
@@ -88,6 +101,38 @@ export const createPostSucceeded = (state = initialState, action) => {
 
 export const createPostFailed = (state = initialState, action) => {
   return { ...state, state: 'CREATE_POST_FAILED', err: action.err }
+}
+
+// Update a Post
+export const updatePostRequested = (state = initialState, action) => {
+  return { ...state, state: 'UPDATING_POST' }
+}
+
+export const updatePostSucceeded = (state = initialState, action) => {
+
+  let post = Object.assign({}, state.post, action.result.updates)
+  return { ...state, state: 'UPDATE_POST_SUCCEEDED', post, result: action.result }
+}
+
+export const updatePostFailed = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_POST_FAILED', err: action.err }
+}
+
+// Delete a Post
+export const deletePostRequested = (state = initialState, action) => {
+  return { ...state, state: 'DELETING_POST' }
+}
+
+export const deletePostSucceeded = (state = initialState, action) => {
+  let posts = state.posts
+  const index = posts.findIndex(e => (e.post === action.result.post))
+  posts.splice(index, 1)
+
+  return { ...state, state: 'DELETE_POST_SUCCEEDED', posts, result: action.result }
+}
+
+export const deletePostFailed = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_POST_FAILED', err: action.err }
 }
 
 // map action types to reducer functions
@@ -109,9 +154,21 @@ export const handlers = {
   [Types.FLAG_POST_SUCCEEDED]: flagPostSucceeded,
   [Types.FLAG_POST_FAILED]: flagPostFailed,
 
+  [Types.GET_POST_REQUESTED]: getPostRequested,
+  [Types.GET_POST_SUCCEEDED]: getPostSucceeded,
+  [Types.GET_POST_FAILED]: getPostFailed,
+
   [Types.CREATE_POST_REQUESTED]: createPostRequested,
   [Types.CREATE_POST_SUCCEEDED]: createPostSucceeded,
   [Types.CREATE_POST_FAILED]: createPostFailed,
+
+  [Types.UPDATE_POST_REQUESTED]: updatePostRequested,
+  [Types.UPDATE_POST_SUCCEEDED]: updatePostSucceeded,
+  [Types.UPDATE_POST_FAILED]: updatePostFailed,
+
+  [Types.DELETE_POST_REQUESTED]: deletePostRequested,
+  [Types.DELETE_POST_SUCCEEDED]: deletePostSucceeded,
+  [Types.DELETE_POST_FAILED]: deletePostFailed,
 }
 
 /* Selectors */

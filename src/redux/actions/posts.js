@@ -43,6 +43,16 @@ export const flagPostSucceeded = (result) =>
 export const flagPostFailed = (err) =>
   ({ type: Types.FLAG_POST_FAILED, err: err })
 
+// Get Post
+export const getPostRequested = (state, city, department, post) =>
+  ({ type: Types.GET_POST_REQUESTED, state, city, department, post })
+
+export const getPostSucceeded = (result) =>
+  ({ type: Types.GET_POST_SUCCEEDED, result })
+
+export const getPostFailed = (err) =>
+  ({ type: Types.GET_POST_FAILED, err: err })
+
 // Create Post
 export const createPostRequested = (data, idToken) =>
   ({ type: Types.CREATE_POST_REQUESTED, data, idToken })
@@ -54,14 +64,14 @@ export const createPostFailed = (err) =>
   ({ type: Types.CREATE_POST_FAILED, err: err })
 
 // Edit Post
-export const editPostRequested = (data, idToken) =>
-  ({ type: Types.EDIT_POST_REQUESTED, data, idToken })
+export const updatePostRequested = (data, idToken) =>
+  ({ type: Types.UPDATE_POST_REQUESTED, data, idToken })
 
-export const editPostSucceeded = (result) =>
-  ({ type: Types.EDIT_POST_SUCCEEDED, result })
+export const updatePostSucceeded = (result) =>
+  ({ type: Types.UPDATE_POST_SUCCEEDED, result })
 
-export const editPostFailed = (err) =>
-  ({ type: Types.EDIT_POST_FAILED, err: err })
+export const updatePostFailed = (err) =>
+  ({ type: Types.UPDATE_POST_FAILED, err: err })
 
 // Delete Post
 export const deletePostRequested = (data, idToken) =>

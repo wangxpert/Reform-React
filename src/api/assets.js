@@ -14,6 +14,7 @@ export function deleteFile(folder, file) {
 
       AWS.config.region = AWS_CONFIG_REGION
 
+      if (AWS.config.credentials) AWS.config.credentials.clearCachedId()
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
           IdentityPoolId : AWS_IDENTITY_POOL_ID, // your identity pool id here
           Logins : {
@@ -21,8 +22,6 @@ export function deleteFile(folder, file) {
               [`cognito-idp.${ AWS_CONFIG_REGION }.amazonaws.com/${ AWS_COGNITO_POOL.UserPoolId }`] : session.getIdToken().getJwtToken()
           }
       })
-
-      AWS.config.credentials.clearCachedId()
 
       AWS.config.credentials.refresh((error) => {
         if (error) {
@@ -61,6 +60,8 @@ export function uploadFile(folder, file) {
 
       AWS.config.region = AWS_CONFIG_REGION
 
+
+      if (AWS.config.credentials) AWS.config.credentials.clearCachedId()
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
           IdentityPoolId : AWS_IDENTITY_POOL_ID, // your identity pool id here
           Logins : {
@@ -68,8 +69,6 @@ export function uploadFile(folder, file) {
               [`cognito-idp.${ AWS_CONFIG_REGION }.amazonaws.com/${ AWS_COGNITO_POOL.UserPoolId }`] : session.getIdToken().getJwtToken()
           }
       })
-
-      AWS.config.credentials.clearCachedId()
 
       AWS.config.credentials.refresh((error) => {
         if (error) {

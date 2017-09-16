@@ -13,7 +13,7 @@ import Button from '../../../components/Button'
 
 // Import Utils
 
-class Create extends Component {
+class Edit extends Component {
 
   constructor(props) {
     super(props)
@@ -26,7 +26,7 @@ class Create extends Component {
     }
 
     this.onChange = this.onChange.bind(this)
-    this.onCreate = this.onCreate.bind(this)
+    this.onSave = this.onSave.bind(this)
     this.onImage = this.onImage.bind(this)
     this.onPickImage = this.onPickImage.bind(this)
 
@@ -35,6 +35,13 @@ class Create extends Component {
       let city = props.user['custom:city']
       props.fetchDepartments(state, city)
     }
+
+  }
+
+  componentWillMount() {
+    const longId = this.props.match.params.postLongId
+    const path = longId.split('-')
+    this.props.getPost(path[0], path[1], path[2], path[3])
   }
 
   componentDidMount() {
@@ -44,9 +51,10 @@ class Create extends Component {
   componentWillReceiveProps(nextProps) {
 
     if (nextProps.departments !== this.props.departments && nextProps.departments.Items && nextProps.departments.Count) {
-      this.setState({
-        department: nextProps.departments.Items[3].department
-      })
+      if (!this.state.department)
+        this.setState({
+          department: nextProps.departments.Items[3].department
+        })
     }
 
     if (nextProps.user !== this.props.user && nextProps.user) {
@@ -55,11 +63,14 @@ class Create extends Component {
       this.props.fetchDepartments(state, city)
     }
 
-    if (nextProps.state !== this.props.state && nextProps.state === 'CREATE_POST_SUCCEEDED') {
+    if (nextProps.post !== this.props.post && nextProps.post) {
+      let post = nextProps.post
+
       this.setState({
-        text: '',
+        department: post.department,
+        text: post.text,
         imageFile: null,
-        image: null
+        image: post.media ? `https://${post.media}` : null
       })
     }
   }
@@ -74,18 +85,17 @@ class Create extends Component {
     })
   }
 
-  onCreate(e) {
+  onSave(e) {
     e.preventDefault()
 
-    if (this.props.state === 'CREATING_POST')
+    if (this.props.state === 'UPDATING_POST')
       return
 
-    this.props.createPost({
-      state: this.props.user['custom:stateid'],
-      city: this.props.user['custom:city'],
+    this.props.updatePost({
+      old: this.props.post,
       department: this.state.department,
       text: this.state.text,
-      imageFile: this.state.imageFile
+      imageFile: this.state.imageFile,
     }, this.props.session.idToken.jwtToken)
   }
 
@@ -123,8 +133,8 @@ class Create extends Component {
 
     return (
       <div className="inputpage my-3 my-md-5">
-        <h1 className="title py-3 mt-3 mb-4 text-center"> Create a Post </h1>
-        <form className="form" onSubmit={ this.onCreate }>
+        <h1 className="title py-3 mt-3 mb-4 text-center"> Edit Post </h1>
+        <form className="form" onSubmit={ this.onSave }>
 
           <div className="form-group row">
             <label htmlFor="department" className="col-auto col-md-3 col-form-label">Department:</label>
@@ -165,9 +175,9 @@ class Create extends Component {
           <div className="row py-3">
             <div className="ml-auto col-12 text-right">
               <Button type="submit">
-                { this.props.state === 'CREATING_POST' ?
+                { this.props.state === 'UPDATING_POST' ?
                   (<ThreeBounce size={12} color='white' />) :
-                  (<div><i className="fa"></i> Create </div>)
+                  (<div><i className="fa"></i> Save </div>)
                 }
               </Button>
             </div>
@@ -178,4 +188,4 @@ class Create extends Component {
   }
 }
 
-export default Create
+export default Edit

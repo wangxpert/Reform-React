@@ -7,6 +7,7 @@ import asyncComponent from '../../components/AsyncComponent'
 
 const AsyncPosts = asyncComponent(() => import('./Posts'))
 const AsyncCreate = asyncComponent(() => import('./Create'))
+const AsyncEdit = asyncComponent(() => import('./Edit'))
 
 const Activism = (props) => {
 
@@ -18,6 +19,7 @@ const Activism = (props) => {
       { props.auth.state === 'NOT_LOGGED' && <Redirect to='/auth/login' /> }
 
       <Route path='/post/create' component={ AsyncCreate } />
+      <Route path='/post/edit/:postLongId' component={ AsyncEdit } />
 
     </Switch>
   )

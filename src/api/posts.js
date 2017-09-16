@@ -27,15 +27,22 @@ export function createPost(data, idToken) {
   return callApi(POST_API_URL, `states/${data.state}/cities/${data.city}/departments/${data.department}/posts/create`, 'POST', body, idToken)
 }
 
-export function editPost(data, idToken) {
+export function updatePost(data, idToken) {
   let body = {
+    department: data.department,
     text: data.text,
     media: data.image
   }
 
-  return callApi(POST_API_URL, `states/${data.state}/cities/${data.city}/departments/${data.department}/posts/${data.post}`, 'PUT', body, idToken)
+  let old = data.old
+
+  return callApi(POST_API_URL, `states/${old.state}/cities/${old.city}/departments/${old.department}/posts/${old.post}`, 'PUT', body, idToken)
 }
 
 export function deletePost(data, idToken) {
   return callApi(POST_API_URL, `states/${data.state}/cities/${data.city}/departments/${data.department}/posts/${data.post}`, 'DELETE', null, idToken)
+}
+
+export function getPost(state, city, department, post) {
+  return callApi(POST_API_URL, `states/${state}/cities/${city}/departments/${department}/posts/${post}`)
 }
