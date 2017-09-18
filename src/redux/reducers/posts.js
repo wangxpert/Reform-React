@@ -11,11 +11,11 @@ const initialState = {
 // Handlers
 
 export const resetPosts = (state = initialState) => {
-  return { state: 'RESETED_POSTS', posts: [] }
+  return { ...state, state: 'RESETED_POSTS', posts: [] }
 }
 
 export const resetMyPages = (state = initialState) => {
-  return { myPosts: { posts: [], lastKey: null } }
+  return { ...state, state: 'RESETED_MYPOSTS', myPosts: { posts: [], lastKey: null } }
 }
 
 export const fetchPostsRequested = (state = initialState) => {
@@ -39,7 +39,8 @@ export const getMyPostsSucceeded = (state = initialState, action) => {
   let myPosts = state.myPosts
   myPosts.posts = myPosts.posts.concat(action.result.Items)
   myPosts.lastKey = action.result.LastEvaluatedKey
-  return { ...state, state: 'GET_MYPOSTS_SUCCEEDED', myPosts, result: action.result }
+  state.posts = myPosts.posts
+  return { ...state, state: 'GET_MYPOSTS_SUCCEEDED', posts: state.posts, myPosts, result: action.result }
 }
 
 export const getMyPostsFailed = (state = initialState, action) => {

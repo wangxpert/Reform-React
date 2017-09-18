@@ -7,7 +7,7 @@ import { NotificationManager } from 'react-notifications'
 import PostBlock from '../Posts/components/PostBlock'
 
 const FETCH_LIMIT = 50
-class Posts extends Component {
+class MyPosts extends Component {
 
   constructor(props) {
     super(props)
@@ -67,6 +67,7 @@ class Posts extends Component {
   }
 
   render() {
+
     const { posts, lastKey } = this.props.myPosts
 
     var renderPosts = []
@@ -103,4 +104,4 @@ class Posts extends Component {
   }
 }
 
-export default Posts
+export default MyPosts

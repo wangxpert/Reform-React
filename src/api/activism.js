@@ -4,14 +4,15 @@ export function fetchActivists(state, city, includingStates, includingCities, li
 
   var url = 'activism?co=us'
   if (includingStates === true) {
-    url += '&ic=1'
+    url += '&is=1'
   } else {
     url += `&st=${ state }`
-    if (includingCities === true) {
-      url += '&ic=1'
-    } else {
-      url += `&ct=${ city }`
-    }
+  }
+
+  if (includingCities === true) {
+    url += '&ic=1'
+  } else {
+    url += `&ct=${ city }`
   }
 
   if (limit) url += `&limit=${limit}`
