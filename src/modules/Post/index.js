@@ -8,6 +8,7 @@ import asyncComponent from '../../components/AsyncComponent'
 const AsyncPosts = asyncComponent(() => import('./Posts'))
 const AsyncCreate = asyncComponent(() => import('./Create'))
 const AsyncEdit = asyncComponent(() => import('./Edit'))
+const AsyncMyPosts = asyncComponent(() => import('./MyPosts'))
 
 const Activism = (props) => {
 
@@ -20,6 +21,7 @@ const Activism = (props) => {
 
       <Route path='/post/create' component={ AsyncCreate } />
       <Route path='/post/edit/:postLongId' component={ AsyncEdit } />
+      <Route Path='post/myposts' component={ AsyncMyPosts } />
 
     </Switch>
   )

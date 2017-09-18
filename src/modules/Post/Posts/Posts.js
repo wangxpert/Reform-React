@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 // Import components
 import InfiniteScroll from 'react-infinite-scroller'

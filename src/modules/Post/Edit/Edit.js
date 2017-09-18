@@ -73,6 +73,10 @@ class Edit extends Component {
         image: post.media ? `https://${post.media}` : null
       })
     }
+
+    if (nextProps.state !== this.props.state && nextProps.state === 'UPDATE_POST_SUCCEEDED') {
+      this.props.replaceLocation(`/post/edit/${ this.props.post.postid }`)
+    }
   }
 
   onChange(e) {

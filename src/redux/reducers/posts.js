@@ -4,13 +4,18 @@ import Types from '../actions/types'
 
 // Initial State
 const initialState = {
-  posts: [], state: 'RESETED_POSTS'
+  posts: [], state: 'RESETED_POSTS',
+  myPosts: { posts: [], lastKey: undefined }
 }
 
 // Handlers
 
 export const resetPosts = (state = initialState) => {
   return { state: 'RESETED_POSTS', posts: [] }
+}
+
+export const resetMyPages = (state = initialState) => {
+  return { myPosts: { posts: [], lastKey: null } }
 }
 
 export const fetchPostsRequested = (state = initialState) => {
@@ -23,6 +28,22 @@ export const fetchPostsSucceeded = (state = initialState, action) => {
 
 export const fetchPostsFailed = (state = initialState, action) => {
   return { ...state, state: 'FETCH_POSTS_FAILED', err: action.err }
+}
+
+// Get My Posts
+export const getMyPostsRequested = (state = initialState) => {
+  return { ...state, state: 'GETTING_MYPOSTS' }
+}
+
+export const getMyPostsSucceeded = (state = initialState, action) => {
+  let myPosts = state.myPosts
+  myPosts.posts = myPosts.posts.concat(action.result.Items)
+  myPosts.lastKey = action.result.LastEvaluatedKey
+  return { ...state, state: 'GET_MYPOSTS_SUCCEEDED', myPosts, result: action.result }
+}
+
+export const getMyPostsFailed = (state = initialState, action) => {
+  return { ...state, state: 'GET_MYPOSTS_FAILED', err: action.err }
 }
 
 // Upvote Post
@@ -109,7 +130,6 @@ export const updatePostRequested = (state = initialState, action) => {
 }
 
 export const updatePostSucceeded = (state = initialState, action) => {
-
   let post = Object.assign({}, state.post, action.result.updates)
   return { ...state, state: 'UPDATE_POST_SUCCEEDED', post, result: action.result }
 }
@@ -141,6 +161,10 @@ export const handlers = {
   [Types.POSTS_FETCH_REQUESTED]: fetchPostsRequested,
   [Types.POSTS_FETCH_SUCCEEDED]: fetchPostsSucceeded,
   [Types.POSTS_FETCH_FAILED]: fetchPostsFailed,
+
+  [Types.GET_MYPOSTS_REQUESTED]: getMyPostsRequested,
+  [Types.GET_MYPOSTS_SUCCEEDED]: getMyPostsSucceeded,
+  [Types.GET_MYPOSTS_FAILED]: getMyPostsFailed,
 
   [Types.UPVOTE_POST_REQUESTED]: upvotePostRequested,
   [Types.UPVOTE_POST_SUCCEEDED]: upvotePostSucceeded,

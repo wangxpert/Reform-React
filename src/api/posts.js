@@ -6,6 +6,10 @@ export function fetchPosts(state, city, department, limit, lastKey) {
   return callApi(POST_API_URL, `states/${state}/cities/${city}/departments/${department}/posts?limit=${limit}`, 'POST', { LastEvaluatedKey } )
 }
 
+export function getMyPosts(limit, lastKey, idToken) {
+  return callApi(POST_API_URL, `posts/me?limit=${limit}`, 'POST', { LastEvaluatedKey: lastKey }, idToken)
+}
+
 export function upvotePost(post, idToken) {
   return callApi(POST_API_URL, `states/${post.state}/cities/${post.city}/departments/${post.department}/posts/${post.post}/upvote`, 'PUT', null, idToken)
 }

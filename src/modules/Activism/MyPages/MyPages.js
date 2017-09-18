@@ -22,7 +22,8 @@ class MyPages extends Component {
   }
 
   loadPages() {
-    if (this.props.state === 'GETTING_MYPAGES') return
+    if (this.props.state === 'GETTING_MYPAGES')
+      return
 
     const idToken = this.props.session.idToken.jwtToken
 

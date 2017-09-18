@@ -23,6 +23,16 @@ function* fetchPosts(action) {
    }
 }
 
+// Saga: will be fired on GET_MYPOSTS_REQUESTED actions
+function* getMyPosts(action) {
+   try {
+      const result = yield call(Api.getMyPosts, action.limit, action.lastKey, action.idToken)
+      yield put(Actions.getMyPostsSucceeded(result))
+   } catch (e) {
+      yield put(Actions.getMyPostsFailed(e))
+   }
+}
+
 // Saga: will be fired on UPVOTE_POST_REQUESTED actions
 function* upvotePost(action) {
    try {
@@ -126,6 +136,7 @@ function* deletePost(action) {
 */
 export function* postsSaga() {
   yield takeLatest(Types.POSTS_FETCH_REQUESTED, fetchPosts)
+  yield takeLatest(Types.GET_MYPOSTS_REQUESTED, getMyPosts)
   yield takeLatest(Types.UPVOTE_POST_REQUESTED, upvotePost)
   yield takeLatest(Types.DOWNVOTE_POST_REQUESTED, downvotePost)
   yield takeLatest(Types.FLAG_POST_REQUESTED, flagPost)

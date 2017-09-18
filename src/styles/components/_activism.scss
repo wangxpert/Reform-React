@@ -37,12 +37,26 @@
   .image-container {
     background: #f8f8f8;
     border: 1px solid rgba(0, 0, 0, .1);
-    min-height: 200px
+    min-height: 200px;
   }
 
   .content-container {
     max-height: 270px;
     overflow-y: scroll;
+  }
+
+  .share-button {
+    display: inline-block;
+    margin: 0 8px;
+    &:focus {
+      outline: none;
+    }
+
+    div {
+      display: inline-block;
+    }
+
+
   }
 
   .activity-container {
