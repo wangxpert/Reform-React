@@ -1,1 +1,3 @@
-export const errorMessage = str => str.replace(/^\[.*\]/, '')
+export const errorMessage = str => {
+  return str ? str.replace(/^\[.*\]/, '') : ''
+}

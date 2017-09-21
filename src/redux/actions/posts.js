@@ -96,3 +96,73 @@ export const deletePostSucceeded = (result) =>
 
 export const deletePostFailed = (err) =>
   ({ type: Types.DELETE_POST_FAILED, err: err })
+
+// Get Post Comments
+export const getPostCommentsRequested = (post, limit, lastKey) =>
+  ({ type: Types.GET_POST_COMMENTS_REQUESTED, post, limit, lastKey })
+
+export const getPostCommentsSucceeded = (result) =>
+  ({ type: Types.GET_POST_COMMENTS_SUCCEEDED, result })
+
+export const getPostCommentsFailed = (err) =>
+  ({ type: Types.GET_POST_COMMENTS_FAILED, err: err })
+
+// Add Post Comment
+export const addCommentToPostRequested = (post, text, idToken) =>
+  ({ type: Types.ADD_COMMENT_TO_POST_REQUESTED, post, text, idToken })
+
+export const addCommentToPostSucceeded = (result) =>
+  ({ type: Types.ADD_COMMENT_TO_POST_SUCCEEDED, result })
+
+export const addCommentToPostFailed = (err) =>
+  ({ type: Types.ADD_COMMENT_TO_POST_FAILED, err: err })
+
+// Update Post Comment
+export const updatePostCommentRequested = (post, commentId, text, idToken) =>
+  ({ type: Types.UPDATE_POST_COMMENT_REQUESTED, post, commentId, text, idToken })
+
+export const updatePostCommentSucceeded = (result) =>
+  ({ type: Types.UPDATE_POST_COMMENT_SUCCEEDED, result })
+
+export const updatePostCommentFailed = (err) =>
+  ({ type: Types.UPDATE_POST_COMMENT_FAILED, err: err })
+
+// Delete Post Comment
+export const deletePostCommentRequested = (post, commentId, idToken) =>
+  ({ type: Types.DELETE_POST_COMMENT_REQUESTED, post, commentId, idToken })
+
+export const deletePostCommentSucceeded = (result) =>
+  ({ type: Types.DELETE_POST_COMMENT_SUCCEEDED, result })
+
+export const deletePostCommentFailed = (err) =>
+  ({ type: Types.DELETE_POST_COMMENT_FAILED, err: err })
+
+// Upvote Post Comment
+export const upvotePostCommentRequested = (commentLongId, idToken) =>
+  ({ type: Types.UPVOTE_POST_COMMENT_REQUESTED, commentLongId, idToken })
+
+export const upvotePostCommentSucceeded = (result) =>
+  ({ type: Types.UPVOTE_POST_COMMENT_SUCCEEDED, result })
+
+export const upvotePostCommentFailed = (err) =>
+  ({ type: Types.UPVOTE_POST_COMMENT_FAILED, err: err })
+
+// Downvote Post Comment
+export const downvotePostCommentRequested = (commentLongId, idToken) =>
+  ({ type: Types.DOWNVOTE_POST_COMMENT_REQUESTED, commentLongId, idToken })
+
+export const downvotePostCommentSucceeded = (result) =>
+  ({ type: Types.DOWNVOTE_POST_COMMENT_SUCCEEDED, result })
+
+export const downvotePostCommentFailed = (err) =>
+  ({ type: Types.DOWNVOTE_POST_COMMENT_FAILED, err: err })
+
+// flag Post Comment
+export const flagPostCommentRequested = (commentLongId, idToken) =>
+  ({ type: Types.FLAG_POST_COMMENT_REQUESTED, commentLongId, idToken })
+
+export const flagPostCommentSucceeded = (result) =>
+  ({ type: Types.FLAG_POST_COMMENT_SUCCEEDED, result })
+
+export const flagPostCommentFailed = (err) =>
+  ({ type: Types.FLAG_POST_COMMENT_FAILED, err: err })

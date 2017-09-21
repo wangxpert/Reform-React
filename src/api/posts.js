@@ -50,3 +50,31 @@ export function deletePost(data, idToken) {
 export function getPost(state, city, department, post) {
   return callApi(POST_API_URL, `states/${state}/cities/${city}/departments/${department}/posts/${post}`)
 }
+
+export function getPostComments(post, limit, lastKey) {
+  return callApi(POST_API_URL, `states/${post.state}/cities/${post.city}/departments/${post.department}/posts/${post.post}/comments?limit=${ limit }`, 'POST', { LastEvaluatedKey: lastKey })
+}
+
+export function addCommentToPost(post, text, idToken) {
+  return callApi(POST_API_URL, `states/${post.state}/cities/${post.city}/departments/${post.department}/posts/${post.post}/comments/create`, 'POST', { text }, idToken)
+}
+
+export function updatePostComment(post, commentId, text, idToken) {
+  return callApi(POST_API_URL, `states/${post.state}/cities/${post.city}/departments/${post.department}/posts/${post.post}/comments/${commentId}`, 'PUT', { text }, idToken)
+}
+
+export function deletePostComment(post, commentId, idToken) {
+  return callApi(POST_API_URL, `states/${post.state}/cities/${post.city}/departments/${post.department}/posts/${post.post}/comments/${commentId}`, 'DELETE', null, idToken)
+}
+
+export function upvotePostComment(commentLongId, idToken) {
+  return callApi(POST_API_URL, `comments/${ commentLongId }/upvote`, 'PUT', null, idToken)
+}
+
+export function downvotePostComment(commentLongId, idToken) {
+  return callApi(POST_API_URL, `comments/${ commentLongId }/downvote`, 'PUT', null, idToken)
+}
+
+export function flagPostComment(commentLongId, idToken) {
+  return callApi(POST_API_URL, `comments/${ commentLongId }/flag`, 'PUT', null, idToken)
+}

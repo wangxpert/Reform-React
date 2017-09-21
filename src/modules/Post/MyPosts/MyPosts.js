@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 // Import components
 import InfiniteScroll from 'react-infinite-scroller'
-import { NotificationManager } from 'react-notifications'
 
 import PostBlock from '../Posts/components/PostBlock'
 
@@ -21,6 +20,7 @@ class MyPosts extends Component {
     this.onFlag = this.onFlag.bind(this)
     this.onEdit = this.onEdit.bind(this)
     this.onDelete = this.onDelete.bind(this)
+    this.onPost = this.onPost.bind(this)
   }
 
   componentWillMount() {
@@ -66,6 +66,10 @@ class MyPosts extends Component {
       this.props.deletePost(post, this.props.session.idToken.jwtToken)
   }
 
+  onPost(post) {
+    this.props.changeLocation(`/post/posts/${ post.postid }`)
+  }
+
   render() {
 
     const { posts, lastKey } = this.props.myPosts
@@ -74,7 +78,7 @@ class MyPosts extends Component {
     if (posts) {
       renderPosts = posts.map((ele, index) => (
         <PostBlock key={ index } post={ ele } state={ this.props.state } currentPost={ this.props.currentPost } user={ this.props.user }
-          onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onEdit={ this.onEdit }/>
+          onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onEdit={ this.onEdit } onPost={ this.onPost }/>
       ))
     }
 

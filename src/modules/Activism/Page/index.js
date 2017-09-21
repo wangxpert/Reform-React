@@ -34,7 +34,7 @@ function mapDispatchToProps(dispatch) {
     downvoteComment: (pageId, commentId, idToken) => dispatch(Actions.downvoteCommentRequested(pageId, commentId, idToken)),
     flagComment: (pageId, commentId, idToken) => dispatch(Actions.flagCommentRequested(pageId, commentId, idToken)),
     deleteComment: (pageId, commentId, idToken) => dispatch(Actions.deleteCommentRequested(pageId, commentId, idToken)),
-    editComment: (pageId, commentId, content, idToken) => dispatch(Actions.updateCommentRequested(pageId, commentId, content, idToken)),
+    editComment: (pageId, commentId, text, idToken) => dispatch(Actions.updateCommentRequested(pageId, commentId, text, idToken)),
     changeLocation: (location) => dispatch(push(location))
   }
 }

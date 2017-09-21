@@ -109,19 +109,6 @@ export const addUserEmailToActivismPageFailed = (state = initialState, action) =
   return { ...state, state: 'ADD_USER_EMAIL_TO_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
-// Get Comments of Activism Page
-export const getActivismPageCommentsRequested = (state = initialState, action) => {
-  return { ...state, state: 'GETTING_ACTIVISM_PAGE_COMMENTS' }
-}
-
-export const getActivismPageCommentsSucceeded = (state = initialState, action) => {
-  return { ...state, state: 'GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED', comments: action.result }
-}
-
-export const getActivismPageCommentsFailed = (state = initialState, action) => {
-  return { ...state, state: 'GET_ACTIVISM_PAGE_COMMENTS_FAILED', err: action.err }
-}
-
 // Upvote Activism Page
 export const upvoteActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'UPVOTING_ACTIVISM_PAGE' }
@@ -184,6 +171,19 @@ export const followActivismPageFailed = (state = initialState, action) => {
   return { ...state, state: 'FOLLOW_ACTIVISM_PAGE_FAILED', err: action.err }
 }
 
+// Get Comments of Activism Page
+export const getActivismPageCommentsRequested = (state = initialState, action) => {
+  return { ...state, state: 'GETTING_ACTIVISM_PAGE_COMMENTS' }
+}
+
+export const getActivismPageCommentsSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED', comments: action.result }
+}
+
+export const getActivismPageCommentsFailed = (state = initialState, action) => {
+  return { ...state, state: 'GET_ACTIVISM_PAGE_COMMENTS_FAILED', err: action.err }
+}
+
 // Add comment to Activism Page
 export const addCommentToActivismPageRequested = (state = initialState, action) => {
   return { ...state, state: 'ADDING_COMMENT_TO_ACTIVISM_PAGE' }
@@ -208,7 +208,7 @@ export const updateCommentRequested = (state = initialState, action) => {
 export const updateCommentSucceeded = (state = initialState, action) => {
   let comments = state.comments
   let comment = comments.Items.find(e => e.commentid === action.result.comment)
-  comment.content = action.result.updates.content
+  comment.text = action.result.updates.text
 
   return { ...state, state: 'UPDATE_COMMENT_SUCCEEDED', comments, result: action.result }
 }

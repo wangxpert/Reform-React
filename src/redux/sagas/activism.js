@@ -143,17 +143,6 @@ function* addUserEmailToActivismPage(action) {
    }
 }
 
-// Saga: will be fired on GET_ACTIVISM_PAGE_COMMENTS_REQUESTED actions
-function* getActivismPageComments(action) {
-   try {
-      const result = yield call(Api.getActivismPageComments, action.pageId, action.email)
-      yield put(Actions.getActivismPageCommentsSucceeded(result))
-   } catch (e) {
-      yield put(Actions.getActivismPageCommentsFailed(e))
-      // NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
-   }
-}
-
 // Saga: will be fired on UPVOTE_ACTIVISM_PAGE actions
 function* upvoteActivismPage(action) {
    try {
@@ -198,10 +187,21 @@ function* followActivismPage(action) {
    }
 }
 
+// Saga: will be fired on GET_ACTIVISM_PAGE_COMMENTS_REQUESTED actions
+function* getActivismPageComments(action) {
+   try {
+      const result = yield call(Api.getActivismPageComments, action.pageId, action.email)
+      yield put(Actions.getActivismPageCommentsSucceeded(result))
+   } catch (e) {
+      yield put(Actions.getActivismPageCommentsFailed(e))
+      // NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
 // Saga: will be fired on ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED actions
 function* addCommentToActivismPage(action) {
    try {
-      const result = yield call(Api.addCommentToActivismPage, action.pageId, action.content, action.idToken)
+      const result = yield call(Api.addCommentToActivismPage, action.pageId, action.text, action.idToken)
       yield put(Actions.addCommentToActivismPageSucceeded(result))
       NotificationManager.success('New comment is added successfully.', 'Add comment')
    } catch (e) {
@@ -213,7 +213,7 @@ function* addCommentToActivismPage(action) {
 // Saga: will be fired on UPDATE_COMMENT actions
 function* updateComment(action) {
    try {
-      const result = yield call(Api.updateComment, action.pageId, action.commentId, action.content, action.idToken)
+      const result = yield call(Api.updateComment, action.pageId, action.commentId, action.text, action.idToken)
       yield put(Actions.updateCommentSucceeded(result))
       NotificationManager.success('The change is saved successfully.', 'Edit comment')
    } catch (e) {

@@ -39,7 +39,7 @@ class Profile extends Component {
       email: user ? user.email : '',
       phoneNumber: user ? user.phone_number : '',
       zipCode: user ? user['custom:zipcode'] : '',
-      avatar: user? `https://${ user.picture }`: '',
+      avatar: user && user.picture ? `https://${ user.picture }`: '',
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
@@ -76,7 +76,7 @@ class Profile extends Component {
         lastName: name[1],
         email: user.email,
         phoneNumber: user.phone_number,
-        avatar: `https://${ user.picture }`,
+        avatar: user.picture ? `https://${ user.picture }` : '',
         zipCode: user['custom:zipcode'],
         password: '',
         confirmPassword: ''

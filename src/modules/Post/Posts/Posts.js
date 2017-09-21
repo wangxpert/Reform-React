@@ -23,6 +23,7 @@ class Posts extends Component {
     this.onFlag = this.onFlag.bind(this)
     this.onEdit = this.onEdit.bind(this)
     this.onDelete = this.onDelete.bind(this)
+    this.onPost = this.onPost.bind(this)
   }
 
   componentDidMount() {
@@ -106,6 +107,14 @@ class Posts extends Component {
       this.props.deletePost(post, auth.session.idToken.jwtToken)
   }
 
+  onPost(post) {
+    this.props.changeLocation(`/post/posts/${ post.postid }`)
+  }
+
+  onComment(post) {
+    this.onPost(post)
+  }
+
   render() {
     const { region, posts, user } = this.props
 
@@ -113,7 +122,7 @@ class Posts extends Component {
     if (this.props.posts && this.props.posts.posts) {
       renderPosts = this.props.posts.posts.map((ele, index) => (
         <PostBlock key={ index } post={ ele } state={ posts.state } currentPost={ posts.currentPost } user={ user }
-          onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onEdit={ this.onEdit }/>
+          onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onComment={ this.onComment } onEdit={ this.onEdit } onPost={ this.onPost }/>
       ))
     }
 

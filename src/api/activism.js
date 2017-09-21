@@ -67,12 +67,12 @@ export function followActivismPage(pageId, idToken) {
   return callApi(ACTIVISM_API_URL, `activism/${ pageId }/follow`, 'PUT', null, idToken)
 }
 
-export function addCommentToActivismPage(pageId, content, idToken) {
-  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/create`, 'POST', { content }, idToken)
+export function addCommentToActivismPage(pageId, text, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/create`, 'POST', { text }, idToken)
 }
 
-export function updateComment(pageId, commentId, content, idToken) {
-  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }`, 'PUT', { content }, idToken)
+export function updateComment(pageId, commentId, text, idToken) {
+  return callApi(ACTIVISM_API_URL, `activism/${ pageId }/comments/${ commentId }`, 'PUT', { text }, idToken)
 }
 
 export function deleteComment(pageId, commentId, idToken) {

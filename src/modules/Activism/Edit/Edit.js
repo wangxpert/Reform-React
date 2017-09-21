@@ -71,7 +71,7 @@ class Edit extends Component {
         city: page.city,
         images: page.images.map(e => `https://${ e }`),
         imageFiles: page.images.slice(),
-        description: page.content,
+        description: page.text,
         video: page.videos[0] ? page.video[0] : '',
         videoFile: null
       })

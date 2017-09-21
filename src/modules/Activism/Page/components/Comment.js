@@ -53,6 +53,9 @@ export default class Comment extends Component {
   render() {
     const { comment, user } = this.props
 
+    const isCurrentComment = (this.props.comment.commentid && this.props.comment.commentid === this.props.currentComment)
+      || (this.props.comment.postid && this.props.comment.postid === this.props.currentComment)
+
     return (
       <div className={ `comment ${ this.props.className }` }>
         { (user && comment.username === user.email) &&
@@ -80,25 +83,25 @@ export default class Comment extends Component {
         </div>
 
         <div className="px-4 pt-3 pb-1">
-          <p className="">{ comment.content }</p>
+          <p className="">{ comment.text }</p>
           <div className="p-3 row">
             <button className="btn btn-secondary post-button col" onClick={ this.onUpvote }>
               <i className="fa fa-thumbs-up" aria-hidden="true"></i>
-              { this.props.state === 'UPVOTING_COMMENT' && this.props.comment.commentid === this.props.currentComment
+              { this.props.state === 'UPVOTING_COMMENT' && isCurrentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
                 : ` ${ comment.upvotes } Support`
               }
             </button>
             <button className="btn btn-secondary post-button col" onClick={ this.onDownvote }>
               <i className="fa fa-thumbs-down" aria-hidden="true"></i>
-              { this.props.state === 'DOWNVOTING_COMMENT' && this.props.comment.commentid === this.props.currentComment
+              { this.props.state === 'DOWNVOTING_COMMENT' && isCurrentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
                 : ` ${ comment.downvotes } Don't support`
               }
             </button>
             <button className="btn btn-secondary post-button col" onClick={ this.onReport }>
               <i className="fa fa-user-times" aria-hidden="true"></i>
-              { this.props.state === 'FLAGGING_COMMENT' && this.props.comment.commentid === this.props.currentComment
+              { this.props.state === 'FLAGGING_COMMENT' && isCurrentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
                 : ` ${ comment.flags } Report`
               }

@@ -100,9 +100,9 @@ class Page extends Component {
     this.props.addUserEmailToActivismPage(this.props.page.id, this.state.email)
   }
 
-  addComment(content) {
+  addComment(text) {
     this.toggleAddCommentDialog()
-    this.props.addComment(this.props.page.id, content, this.props.auth.session.idToken.jwtToken)
+    this.props.addComment(this.props.page.id, text, this.props.auth.session.idToken.jwtToken)
   }
 
   editComment(comment) {
@@ -227,12 +227,12 @@ class Page extends Component {
     return (
       <div className="activism-page my-3 my-md-5">
         {/* Dialogs */}
-        <InputDialog title={ 'Add Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Add' } default={''}
+        <InputDialog title={ 'Add Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Add' } defaultValue={''}
           isOpen={ this.state.showCreateComment } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
 
-        <InputDialog title={ 'Edit Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Save' } default={ this.state.comment ? this.state.comment.content : '' }
+        <InputDialog title={ 'Edit Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Save' } defaultValue={ this.state.comment ? this.state.comment.content : '' }
           isOpen={ this.state.showEditComment } toggle={ this.toggleEditCommentDialog }
-          save={ content => this.props.editComment(page.id, this.state.comment.commentid, content, idToken)  } />
+          save={ text => this.props.editComment(page.id, this.state.comment.commentid, text, idToken)  } />
 
         <ConfirmDialog title={ 'Confirm Deletion' } content={ 'Do you want to delete this page?' }
           isOpen={ this.state.showConfirmDeletePage } toggle={ this.toggleConfirmDeletePageDialog }
@@ -330,17 +330,17 @@ class Page extends Component {
           </div>
 
 
-          <div className="col-12 col-lg-7">
+          <div className="col-12 col-lg-7 d-lg-flex flex-lg-column justify-content-between">
             { page.videos[0] &&
               <Player className="mb-2">
                 <source src={ `https://${ page.videos[0] }` } />
               </Player>
             }
-            <div className="content-container">
-              { page.content }
+            <div className="content-container col">
+              { page.text }
             </div>
             <form onSubmit={ this.addUserEmail }>
-              <div className="inform-container row mt-4">
+              <div className="inform-container row mt-4 mb-4">
                 <div className="col-12 mb-1">
                   Stay informed. Sign Up for email updates.
                 </div>
@@ -359,7 +359,7 @@ class Page extends Component {
 
         </div>
 
-        <div className="p-3 row">
+        <div className="p-3 mt-1 row">
           <Button className="col" style={ btnStyle2 } onClick={ this.upvotePage }>
             <i className="fa fa-thumbs-up" aria-hidden="true"></i>
             { this.props.state === 'UPVOTING_ACTIVISM_PAGE'

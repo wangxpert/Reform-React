@@ -41,8 +41,15 @@
   }
 
   .content-container {
-    max-height: 270px;
     overflow-y: scroll;
+
+    @include media-breakpoint-up(lg) {
+      min-height: 200px;
+    }
+
+    // @include media-breakpoint-down(lg) {
+    //   max-height: 300px;
+    // }
   }
 
   .share-button {
@@ -55,8 +62,6 @@
     div {
       display: inline-block;
     }
-
-
   }
 
   .activity-container {

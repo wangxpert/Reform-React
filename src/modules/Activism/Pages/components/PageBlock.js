@@ -11,8 +11,8 @@ function PageBlock(props) {
       <div className="media-body">
         <h5 className="mt-0 page-title">{ activist.title }</h5>
         <span className="page-description">
-          {
-            (activist.content.length > DESCRIPTION_MAX_LENGTH) ? `${ activist.content.substr(0, DESCRIPTION_MAX_LENGTH) }...` : activist.content
+          { activist.text &&
+            (activist.text.length > DESCRIPTION_MAX_LENGTH) ? `${ activist.text.substr(0, DESCRIPTION_MAX_LENGTH) }...` : activist.text
           }
         </span>
       </div>

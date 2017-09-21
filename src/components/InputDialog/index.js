@@ -14,15 +14,19 @@ class AddCommentDialog extends Component {
     super(props)
 
     this.state = {
-      content: props.default ? props.default : ''
+      content: props.defaultValue ? props.defaultValue : ''
     }
 
     this.onSave = this.onSave.bind(this)
   }
 
+  componentWillMount() {
+    this.setState({ content: this.props.defaultValue ? this.props.defaultValue : '' })
+  }
+
   componentWillReceiveProps(nextProps) {
-    if (nextProps.default !== this.props.default) {
-      this.setState({ content: nextProps.default })
+    if (nextProps.isOpen !== this.props.isOpen && nextProps.isOpen) {
+      this.setState({ content: nextProps.defaultValue })
     }
   }
 
@@ -64,6 +68,7 @@ AddCommentDialog.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   buttonTitle: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
 
   toggle: PropTypes.func.isRequired,
   save: PropTypes.func.isRequired

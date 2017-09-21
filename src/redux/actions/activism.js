@@ -67,16 +67,6 @@ export const addUserEmailToActivismPageSucceeded = (result) =>
 export const addUserEmailToActivismPageFailed = (err) =>
   ({ type: Types.ADD_USER_EMAIL_TO_ACTIVISM_PAGE_FAILED, err })
 
-// Get Comments of Activism Page
-export const getActivismPageCommentsRequested = (pageId, limit = '', lastKey) =>
-  ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED, pageId, limit, lastKey })
-
-export const getActivismPageCommentsSucceeded = (result) =>
-  ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED, result })
-
-export const getActivismPageCommentsFailed = (err) =>
-  ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_FAILED, err })
-
 // Upvote Activism Page
 export const upvoteActivismPageRequested = (pageId, idToken) =>
   ({ type: Types.UPVOTE_ACTIVISM_PAGE_REQUESTED, pageId, idToken })
@@ -117,9 +107,19 @@ export const followActivismPageSucceeded = (result) =>
 export const followActivismPageFailed = (err) =>
   ({ type: Types.FOLLOW_ACTIVISM_PAGE_FAILED, err })
 
+// Get Comments of Activism Page
+export const getActivismPageCommentsRequested = (pageId, limit = '', lastKey) =>
+  ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_REQUESTED, pageId, limit, lastKey })
+
+export const getActivismPageCommentsSucceeded = (result) =>
+  ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_SUCCEEDED, result })
+
+export const getActivismPageCommentsFailed = (err) =>
+  ({ type: Types.GET_ACTIVISM_PAGE_COMMENTS_FAILED, err })
+
 // Add Comment to Activism Page
-export const addCommentToActivismPageRequested = (pageId, content, idToken) =>
-  ({ type: Types.ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED, pageId, content, idToken })
+export const addCommentToActivismPageRequested = (pageId, text, idToken) =>
+  ({ type: Types.ADD_COMMENT_TO_ACTIVISM_PAGE_REQUESTED, pageId, text, idToken })
 
 export const addCommentToActivismPageSucceeded = (result) =>
   ({ type: Types.ADD_COMMENT_TO_ACTIVISM_PAGE_SUCCEEDED, result })
@@ -128,8 +128,8 @@ export const addCommentToActivismPageFailed = (err) =>
   ({ type: Types.ADD_COMMENT_TO_ACTIVISM_PAGE_FAILED, err })
 
 // Edit Comment
-export const updateCommentRequested = (pageId, commentId, content, idToken) =>
-  ({ type: Types.UPDATE_COMMENT_REQUESTED, pageId, commentId, content, idToken })
+export const updateCommentRequested = (pageId, commentId, text, idToken) =>
+  ({ type: Types.UPDATE_COMMENT_REQUESTED, pageId, commentId, text, idToken })
 
 export const updateCommentSucceeded = (result) =>
   ({ type: Types.UPDATE_COMMENT_SUCCEEDED, result })

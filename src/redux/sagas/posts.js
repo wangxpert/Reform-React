@@ -131,6 +131,86 @@ function* deletePost(action) {
    }
 }
 
+// Saga: will be fired on GET_POST_COMMENTS_REQUESTED actions
+function* getPostComments(action) {
+   try {
+     const result = yield call(Api.getPostComments, action.post, action.limit, action.lastKey)
+     yield put(Actions.getPostCommentsSucceeded(result))
+   } catch (e) {
+     yield put(Actions.getPostCommentsFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on ADD_COMMENT_TO_POST_REQUESTED actions
+function* addCommentToPost(action) {
+   try {
+     const result = yield call(Api.addCommentToPost, action.post, action.text, action.idToken)
+     yield put(Actions.addCommentToPostSucceeded(result))
+     NotificationManager.success('Your comment is added.', 'Add Comment')
+   } catch (e) {
+     yield put(Actions.addCommentToPostFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on UPDATE_POST_COMMENT_REQUESTED actions
+function* updatePostComment(action) {
+   try {
+     const result = yield call(Api.updatePostComment, action.post, action.commentId, action.text, action.idToken)
+     yield put(Actions.updatePostCommentSucceeded(result))
+     NotificationManager.success('Your change is saved.', 'Edit Comment')
+   } catch (e) {
+     yield put(Actions.updatePostCommentFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on DELETE_POST_COMMENT_REQUESTED actions
+function* deletePostComment(action) {
+   try {
+     const result = yield call(Api.deletePostComment, action.post, action.commentId, action.idToken)
+     yield put(Actions.deletePostCommentSucceeded(result))
+     NotificationManager.success('The comment is deleted.', 'Delete Comment')
+   } catch (e) {
+     yield put(Actions.deletePostCommentFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on UPVOTE_POST_COMMENT_REQUESTED actions
+function* upvotePostComment(action) {
+   try {
+     const result = yield call(Api.upvotePostComment, action.commentLongId, action.idToken)
+     yield put(Actions.upvotePostCommentSucceeded(result))
+   } catch (e) {
+     yield put(Actions.upvotePostCommentFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on DOWNVOTE_POST_COMMENT_REQUESTED actions
+function* downvotePostComment(action) {
+   try {
+     const result = yield call(Api.downvotePostComment, action.commentLongId, action.idToken)
+     yield put(Actions.downvotePostCommentSucceeded(result))
+   } catch (e) {
+     yield put(Actions.downvotePostCommentFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
+// Saga: will be fired on FLAG_POST_COMMENT_REQUESTED actions
+function* flagPostComment(action) {
+   try {
+     const result = yield call(Api.flagPostComment, action.commentLongId, action.idToken)
+     yield put(Actions.flagPostCommentSucceeded(result))
+   } catch (e) {
+     yield put(Actions.flagPostCommentFailed(e))
+     NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
+   }
+}
+
 /*
   Does not allow concurrent fetches.
 */
@@ -144,4 +224,11 @@ export function* postsSaga() {
   yield takeLatest(Types.CREATE_POST_REQUESTED, createPost)
   yield takeLatest(Types.UPDATE_POST_REQUESTED, updatePost)
   yield takeLatest(Types.DELETE_POST_REQUESTED, deletePost)
+  yield takeLatest(Types.GET_POST_COMMENTS_REQUESTED, getPostComments)
+  yield takeLatest(Types.ADD_COMMENT_TO_POST_REQUESTED, addCommentToPost)
+  yield takeLatest(Types.UPDATE_POST_COMMENT_REQUESTED, updatePostComment)
+  yield takeLatest(Types.DELETE_POST_COMMENT_REQUESTED, deletePostComment)
+  yield takeLatest(Types.UPVOTE_POST_COMMENT_REQUESTED, upvotePostComment)
+  yield takeLatest(Types.DOWNVOTE_POST_COMMENT_REQUESTED, downvotePostComment)
+  yield takeLatest(Types.FLAG_POST_COMMENT_REQUESTED, flagPostComment)
 }

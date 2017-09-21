@@ -8,20 +8,23 @@ import asyncComponent from '../../components/AsyncComponent'
 const AsyncPosts = asyncComponent(() => import('./Posts'))
 const AsyncCreate = asyncComponent(() => import('./Create'))
 const AsyncEdit = asyncComponent(() => import('./Edit'))
+const AsyncView = asyncComponent(() => import('./Post'))
 const AsyncMyPosts = asyncComponent(() => import('./MyPosts'))
+
 
 const Activism = (props) => {
 
   return (
     <Switch path='/post'>
       <Route exact path='/post/posts' component={ AsyncPosts } />
+      <Route path='/post/posts/:postLongId' component={ AsyncView } />
       <Redirect exact path='/post' to='/post/posts' />
 
       { props.auth.state === 'NOT_LOGGED' && <Redirect to='/auth/login' /> }
 
       <Route path='/post/create' component={ AsyncCreate } />
       <Route path='/post/edit/:postLongId' component={ AsyncEdit } />
-      <Route Path='post/myposts' component={ AsyncMyPosts } />
+      <Route path='/post/myposts' component={ AsyncMyPosts } />
 
     </Switch>
   )

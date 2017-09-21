@@ -5,7 +5,8 @@ import Types from '../actions/types'
 // Initial State
 const initialState = {
   posts: [], state: 'RESETED_POSTS',
-  myPosts: { posts: [], lastKey: undefined }
+  myPosts: { posts: [], lastKey: undefined },
+  comments: []
 }
 
 // Handlers
@@ -156,6 +157,123 @@ export const deletePostFailed = (state = initialState, action) => {
   return { ...state, state: 'DELETE_POST_FAILED', err: action.err }
 }
 
+// Get Post Comments
+export const getPostCommentsRequested = (state = initialState, action) => {
+  return { ...state, state: 'GETTING_POST_COMMENTS_POST' }
+}
+
+export const getPostCommentsSucceeded = (state = initialState, action) => {
+  return { ...state, state: 'GET_POST_COMMENTS_SUCCEEDED', comments: action.result.Items,  result: action.result }
+}
+
+export const getPostCommentsFailed = (state = initialState, action) => {
+  return { ...state, state: 'GET_POST_COMMENTS_FAILED', err: action.err }
+}
+
+// Add Comment To Post
+export const addCommentToPostRequested = (state = initialState, action) => {
+  return { ...state, state: 'ADDING_COMMENT_TO_POST' }
+}
+
+export const addCommentToPostSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  comments.unshift(action.result.updates)
+  return { ...state, state: 'ADD_COMMENT_TO_POST_SUCCEEDED', comments, result: action.result }
+}
+
+export const addCommentToPostFailed = (state = initialState, action) => {
+  return { ...state, state: 'ADD_COMMENT_TO_POST_FAILED', err: action.err }
+}
+
+// Update Post Comment
+export const updatePostCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'UPDATING_POST_COMMENT' }
+}
+
+export const updatePostCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let comment = comments.find(e => e.id === action.result.id)
+  comment.text = action.result.updates.text
+
+  return { ...state, state: 'UPDATE_POST_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const updatePostCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'UPDATE_POST_COMMENT_FAILED', err: action.err }
+}
+
+// Delete Post Comment
+export const deletePostCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'DELETING_POST_COMMENT' }
+}
+
+export const deletePostCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let index = comments.findIndex(e => e.id === action.result.id)
+  comments.splice(index, 1)
+
+  return { ...state, state: 'DELETE_POST_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const deletePostCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'DELETE_POST_COMMENT_FAILED', err: action.err }
+}
+
+// Upvote Post Comment
+export const upvotePostCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'UPVOTING_COMMENT', commentLongId: action.commentLongId }
+}
+
+export const upvotePostCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let index = comments.findIndex(e => e.id === action.result.id)
+
+  comments[index] = Object.assign({}, comments[index], action.result.updates)
+
+  return { ...state, state: 'UPVOTE_POST_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const upvotePostCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'UPVOTE_POST_COMMENT_FAILED', err: action.err }
+}
+
+// Downvote Post Comment
+export const downvotePostCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'DOWNVOTING_COMMENT', commentLongId: action.commentLongId }
+}
+
+export const downvotePostCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let index = comments.findIndex(e => e.id === action.result.id)
+
+  comments[index] = Object.assign({}, comments[index], action.result.updates)
+
+  return { ...state, state: 'DOWNVOTE_POST_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const downvotePostCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'DOWNVOTE_POST_COMMENT_FAILED', err: action.err }
+}
+
+// Flag Post Comment
+export const flagPostCommentRequested = (state = initialState, action) => {
+  return { ...state, state: 'FLAGGING_COMMENT', commentLongId: action.commentLongId }
+}
+
+export const flagPostCommentSucceeded = (state = initialState, action) => {
+  let comments = state.comments
+  let index = comments.findIndex(e => e.id === action.result.id)
+
+  comments[index] = Object.assign({}, comments[index], action.result.updates)
+
+  return { ...state, state: 'FLAG_POST_COMMENT_SUCCEEDED', comments, result: action.result }
+}
+
+export const flagPostCommentFailed = (state = initialState, action) => {
+  return { ...state, state: 'FLAG_POST_COMMENT_FAILED', err: action.err }
+}
+
+
 // map action types to reducer functions
 export const handlers = {
   [Types.RESET_POSTS]: resetPosts,
@@ -194,6 +312,34 @@ export const handlers = {
   [Types.DELETE_POST_REQUESTED]: deletePostRequested,
   [Types.DELETE_POST_SUCCEEDED]: deletePostSucceeded,
   [Types.DELETE_POST_FAILED]: deletePostFailed,
+
+  [Types.GET_POST_COMMENTS_REQUESTED]: getPostCommentsRequested,
+  [Types.GET_POST_COMMENTS_SUCCEEDED]: getPostCommentsSucceeded,
+  [Types.GET_POST_COMMENTS_FAILED]: getPostCommentsFailed,
+
+  [Types.ADD_COMMENT_TO_POST_REQUESTED]: addCommentToPostRequested,
+  [Types.ADD_COMMENT_TO_POST_SUCCEEDED]: addCommentToPostSucceeded,
+  [Types.ADD_COMMENT_TO_POST_FAILED]: addCommentToPostFailed,
+
+  [Types.UPDATE_POST_COMMENT_REQUESTED]: updatePostCommentRequested,
+  [Types.UPDATE_POST_COMMENT_SUCCEEDED]: updatePostCommentSucceeded,
+  [Types.UPDATE_POST_COMMENT_FAILED]: updatePostCommentFailed,
+
+  [Types.DELETE_POST_COMMENT_REQUESTED]: deletePostCommentRequested,
+  [Types.DELETE_POST_COMMENT_SUCCEEDED]: deletePostCommentSucceeded,
+  [Types.DELETE_POST_COMMENT_FAILED]: deletePostCommentFailed,
+
+  [Types.UPVOTE_POST_COMMENT_REQUESTED]: upvotePostCommentRequested,
+  [Types.UPVOTE_POST_COMMENT_SUCCEEDED]: upvotePostCommentSucceeded,
+  [Types.UPVOTE_POST_COMMENT_FAILED]: upvotePostCommentFailed,
+
+  [Types.DOWNVOTE_POST_COMMENT_REQUESTED]: downvotePostCommentRequested,
+  [Types.DOWNVOTE_POST_COMMENT_SUCCEEDED]: downvotePostCommentSucceeded,
+  [Types.DOWNVOTE_POST_COMMENT_FAILED]: downvotePostCommentFailed,
+
+  [Types.FLAG_POST_COMMENT_REQUESTED]: flagPostCommentRequested,
+  [Types.FLAG_POST_COMMENT_SUCCEEDED]: flagPostCommentSucceeded,
+  [Types.FLAG_POST_COMMENT_FAILED]: flagPostCommentFailed,
 }
 
 /* Selectors */

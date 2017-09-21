@@ -169,7 +169,7 @@
     }
 
     .sidebar {
-      z-index: $zindex-navbar - 1;
+      z-index: $zindex-header - 1;
       width: $sidebar-compact-width;
       .sidebar-nav {
         overflow: visible;
