@@ -14,6 +14,7 @@ import account from './account'
 import whistleblower from './whistleblower'
 import advertise from './advertise'
 import feedback from './feedback'
+import cityOfficials from './city_officials'
 
 // Combine all reducers into one root reducer
 export default combineReducers({
@@ -25,5 +26,6 @@ export default combineReducers({
   account,
   whistleblower,
   advertise,
-  feedback
+  feedback,
+  cityOfficials
 })

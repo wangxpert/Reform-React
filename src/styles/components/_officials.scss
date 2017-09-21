@@ -1,0 +1,44 @@
+.officials {
+  background: $officials-container-bg;
+  padding-bottom: 10px;
+  border: $officials-container-border;
+
+  .page-title {
+    color: $inputpage-title-color;
+    font-size: $inputpage-title-font-size;
+  }
+
+  .official-block {
+    background: #fff;
+    box-shadow: 0px 0px 1px rgba(0, 0, 0, .3);
+
+    .official-avatar {
+      width: 120px;
+      max-width: 120px;
+      height: 160px;
+      border: 1px solid rgba(0, 0, 0, .1);
+      padding: 1px;
+      object-fit: cover;
+    }
+
+    .official-name {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .official-position {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .official-termends {
+      font-size: 18px;
+      font-weight: normal;
+    }
+
+    .official-email {
+      font-size: 18px;
+      word-wrap: break-word;
+    }
+  }
+}

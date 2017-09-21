@@ -63,7 +63,7 @@ export default class CategorySelector extends Component {
           <div className="form-group row">
             <label htmlFor="location-input" className="col-3 col-form-label">State</label>
             <div className="col-9">
-              <select name="state" className="form-control postsview_select" value={ this.props.selectedState } onChange={ e => this.props.selectState(e.target.value) }>
+              <select name="state" className="form-control" value={ this.props.selectedState } onChange={ e => this.props.selectState(e.target.value) }>
                 { stateOptions }
               </select>
               {/* <p>Selected state is {this.props.selectedState}</p> */}
@@ -90,7 +90,7 @@ export default class CategorySelector extends Component {
             </div>
           </div>
         </div>
-        <br/>
+        <br />
         <hr />
      </div>
     )

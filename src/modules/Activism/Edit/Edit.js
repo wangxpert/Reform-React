@@ -141,7 +141,7 @@ class Edit extends Component {
         level: this.state.level,
         state: (this.state.level > 1) ? this.state.state : undefined,
         city: (this.state.level > 2) ? this.state.city : undefined,
-        content: this.state.description,
+        text: this.state.description,
         imageFiles: this.state.imageFiles,
         videoFile: this.state.videoFile,
         oldImages: this.props.page.images,

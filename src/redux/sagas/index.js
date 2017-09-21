@@ -6,6 +6,7 @@ import { accountSaga } from './account'
 import { whistleBlowerSaga } from './whistleblower'
 import { advertiseSaga } from './advertise'
 import { feedbackSaga } from './feedback'
+import { cityOfficialsSaga } from './city_officials'
 
 export default [
   regionSaga,
@@ -15,5 +16,6 @@ export default [
   accountSaga,
   whistleBlowerSaga,
   advertiseSaga,
-  feedbackSaga
+  feedbackSaga,
+  cityOfficialsSaga
 ]

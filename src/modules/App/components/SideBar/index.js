@@ -57,7 +57,7 @@ class SideBar extends Component {
             </li>
 
             <li className="nav-item">
-              <Link to={'/'} className="nav-link"><i className=""></i> City Officials</Link>
+              <Link to={'/city_officials'} className="nav-link"><i className=""></i> City Officials</Link>
             </li>
 
             <li className="nav-item">

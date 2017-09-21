@@ -11,6 +11,7 @@ const AsyncContactUs = asyncComponent(() => import('../ContactUs'))
 const AsyncAboutUs = asyncComponent(() => import('../AboutUs'))
 const AsyncTerms = asyncComponent(() => import('../Terms'))
 const AsyncWhistleBlower = asyncComponent(() => import('../WhistleBlower'))
+const AsyncCityOfficials = asyncComponent(() => import('../CityOfficials'))
 const AsyncAdvertise = asyncComponent(() => import('../Advertise'))
 const AsyncFeedback = asyncComponent(() => import('../Feedback'))
 const AsyncPrivacy = asyncComponent(() => import('../Privacy'))
@@ -22,6 +23,7 @@ const routes = (
     <Route path='/contactus' component={ AsyncContactUs } />
     <Route path='/aboutus' component={ AsyncAboutUs } />
     <Route path='/terms' component={ AsyncTerms } />
+    <Route path='/city_officials' component={ AsyncCityOfficials } />
     <Route path='/whistleblower' component={ AsyncWhistleBlower } />
     <Route path='/advertise' component={ AsyncAdvertise } />
     <Route path='/feedback' component={ AsyncFeedback } />
