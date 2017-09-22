@@ -98,7 +98,8 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-user"></i></div>
                           <input type="text" name="userName" className="form-control" id="username"
-                                 placeholder="User Name" required autoFocus value={ this.state.userName } onChange={ this.onChange.bind(this) } />
+                                 placeholder="User Name" required autoFocus
+                                 value={ this.state.userName } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
               </div>
@@ -110,7 +111,9 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa"></i></div>
                           <input type="text" name="firstName" className="form-control" id="firstname" style={{ textTransform: 'capitalize' }}
-                                 placeholder="First Name" required value={ this.state.firstName } onChange={ this.onChange.bind(this) } />
+                                 placeholder="First Name" required
+                                 onInvalid={ e => e.target.setCustomValidity('Please enter your given name.') }
+                                 value={ this.state.firstName } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
               </div>
@@ -122,6 +125,7 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa"></i></div>
                           <input type="text" name="lastName" className="form-control" id="lastname" style={{ textTransform: 'capitalize' }}
+                                 onInvalid={ e => e.target.setCustomValidity('Please enter your family name.') }
                                  placeholder="Last Name" required value={ this.state.lastName } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
@@ -134,7 +138,9 @@ class SignUp extends Component {
                       <div className="input-group mb-2 mr-sm-2 mb-sm-0">
                           <div className="input-group-addon" style={{width: '2.6rem'}}><i className="fa fa-at"></i></div>
                           <input type="email" name="email" className="form-control" id="email"
-                                 placeholder="Email" required value={ this.state.email } onChange={ this.onChange.bind(this) } />
+                                 placeholder="Email" required
+                                 onInvalid={ e => e.target.setCustomValidity('Your email address is required.') }
+                                 value={ this.state.email } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>
               </div>
@@ -150,6 +156,7 @@ class SignUp extends Component {
                                 value={ this.state.countryCode } />
                           <input type="tel" name="phoneNumber" className="form-control" id="phone_number"
                                 placeholder="Phone Number" required pattern="(\D)*((\d)(\D)*){10}"
+                                onInvalid={ e => e.target.setCustomValidity('Your area code and phone number are required.') }
                                 value={ this.state.phoneNumber } onChange={ this.onChange.bind(this) } />
                       </div>
                   </div>

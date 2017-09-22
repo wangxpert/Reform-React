@@ -61,13 +61,13 @@ class WhistleBlower extends Component {
     return (
       <div className="inputpage my-3 my-md-5">
         <h1 className="title py-3 mt-3 mb-1 text-center"> Be a Whistleblower ! </h1>
-        <p className="description mb-1">
+        <p className="description mb-1 px-md-5">
           Here you can give information anonymously about illegal or unethical activity by a city employee or official.
           Fill out the information below. </p>
-        <p className="description mb-0">
+        <p className="description mb-0 px-md-5">
           It will, in no way, be connected to your account internally or externally.
         </p>
-        <p className="description mb-4">
+        <p className="description mb-4 px-md-5">
           ReformCOW will hold in our file for future reference and compare to similiar complaints from other submissions.
         </p>
         <form className="form" onSubmit={ this.onSubmit }>
@@ -89,7 +89,7 @@ class WhistleBlower extends Component {
           <div className="form-group row">
             <label htmlFor="informant" className="col-auto col-md-3 col-form-label">Reporter:</label>
             <div className="ml-auto col-md-9">
-              <input className="form-control" type="text" name="informant" id="informant" value={ this.state.informant } onChange={ this.onChange } placeholder={ '' } />
+              <input className="form-control" type="text" name="informant" id="informant" value={ this.state.informant } onChange={ this.onChange } placeholder={ 'Optional' } />
             </div>
           </div>
 

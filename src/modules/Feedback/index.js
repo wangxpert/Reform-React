@@ -10,6 +10,7 @@ import { push } from 'react-router-redux'
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
+    user: state.account.user,
     state: state.feedback.state
   }
 }

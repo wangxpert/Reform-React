@@ -17,6 +17,8 @@ class FeedBack extends Component {
       description: ''
     }
 
+    if (this.props.user && this.props.user.email) this.state.contact = this.props.user.email
+
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
   }
@@ -62,7 +64,7 @@ class FeedBack extends Component {
         <form className="form" onSubmit={ this.onSubmit }>
 
           <div className="form-group row">
-            <label htmlFor="contact" className="col-auto col-md-3 col-form-label">Contact:</label>
+            <label htmlFor="contact" className="col-auto col-md-3 col-form-label">Your Email:</label>
             <div className="ml-auto col-md-9">
               <input className="form-control" type="text" name="contact" id="contact" value={ this.state.contact } onChange={ this.onChange } placeholder={ '' } />
             </div>
