@@ -8,10 +8,11 @@ import './styles/styles.css'
 // Import components
 import { NotificationContainer } from 'react-notifications'
 
-
 import Header from './components/Header'
 // import Footer from './components/Footer'
 import SideBar from './components/SideBar'
+import DemoLink from './components/DemoLink'
+import DemoVideo from './components/DemoVideo'
 
 import Ads from '../Ads'
 
@@ -27,7 +28,11 @@ class App extends Component {
 
   constructor(props) {
     super(props)
-    this.state = { isMounted: false }
+    this.state = {
+      isMounted: false,
+      showDemoVideo: false
+    }
+    this.toggleDemoVideo = this.toggleDemoVideo.bind(this)
   }
 
   componentWillMount() {
@@ -38,6 +43,10 @@ class App extends Component {
 
   componentDidMount() {
     this.setState({isMounted: true}) // eslint-disable-line
+  }
+
+  toggleDemoVideo() {
+    this.setState({ showDemoVideo: !this.state.showDemoVideo })
   }
 
   render() {
@@ -60,6 +69,9 @@ class App extends Component {
           </main>
         </div>
         {/* <Footer /> */}
+
+        <DemoLink onClick={ this.toggleDemoVideo }/>
+        <DemoVideo isOpen={ this.state.showDemoVideo } toggle={ this.toggleDemoVideo } />
         <NotificationContainer />
       </div>
     )

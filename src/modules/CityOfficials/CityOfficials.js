@@ -45,7 +45,7 @@ class CityOfficials extends Component {
     }
 
     return (
-      <div className="officials mt-5 mb-5">
+      <div className="officials mt-5 mb-5 py-3">
         <div className="row">
           <div className="col-12 text-center">
             <h2 className="mt-4 page-title">City Officials</h2>
@@ -60,7 +60,7 @@ class CityOfficials extends Component {
           <div className="col px-auto">
             { officials && officials.Items && officials.Count ?
               renderOfficials :
-              <h6 className='ml-5' > We do not have the list of officials for this city yet. </h6>
+              <h6 className='ml-4' > We do not have the list of officials for this city yet. </h6>
             }
           </div>
         </div>
