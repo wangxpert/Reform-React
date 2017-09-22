@@ -1,7 +1,7 @@
 import callApi, { ACTIVISM_API_URL } from '../utils/apiCaller'
 
 export function fetchActivists(state, city, includingStates, includingCities, limit, lastKey) {
-
+  console.log(state, city, includingStates, includingCities)
   var url = 'activism?co=us'
   if (includingStates === true) {
     url += '&is=1'

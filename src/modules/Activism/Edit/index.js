@@ -16,11 +16,11 @@ import {
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
-    account: state.account,
+    user: state.account.user,
     states: state.region.states,
     cities: state.region.cities,
     state: state.activism.state,
-    auth: state.auth,
+    auth: state.auth.session,
     page: state.activism.activismPage,
   }
 }

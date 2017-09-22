@@ -4,7 +4,9 @@ import Types from '../actions/types'
 
 // Initial State
 const initialState = {
-
+  selectedState: '',
+  selectedCity: '',
+  selectedDepartment: ''
 }
 
 // Handlers

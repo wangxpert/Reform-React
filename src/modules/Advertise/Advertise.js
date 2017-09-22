@@ -73,7 +73,8 @@ class Advertise extends Component {
 
     return (
       <div className="inputpage my-3 my-md-5">
-        <h1 className="title py-3 mt-3 mb-4 text-center"> Advertise With Us </h1>
+        <h1 className="title py-3 mt-3 mb-1 text-center"> Advertise With Us </h1>
+        <p className="description text-center mb-4">To advertise on ReformCOW, submit the form below and/or contact us directly at <strong>info@reformcow.com</strong></p>
         <form className="form" onSubmit={ this.onSubmit }>
 
           <div className="form-group row">

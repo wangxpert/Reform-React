@@ -9,6 +9,12 @@
     font-size: $inputpage-title-font-size;
   }
 
+  .description {
+    font-size: $inputpage-title-font-size * 0.5;
+    text-indent: 16px;
+    text-align: justify;
+  }
+
   .form {
     margin: 0 15px
 

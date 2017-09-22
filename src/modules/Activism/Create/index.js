@@ -17,12 +17,12 @@ import {
 // Retrieve data from store as props
 function mapStateToProps(state) {
   return {
-    account: state.account,
+    user: state.account.user,
     states: state.region.states,
     cities: state.region.cities,
     state: state.activism.state,
     result: state.activism.result,
-    auth: state.auth
+    session: state.auth.session
   }
 }
 

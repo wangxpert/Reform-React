@@ -9,31 +9,27 @@ export default class CategorySelector extends Component {
     super(props)
 
     this.state = {
-      includingStates: true,
-      includingCities: true
+      includingStates: false,
+      includingCities: false
     }
   }
 
   componentDidMount() {
-    /*if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState)
-    if (this.props.selectedCity) this.props.selectCity(this.props.selectedCity)*/
-    this.props.selectState('')
-    this.props.selectCity('')
+    if (this.props.selectedState && !this.props.cities) this.props.selectState(this.props.selectedState)
+    if (this.props.selectedCity) this.props.selectCity(this.props.selectedCity)
   }
 
   componentWillReceiveProps(nextProps) {
-    /*if (nextProps.states !== this.props.states && nextProps.states) {
-      this.props.selectState(nextProps.states.Items[0].stateid)
+    if (nextProps.states !== this.props.states && nextProps.states) {
+      this.props.selectState(nextProps.defaultState)
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
-      this.props.selectCity(nextProps.cities.Items[0].city)
-    }*/
+      this.props.selectCity(nextProps.defaultCity)
+    }
   }
 
   makeStateOption(state, index) {
-    // if (index === 0) return null // remove admin country
-
     return (
       <option key={ state.stateid } value={ state.stateid }>{ state.name }</option>
     )
@@ -42,12 +38,6 @@ export default class CategorySelector extends Component {
   makeCityOption(city) {
     return (
       <option key={ city.city } value={ city.city }>{ city.name }</option>
-    )
-  }
-
-  makeDepartmentOption(department) {
-    return (
-      <option key={ `${department.city}-${department.department}` } value={ department.department }>{ department.name }</option>
     )
   }
 
@@ -125,5 +115,7 @@ CategorySelector.propTypes = {
   states: PropTypes.object,
   cities: PropTypes.object,
   selectedState: PropTypes.string,
-  selectedCity: PropTypes.string
+  selectedCity: PropTypes.string,
+  defaultState: PropTypes.string,
+  defaultCity: PropTypes.string
 }

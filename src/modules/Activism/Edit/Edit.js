@@ -49,17 +49,24 @@ class Edit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.states !== this.props.states && nextProps.states) {
-      this.setState({ state: nextProps.states.Items[0].stateid })
-      this.props.selectState(nextProps.states.Items[0].stateid)
+    const { user } = nextProps
 
-      this.props.citiesFetchRequested(nextProps.states.Items[0].stateid)
+    if (nextProps.states !== this.props.states && nextProps.states) {
+      var defaultState = 'texas'
+      if (user && user['custom:stateid']) defaultState = user['custom:stateid']
+
+      this.setState({ state: defaultState })
+      this.props.selectState(defaultState)
+
+      this.props.citiesFetchRequested(defaultState)
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities) {
-      let city = nextProps.cities.Count ? nextProps.cities.Items[0].city : ''
-      this.setState({ city: city })
-      this.props.selectCity(city)
+      var defaultCity = 'austin'
+      if (user && user['custom:city']) defaultCity = user['custom:city']
+
+      this.setState({ city: defaultCity })
+      this.props.selectCity(defaultCity)
     }
 
     if (nextProps.page !== this.props.page && nextProps.page) {
@@ -149,7 +156,7 @@ class Edit extends Component {
         oldImages: this.props.page.images,
         oldVideo: this.props.page.videos[0],
         youtubelink: this.state.youtube
-      }, this.props.auth.session.idToken.jwtToken)
+      }, this.props.session.idToken.jwtToken)
   }
 
   onVideo(e) {

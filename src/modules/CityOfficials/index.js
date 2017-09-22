@@ -17,7 +17,8 @@ import CityOfficials from './CityOfficials'
 function mapStateToProps(state) {
   return {
     officials: state.cityOfficials.officials,
-    region: state.region
+    region: state.region,
+    user: state.account.user
   }
 }
 

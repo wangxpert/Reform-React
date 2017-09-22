@@ -28,9 +28,9 @@ class Posts extends Component {
   }
 
   componentDidMount() {
-    // const { region } = this.props
-    // if (!region.states)
-    this.props.statesFetchRequested(true)
+    const { region } = this.props
+    if (!region.states)
+      this.props.statesFetchRequested()
   }
 
   selectState(state) {
@@ -129,10 +129,17 @@ class Posts extends Component {
       ))
     }
 
+    var defaultState = 'texas'
+    var defaultCity = 'austin'
+
+    if (user && user['custom:stateid']) defaultState = user['custom:stateid']
+    if (user && user['custom:city']) defaultCity = user['custom:city']
+
     return (
       <div className="posts mt-5 mb-5">
         <TabBar />
         <CategorySelector states={ region.states } cities={ region.cities } departments={ region.departments }
+          defaultState={ defaultState } defaultCity={ defaultCity }
           selectedState={ region.selectedState } selectedCity={ region.selectedCity } selectedDepartment = { region.selectedDepartment }
           selectState={ this.selectState.bind(this) }  selectCity={ this.selectCity.bind(this) } selectDepartment={ this.selectDepartment.bind(this) } />
 

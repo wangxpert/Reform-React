@@ -18,7 +18,7 @@ class CityOfficials extends Component {
     const { region } = this.props
 
     if (!region.states)
-      this.props.getStates(true)
+      this.props.getStates()
   }
 
   selectState(state) {
@@ -34,7 +34,7 @@ class CityOfficials extends Component {
 
   render() {
 
-    const { officials, region } = this.props
+    const { officials, region, user } = this.props
 
 
     let renderOfficials = null
@@ -43,6 +43,12 @@ class CityOfficials extends Component {
         <Official key={ index } official={ e } />
       ))
     }
+
+    var defaultState = 'texas'
+    var defaultCity = 'austin'
+
+    if (user && user['custom:stateid']) defaultState = user['custom:stateid']
+    if (user && user['custom:city']) defaultCity = user['custom:city']
 
     return (
       <div className="officials mt-5 mb-5 py-3">
@@ -53,6 +59,7 @@ class CityOfficials extends Component {
           <hr />
           <div className="col-12">
             <RegionSelector  states={ region.states } cities={ region.cities }
+              defaultState={ defaultState } defaultCity={ defaultCity }
               selectedState={ region.selectedState } selectedCity={ region.selectedCity }
               selectState={ this.selectState } selectCity={ this.selectCity } />
           </div>

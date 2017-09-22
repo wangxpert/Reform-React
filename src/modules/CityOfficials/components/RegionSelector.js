@@ -10,16 +10,15 @@ class RegionSelector extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.states !== this.props.states && nextProps.states) {
-      this.props.selectState(nextProps.states.Items[1].stateid)
+      this.props.selectState(nextProps.defaultState)
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
-      this.props.selectCity(nextProps.cities.Items[0].city)
+      this.props.selectCity(nextProps.defaultCity)
     }
   }
 
   makeStateOption(state, index) {
-    if (index === 0 ) return null
     return (
       <option key={ state.stateid } value={ state.stateid }>{ state.name }</option>
     )
@@ -78,6 +77,9 @@ RegionSelector.propTypes = {
 
   selectedState: PropTypes.string,
   selectedCity: PropTypes.string,
+
+  defaultState: PropTypes.string,
+  defaultCity: PropTypes.string,
 
   selectState: PropTypes.func,
   selectCity: PropTypes.func,

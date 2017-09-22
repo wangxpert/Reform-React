@@ -13,11 +13,11 @@ export default class CategorySelector extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.states !== this.props.states && nextProps.states) {
-      this.props.selectState(nextProps.states.Items[0].stateid)
+      this.props.selectState(nextProps.defaultState)
     }
 
     if (nextProps.cities !== this.props.cities && nextProps.cities && nextProps.cities.Items.length) {
-      this.props.selectCity(nextProps.cities.Items[0].city)
+      this.props.selectCity(nextProps.defaultCity)
     }
 
     if (nextProps.departments !== this.props.departments && nextProps.departments) {
@@ -47,14 +47,17 @@ export default class CategorySelector extends Component {
     var stateOptions = null
     var cityOptions = null
     var departOptions = null
-    if (this.props.states)
-      stateOptions = this.props.states.Items.map(this.makeStateOption)
 
-    if (this.props.cities)
-      cityOptions = this.props.cities.Items.map(this.makeCityOption)
+    const { states, cities, departments } = this.props
 
-    if (this.props.departments)
-      departOptions = this.props.departments.Items.map(this.makeDepartmentOption)
+    if (states)
+      stateOptions = states.Items.map(this.makeStateOption)
+
+    if (cities)
+      cityOptions = cities.Items.map(this.makeCityOption)
+
+    if (departments)
+      departOptions = departments.Items.map(this.makeDepartmentOption)
 
     return (
       <div className="pt-5 pb-1 px-3">
@@ -100,5 +103,7 @@ export default class CategorySelector extends Component {
 CategorySelector.propTypes = {
   states: PropTypes.object,
   cities: PropTypes.object,
-  category: PropTypes.object
+  departments: PropTypes.object,
+  defaultState: PropTypes.string,
+  defaultCity: PropTypes.string
 }
