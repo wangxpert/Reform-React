@@ -52,18 +52,6 @@
     // }
   }
 
-  .share-button {
-    display: inline-block;
-    margin: 0 8px;
-    &:focus {
-      outline: none;
-    }
-
-    div {
-      display: inline-block;
-    }
-  }
-
   .activity-container {
     // box-shadow: 0 0 6px rgba(0, 0, 0, .3);
     background: $bg-secondary;

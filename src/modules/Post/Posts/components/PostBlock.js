@@ -7,7 +7,7 @@ import {
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/navigation/menu';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 class PostBlock extends Component {
 
@@ -96,7 +96,7 @@ class PostBlock extends Component {
             <h5 className="media-heading">{ post.preferred_username }</h5>
             <span>{ `${ post.cityname } / ${ post.departmentname }` }</span>
           </div>
-          { (user && post.username === user.email) &&
+          { (user && (post.username === user.email || user['custom:isadmin'])) &&
             <div className="float-right pr-3">
               <IconMenu
                 onClick={ this.onContext }

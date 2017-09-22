@@ -9,7 +9,7 @@ import {
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/navigation/menu';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 export default class Comment extends Component {
 
@@ -58,7 +58,7 @@ export default class Comment extends Component {
 
     return (
       <div className={ `comment ${ this.props.className }` }>
-        { (user && comment.username === user.email) &&
+        { (user && (comment.username === user.email || user['custom:isadmin'])) &&
           <div className="float-right pr-3">
             <IconMenu
               iconButtonElement={<IconButton><EditIcon /></IconButton>}

@@ -1,0 +1,13 @@
+.share-buttons {
+  .share-button {
+    display: inline-block;
+    margin: 0 8px;
+    &:focus {
+      outline: none;
+    }
+
+    div {
+      display: inline-block;
+    }
+  }
+}

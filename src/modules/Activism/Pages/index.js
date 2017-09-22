@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 // Import Components
 import InfiniteScroll from 'react-infinite-scroller'
 import { push } from 'react-router-redux'
+import Reveal from 'react-reveal'
 
 import PageBlock from './components/PageBlock'
 import CategorySelector from './components/CategorySelector'
@@ -91,7 +92,9 @@ class ActivistList extends Component {
     var renderActivists = null
     if (activism.activists) {
       renderActivists = activism.activists.map((ele, index) => (
-        <PageBlock key={ index } activist={ ele } onClick={ e => this.props.dispatch(push( `/activism/pages/${ ele.id }` )) } />
+        <Reveal key={ index } effect="animated fadeInUp">
+          <PageBlock key={ index } activist={ ele } onClick={ e => this.props.dispatch(push( `/activism/pages/${ ele.id }` )) } />
+        </Reveal>
       ))
     }
 

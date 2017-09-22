@@ -13,18 +13,14 @@ import { NotificationManager } from 'react-notifications'
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
-import EditIcon from 'material-ui/svg-icons/navigation/menu';
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit';
 
 import {
   Circle
 } from 'better-react-spinkit'
 
-import {
-  ShareButtons,
-  generateShareIcon
-} from 'react-share'
-
 import Button from '../../../components/Button'
+import ShareButtons from '../../../components/ShareButtons'
 import ConfirmDialog from '../../../components/ConfirmDialog'
 import InputDialog from '../../../components/InputDialog'
 import Comment from './components/Comment'
@@ -32,18 +28,6 @@ import Comment from './components/Comment'
 const btnStyle = { padding: '3px 30px', marginRight: '16px' }
 const btnStyle2 = { width: '100%', margin: '1px 1px' }
 const spinnerStyle = { display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }
-
-const {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  LinkedinShareButton,
-  TwitterShareButton
-} = ShareButtons
-
-const FacebookIcon = generateShareIcon('facebook')
-const GooglePlusIcon = generateShareIcon('google')
-const LinkedShareIcon = generateShareIcon('linkedin')
-const TwitterShareIcon = generateShareIcon('twitter')
 
 class Page extends Component {
 
@@ -244,7 +228,7 @@ class Page extends Component {
         {/* --- */}
 
         <div className="float-right text-right">
-          { (this.props.user && page.username === this.props.user.email) &&
+          { (this.props.user && ( page.username === this.props.user.email || this.props.user['custom:isadmin'])) &&
             <div className="">
               <IconMenu
                 iconButtonElement={<IconButton><EditIcon /></IconButton>}
@@ -286,46 +270,7 @@ class Page extends Component {
             </div>
             <div className="pt-3 text-center">
               <div className="mb-2"> Share : </div>
-              <FacebookShareButton
-                url={ shareUrl }
-                quote={ page.title }
-                picture={ `https://${ page.images[0] }` }
-                className="share-button"
-                >
-                <FacebookIcon
-                  size={32}
-                  round />
-              </FacebookShareButton>
-
-              <GooglePlusShareButton
-                url={ shareUrl }
-                quote={ page.title }
-                className="share-button"
-                >
-                <GooglePlusIcon
-                  size={32}
-                  round />
-              </GooglePlusShareButton>
-
-              <LinkedinShareButton
-                url={ shareUrl }
-                quote={ page.title }
-                className="share-button"
-                >
-                <LinkedShareIcon
-                  size={32}
-                  round />
-              </LinkedinShareButton>
-
-              <TwitterShareButton
-                url={ shareUrl }
-                quote={ page.title }
-                className="share-button"
-                >
-                <TwitterShareIcon
-                  size={32}
-                  round />
-              </TwitterShareButton>
+              <ShareButtons shareUrl={ shareUrl } title={ page.title } />
             </div>
           </div>
 
@@ -335,6 +280,12 @@ class Page extends Component {
               <Player className="mb-2">
                 <source src={ `https://${ page.videos[0] }` } />
               </Player>
+            }
+            { page.youtubelink &&
+              <iframe className="video mb-2" title={ page.title }
+                frameBorder="0" allowFullScreen
+                src={ page.youtubelink }>
+              </iframe>
             }
             <div className="content-container col">
               { page.text }

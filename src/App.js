@@ -14,6 +14,7 @@ import Core from './modules/App'
 import 'font-awesome/css/font-awesome.css'
 import './styles/styles.css'
 import 'react-notifications/lib/notifications.css'
+import 'animate.css/animate.css'
 
 export default function App(props) {
   return (

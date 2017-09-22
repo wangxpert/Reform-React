@@ -7,18 +7,14 @@ import { NotificationManager } from 'react-notifications'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
-import EditIcon from 'material-ui/svg-icons/navigation/menu'
+import EditIcon from 'material-ui/svg-icons/editor/mode-edit'
 
 import {
   Circle
 } from 'better-react-spinkit'
 
-import {
-  ShareButtons,
-  generateShareIcon
-} from 'react-share'
-
 import Button from '../../../components/Button'
+import ShareButtons from '../../../components/ShareButtons'
 import ConfirmDialog from '../../../components/ConfirmDialog'
 import InputDialog from '../../../components/InputDialog'
 import Comment from '../../Activism/Page/components/Comment'
@@ -26,18 +22,6 @@ import Comment from '../../Activism/Page/components/Comment'
 const btnStyle = { padding: '3px 30px', marginRight: '16px' }
 const btnStyle2 = { width: '100%', margin: '1px 1px' }
 const spinnerStyle = { display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }
-
-const {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  LinkedinShareButton,
-  TwitterShareButton
-} = ShareButtons
-
-const FacebookIcon = generateShareIcon('facebook')
-const GooglePlusIcon = generateShareIcon('google')
-const LinkedShareIcon = generateShareIcon('linkedin')
-const TwitterShareIcon = generateShareIcon('twitter')
 
 class Post extends Component {
 
@@ -221,7 +205,7 @@ class Post extends Component {
 
         <div className="row">
           <div className="col-12">
-            { (this.props.user && post.username === this.props.user.email) &&
+            { (this.props.user && (post.username === this.props.user.email || this.props.user['custom:isadmin'])) &&
               <div className="float-right">
                 <IconMenu
                   onClick={ this.onContext }
@@ -248,46 +232,7 @@ class Post extends Component {
           <div className="col-12 text-center" >
             <img className="post-media" src={ `https://${ post.media }` } alt="No Images" />
             <div className="mt-2 text-center">
-              <FacebookShareButton
-                url={ shareUrl }
-                quote={ 'ReformCOW' }
-                picture={ `https://${ post.media }` }
-                className="share-button"
-                >
-                <FacebookIcon
-                  size={32}
-                  round />
-              </FacebookShareButton>
-
-              <GooglePlusShareButton
-                url={ shareUrl }
-                quote={ 'ReformCOW' }
-                className="share-button"
-                >
-                <GooglePlusIcon
-                  size={32}
-                  round />
-              </GooglePlusShareButton>
-
-              <LinkedinShareButton
-                url={ shareUrl }
-                quote={ 'ReformCOW' }
-                className="share-button"
-                >
-                <LinkedShareIcon
-                  size={32}
-                  round />
-              </LinkedinShareButton>
-
-              <TwitterShareButton
-                url={ shareUrl }
-                quote={ 'ReformCOW' }
-                className="share-button"
-                >
-                <TwitterShareIcon
-                  size={32}
-                  round />
-              </TwitterShareButton>
+              <ShareButtons shareUrl={ shareUrl } title={ 'ReformCOW' } picture={ `https://${ post.media }` }/>
             </div>
           </div>
           <div className="col-12">

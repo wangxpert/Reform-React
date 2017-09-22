@@ -24,7 +24,8 @@ class Edit extends Component {
       images: [],
       imageFiles: [],
       videoFile: null,
-      video: ''
+      video: '',
+      youtube: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -73,7 +74,8 @@ class Edit extends Component {
         imageFiles: page.images.slice(),
         description: page.text,
         video: page.videos[0] ? page.video[0] : '',
-        videoFile: null
+        videoFile: null,
+        youtube: page.youtubelink ? page.youtubelink: ''
       })
     }
 
@@ -145,7 +147,8 @@ class Edit extends Component {
         imageFiles: this.state.imageFiles,
         videoFile: this.state.videoFile,
         oldImages: this.props.page.images,
-        oldVideo: this.props.page.videos[0]
+        oldVideo: this.props.page.videos[0],
+        youtubelink: this.state.youtube
       }, this.props.auth.session.idToken.jwtToken)
   }
 
@@ -283,6 +286,13 @@ class Edit extends Component {
                 </div>
                 <input ref={input => this.videoPicker = input} type="file" name="pic" accept="video/*" hidden onChange={ this.onVideo } />
               </div>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="youtube" className="col-auto col-md-3 col-form-label">Youtube:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="text" name="youtube" id="youtube" value={ this.state.youtube } onChange={ this.onChange } placeholder={ '' } />
             </div>
           </div>
 

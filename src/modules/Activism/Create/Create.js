@@ -24,7 +24,8 @@ class Create extends Component {
       images: [],
       imageFiles: [],
       videoFile: null,
-      video: ''
+      video: '',
+      youtube: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -121,7 +122,8 @@ class Create extends Component {
       city: (this.state.level > 2) ? this.state.city : undefined,
       content: this.state.description,
       imageFiles: this.state.imageFiles,
-      videoFile: this.state.videoFile
+      videoFile: this.state.videoFile,
+      youtubelink: this.state.youtube
     }, this.props.auth.session.idToken.jwtToken)
   }
 
@@ -259,6 +261,13 @@ class Create extends Component {
                 </div>
                 <input ref={input => this.videoPicker = input} type="file" name="pic" accept="video/*" hidden onChange={ this.onVideo } />
               </div>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <label htmlFor="youtube" className="col-auto col-md-3 col-form-label">Youtube:</label>
+            <div className="ml-auto col-md-9">
+              <input className="form-control" type="text" name="youtube" id="youtube" value={ this.state.youtube } onChange={ this.onChange } placeholder={ '' } />
             </div>
           </div>
 

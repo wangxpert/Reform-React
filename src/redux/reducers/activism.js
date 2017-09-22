@@ -1,4 +1,4 @@
-import { createReducer } from 'reduxsauce'
+  import { createReducer } from 'reduxsauce'
 // Import Actions
 import Types from '../actions/types'
 
@@ -11,11 +11,11 @@ const initialState = {
 // Handlers
 
 export const resetActivists = (state = initialState) => {
-  return { activists: [] }
+  return { ...state, activists: [] }
 }
 
 export const resetMyPages = (state = initialState) => {
-  return { myPages: { pages: [], lastKey: null } }
+  return { ...state, myPages: { pages: [], lastKey: null } }
 }
 
 export const fetchActivistsSucceeded = (state = initialState, action) => {

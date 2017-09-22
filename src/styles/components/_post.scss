@@ -63,18 +63,6 @@
     text-align: left;
   }
 
-  .share-button {
-    display: inline-block;
-    margin: 0 8px;
-    &:focus {
-      outline: none;
-    }
-
-    div {
-      display: inline-block;
-    }
-  }
-
   .comments-container {
     background: $bg-secondary;
     // box-shadow: 0 0 6px rgba(0, 0, 0, .3);
