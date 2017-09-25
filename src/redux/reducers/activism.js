@@ -74,7 +74,7 @@ export const updateActivismPageRequested = (state = initialState, action) => {
 }
 
 export const updateActivismPageSucceeded = (state = initialState, action) => {
-  let page = Object.assign({}, state.activismPage, action.result.updates)
+  let page = Object.assign({}, state.activismPage, action.result ? action.result.updates : {})
 
   return { ...state, state: 'UPDATE_ACTIVISM_PAGE_SUCCEEDED', activismPage: page, result: action.result }
 }

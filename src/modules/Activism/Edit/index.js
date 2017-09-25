@@ -20,7 +20,9 @@ function mapStateToProps(state) {
     states: state.region.states,
     cities: state.region.cities,
     state: state.activism.state,
-    auth: state.auth.session,
+    session: state.auth.session,
+    selectedState: state.region.selectedState,
+    selectedCity: state.region.selectedCity,
     page: state.activism.activismPage,
   }
 }

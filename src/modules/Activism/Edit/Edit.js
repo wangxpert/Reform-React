@@ -49,46 +49,34 @@ class Edit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { user } = nextProps
-
-    if (nextProps.states !== this.props.states && nextProps.states) {
-      var defaultState = 'texas'
-      if (user && user['custom:stateid']) defaultState = user['custom:stateid']
-
-      this.setState({ state: defaultState })
-      this.props.selectState(defaultState)
-
-      this.props.citiesFetchRequested(defaultState)
-    }
-
-    if (nextProps.cities !== this.props.cities && nextProps.cities) {
-      var defaultCity = 'austin'
-      if (user && user['custom:city']) defaultCity = user['custom:city']
-
-      this.setState({ city: defaultCity })
-      this.props.selectCity(defaultCity)
-    }
+    let page = nextProps.page
 
     if (nextProps.page !== this.props.page && nextProps.page) {
-      let page = nextProps.page
+
+      nextProps.selectState(page.state)
 
       this.setState({
         title: page.title,
         level: page.level,
-        state: page.state,
-        city: page.city,
         images: page.images.map(e => `https://${ e }`),
         imageFiles: page.images.slice(),
         description: page.text,
-        video: page.videos[0] ? page.video[0] : '',
+        video: page.videos[0] ? page.videos[0] : '',
         videoFile: null,
         youtube: page.youtubelink ? page.youtubelink: ''
       })
     }
 
-    if (nextProps.state !== this.props.state && nextProps.state === 'UPDATE_ACTIVISM_PAGE_SUCCEEDED') {
-
+    if (nextProps.states !== this.props.states && nextProps.states) {
+      this.props.selectState(nextProps.page.state)
+      this.props.citiesFetchRequested(nextProps.page.state)
     }
+
+    if (nextProps.cities !== this.props.cities && nextProps.cities) {
+      if (nextProps.selectedState === page.state) this.props.selectCity(page.selectedCity)
+      else this.props.selectCity(nextProps.cities.Items[0].city)
+    }
+
   }
 
   makeStateOption(state) {
@@ -106,7 +94,6 @@ class Edit extends Component {
   onState(e) {
     const state = e.target.value
 
-    this.setState({ state: state })
     this.props.selectState(state)
     this.props.citiesFetchRequested(state)
   }
@@ -114,7 +101,6 @@ class Edit extends Component {
   onCity(e) {
     const city = e.target.value
 
-    this.setState({ city: city })
     this.props.selectCity(city)
   }
 
@@ -148,8 +134,8 @@ class Edit extends Component {
       {
         title: this.state.title,
         level: this.state.level,
-        state: (this.state.level > 1) ? this.state.state : undefined,
-        city: (this.state.level > 2) ? this.state.city : undefined,
+        state: (this.state.level > 1) ? this.props.selectedState : undefined,
+        city: (this.state.level > 2) ? this.props.selectedCity : undefined,
         text: this.state.description,
         imageFiles: this.state.imageFiles,
         videoFile: this.state.videoFile,
@@ -226,7 +212,7 @@ class Edit extends Component {
         <form className="form" onSubmit={ this.onSave }>
 
           <div className="form-group row">
-            <label htmlFor="level" className="col-auto col-md-3 col-form-label">Page Title:</label>
+            <label htmlFor="title" className="col-auto col-md-3 col-form-label">Page Title:</label>
             <div className="ml-auto col-md-9">
               <input className="form-control" type="text" name="title" id="title" value={ this.state.title } onChange={ this.onChange } placeholder={ '' } required autoFocus />
             </div>
@@ -248,12 +234,12 @@ class Edit extends Component {
             <div className="ml-auto col-md-9">
               <div className="row">
                 <div className="col-6 pr-0" id="location">
-                  <select className="form-control" name="state" id="state" value={ this.state.state } onChange={ this.onState } disabled={ this.state.level < 2 } >
+                  <select className="form-control" name="state" id="state" value={ this.props.selectedState } onChange={ this.onState } disabled={ this.state.level < 2 } >
                     { this.state.level > 1 && stateOptions }
                   </select>
                 </div>
                 <div className="col-6 pl-0" id="location">
-                  <select className="form-control" name="state" id="city" value={ this.state.city } onChange={ this.onCity } disabled={ this.state.level < 3 }>
+                  <select className="form-control" name="state" id="city" value={ this.props.selectedCity } onChange={ this.onCity } disabled={ this.state.level < 3 }>
                     { this.state.level > 2 && cityOptions }
                   </select>
                 </div>

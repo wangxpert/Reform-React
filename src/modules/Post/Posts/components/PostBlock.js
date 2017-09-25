@@ -55,7 +55,6 @@ class PostBlock extends Component {
   onFlag(e) {
     e.preventDefault()
     e.stopPropagation()
-    console.log('flag')
 
     this.props.onFlag(this.props.post)
   }

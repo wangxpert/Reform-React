@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // Import Styles
 import 'react-responsive-carousel/lib/styles/carousel.css'
 import 'video-react/dist/video-react.css'
+import YouTubeVideoId from 'get-youtube-id';
 
 // Import Components
 import { Carousel } from 'react-responsive-carousel'
@@ -196,6 +197,7 @@ class Page extends Component {
     ))
 
     const shareUrl = ''
+    const youtubeId = YouTubeVideoId(page.youtubelink)
 
     let comments = null
 
@@ -214,7 +216,7 @@ class Page extends Component {
         <InputDialog title={ 'Add Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Add' } defaultValue={''}
           isOpen={ this.state.showCreateComment } toggle={ this.toggleAddCommentDialog } save={ this.addComment } />
 
-        <InputDialog title={ 'Edit Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Save' } defaultValue={ this.state.comment ? this.state.comment.content : '' }
+        <InputDialog title={ 'Edit Comment' } content={ 'Please enter the content of comment.' } buttonTitle={ 'Save' } defaultValue={ this.state.comment ? this.state.comment.text : '' }
           isOpen={ this.state.showEditComment } toggle={ this.toggleEditCommentDialog }
           save={ text => this.props.editComment(page.id, this.state.comment.commentid, text, idToken)  } />
 
@@ -284,7 +286,7 @@ class Page extends Component {
             { page.youtubelink &&
               <iframe className="video mb-2" title={ page.title }
                 frameBorder="0" allowFullScreen
-                src={ page.youtubelink }>
+                src={ `https://www.youtube.com/embed/${ youtubeId }` }>
               </iframe>
             }
             <div className="content-container col">

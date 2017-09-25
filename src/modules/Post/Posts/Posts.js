@@ -3,7 +3,6 @@ import React, { Component } from 'react'
 // Import components
 import InfiniteScroll from 'react-infinite-scroller'
 import { NotificationManager } from 'react-notifications'
-import Reveal from 'react-reveal'
 
 import PostBlock from './components/PostBlock'
 import CategorySelector from './components/CategorySelector'
@@ -122,10 +121,8 @@ class Posts extends Component {
     var renderPosts = []
     if (this.props.posts && this.props.posts.posts) {
       renderPosts = this.props.posts.posts.map((ele, index) => (
-        <Reveal key={ index } effect="animated">
-          <PostBlock key={ index } post={ ele } state={ posts.state } currentPost={ posts.currentPost } user={ user }
-            onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onComment={ this.onComment } onEdit={ this.onEdit } onPost={ this.onPost }/>
-        </Reveal>
+        <PostBlock key={ index } post={ ele } state={ posts.state } currentPost={ posts.currentPost } user={ user }
+          onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onComment={ this.onComment } onEdit={ this.onEdit } onPost={ this.onPost }/>
       ))
     }
 

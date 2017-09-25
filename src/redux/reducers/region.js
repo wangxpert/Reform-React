@@ -12,7 +12,7 @@ const initialState = {
 // Handlers
 
 export const fetchStatesSucceeded = (state = initialState, action) => {
-  return { ...state, states: action.states }
+  return { ...state, states: action.states, cities: null, departments: null }
 }
 
 export const fetchStatesFailed = (state = initialState, action) => {
@@ -20,7 +20,7 @@ export const fetchStatesFailed = (state = initialState, action) => {
 }
 
 export const fetchCitiesSucceeded = (state = initialState, action) => {
-  return { ...state, cities: action.cities }
+  return { ...state, cities: action.cities, departments: null }
 }
 
 export const fetchCitiesFailed = (state = initialState, action) => {
@@ -40,7 +40,7 @@ export const selectState = (state = initialState, action) => {
 }
 
 export const selectCity = (state = initialState, action) => {
-  return { ...state, selectedCity: action.city }
+  return { ...state, selectedCity: action.city, departments: null }
 }
 
 export const selectDepartment = (state = initialState, action) => {

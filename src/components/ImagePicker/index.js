@@ -3,11 +3,6 @@ import PropTypes from 'prop-types'
 
 // Import Components
 import DropZone from 'react-dropzone'
-// import Button from '../Button'
-
-// import {
-//   ThreeBounce
-// } from 'better-react-spinkit'
 
 // Import styles
 import './styles.css'
@@ -22,7 +17,7 @@ class ImagePicker extends Component {
         onDropAccepted={ this.props.onDropAccepted }>
         { this.props.children }
 
-        <div className="description">
+        <div className="description ml-2">
           Click or drop file here.
         </div>
       </DropZone>

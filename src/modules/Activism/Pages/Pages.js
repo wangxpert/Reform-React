@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 // Import Components
 import InfiniteScroll from 'react-infinite-scroller'
-import Reveal from 'react-reveal'
 
 import PageBlock from './components/PageBlock'
 import CategorySelector from './components/CategorySelector'
@@ -73,9 +71,7 @@ class ActivistList extends Component {
     var renderActivists = null
     if (activism.activists) {
       renderActivists = activism.activists.map((ele, index) => (
-        <Reveal key={ index } effect="animated fadeInUp">
-          <PageBlock key={ index } activist={ ele } onClick={ e => this.props.changeLocation( `/activism/pages/${ ele.id }` ) } />
-        </Reveal>
+        <PageBlock key={ index } activist={ ele } onClick={ e => this.props.changeLocation( `/activism/pages/${ ele.id }` ) } />
       ))
     }
 

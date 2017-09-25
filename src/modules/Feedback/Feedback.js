@@ -13,11 +13,9 @@ class FeedBack extends Component {
     super(props)
 
     this.state = {
-      contact: '',
+      contact: (this.props.user && this.props.user.email) ? this.props.user.email : '',
       description: ''
     }
-
-    if (this.props.user && this.props.user.email) this.state.contact = this.props.user.email
 
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)

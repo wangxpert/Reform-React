@@ -24,7 +24,7 @@ function mapDispatchToProps(dispatch) {
     getActivismPage: (pageId) => dispatch(Actions.getActivismPageRequested(pageId)),
     addUserEmailToActivismPage: (pageId, email) => dispatch(Actions.addUserEmailToActivismPageRequested(pageId, email)),
     getActivismPageComments: (pageId, limit, lastKey) => dispatch(Actions.getActivismPageCommentsRequested(pageId, limit, lastKey)),
-    addComment: (pageId, content, idToken) => dispatch(Actions.addCommentToActivismPageRequested(pageId, content, idToken)),
+    addComment: (pageId, text, idToken) => dispatch(Actions.addCommentToActivismPageRequested(pageId, text, idToken)),
     upvotePage: (pageId, idToken) => dispatch(Actions.upvoteActivismPageRequested(pageId, idToken)),
     downvotePage: (pageId, idToken) => dispatch(Actions.downvoteActivismPageRequested(pageId, idToken)),
     flagPage: (pageId, idToken) => dispatch(Actions.flagActivismPageRequested(pageId, idToken)),

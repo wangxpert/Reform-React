@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 // Import Components
 import InfiniteScroll from 'react-infinite-scroller'
-import Reveal from 'react-reveal'
 
 import PageBlock from '../Pages/components/PageBlock'
 
@@ -40,9 +39,7 @@ class MyPages extends Component {
     let renderPages = null
     if (pages) {
       renderPages = pages.map((ele, index) => (
-        <Reveal key={ index } effect="animated fadeInUp">
-          <PageBlock key={ index } activist={ ele } onClick={ e => this.props.changeLocation(`/activism/pages/${ ele.id }`) } />
-        </Reveal>
+        <PageBlock key={ index } activist={ ele } onClick={ e => this.props.changeLocation(`/activism/pages/${ ele.id }`) } />
       ))
     }
 

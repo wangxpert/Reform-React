@@ -230,7 +230,7 @@ class Post extends Component {
           </div>
 
           <div className="col-12 text-center" >
-            <img className="post-media" src={ `https://${ post.media }` } alt="No Images" />
+            <img className="post-media" src={ post.media ? `https://${ post.media }` : '' } alt="No Images" />
             <div className="mt-2 text-center">
               <ShareButtons shareUrl={ shareUrl } title={ 'ReformCOW' } picture={ `https://${ post.media }` }/>
             </div>

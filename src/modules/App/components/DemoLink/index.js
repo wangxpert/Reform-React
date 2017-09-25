@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 // Import Styles
 import "./styles/styles.css"
-import Reveal from 'react-reveal'
 
 class DemoLink extends Component {
 
@@ -25,10 +24,8 @@ class DemoLink extends Component {
     return (
 
       <div className="demo-link">
-        <Reveal effect="animated fadeInRight">
-          <i className="fa fa-times close-button" aria-hidden="true" onClick={ this.onClose }></i>&nbsp;&nbsp;
-          <span className="link" onClick={ this.props.onClick }>ReformCOW Intro & Demo</span>
-        </Reveal>
+        <i className="fa fa-times close-button" aria-hidden="true" onClick={ this.onClose }></i>&nbsp;&nbsp;
+        <span className="link" onClick={ this.props.onClick }>ReformCOW Intro & Demo</span>&nbsp;&nbsp;
       </div>
 
     )

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Reveal from 'react-reveal'
 
 export default function asyncComponent(importComponent) {
 
@@ -25,7 +24,7 @@ export default function asyncComponent(importComponent) {
       const C = this.state.component
 
       return C
-        ? <Reveal effect="animated fadeIn"><C {...this.props} /></Reveal>
+        ? <C {...this.props} />
         : null
     }
 

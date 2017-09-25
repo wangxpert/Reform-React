@@ -97,7 +97,6 @@ function* createPost(action) {
 
 // Saga: will be fired on UPDATE_POST_REQUESTED actions
 function* updatePost(action) {
-  console.log(action)
    try {
      let data = action.data
      if (data.imageFile) {

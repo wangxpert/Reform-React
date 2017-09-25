@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 // Import components
 import InfiniteScroll from 'react-infinite-scroller'
-import Reveal from 'react-reveal'
 
 import PostBlock from '../Posts/components/PostBlock'
 
@@ -78,10 +77,8 @@ class MyPosts extends Component {
     var renderPosts = []
     if (posts) {
       renderPosts = posts.map((ele, index) => (
-        <Reveal key={ index } effect="animated">
-          <PostBlock key={ index } post={ ele } state={ this.props.state } currentPost={ this.props.currentPost } user={ this.props.user }
-            onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onEdit={ this.onEdit } onPost={ this.onPost }/>
-        </Reveal>
+        <PostBlock key={ index } post={ ele } state={ this.props.state } currentPost={ this.props.currentPost } user={ this.props.user }
+          onUpvote={ this.onUpvote } onDownvote={ this.onDownvote } onFlag={ this.onFlag } onDelete={ this.onDelete } onEdit={ this.onEdit } onPost={ this.onPost }/>
       ))
     }
 
