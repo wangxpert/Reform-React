@@ -75,7 +75,7 @@ class Edit extends Component {
     }
 
     if (nextProps.state !== this.props.state && nextProps.state === 'UPDATE_POST_SUCCEEDED') {
-      this.props.replaceLocation(`/post/edit/${ this.props.post.postid }`)
+      this.props.backLocation()
     }
   }
 
@@ -97,7 +97,7 @@ class Edit extends Component {
 
     this.props.updatePost({
       old: this.props.post,
-      department: this.state.department,
+      // department: this.state.department,
       text: this.state.text,
       imageFile: this.state.imageFile,
     }, this.props.session.idToken.jwtToken)
@@ -143,7 +143,7 @@ class Edit extends Component {
           <div className="form-group row">
             <label htmlFor="department" className="col-auto col-md-3 col-form-label">Department:</label>
             <div className="ml-auto col-md-9">
-              <select className="form-control" name="department" id="department" value={ this.state.department } onChange={ this.onChange } placeholder={ 'Choose Department' } required >
+              <select className="form-control" name="department" id="department" value={ this.state.department } onChange={ this.onChange } placeholder={ 'Choose Department' } disabled >
                 { departments  }
               </select>
             </div>

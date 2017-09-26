@@ -43,9 +43,7 @@
   .content-container {
     overflow-y: scroll;
 
-    @include media-breakpoint-up(lg) {
-      min-height: 200px;
-    }
+    text-align: justify;
 
     // @include media-breakpoint-down(lg) {
     //   max-height: 300px;

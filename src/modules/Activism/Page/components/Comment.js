@@ -75,7 +75,7 @@ export default class Comment extends Component {
             <img src={ comment.useravatar ? `https://${ comment.useravatar }` : '/img/user.png' } className="media-object img-thumbnail avatar" alt=""/>
           </div>
           <div className="media-body">
-            <div className="media-heading user-name"><strong>{ comment.useralias }</strong></div>
+            <div className="media-heading user-name"><strong>{ comment.useralias || comment.preferred_username }</strong></div>
 
             <span>{ new Date(comment.timestamp).toDateString() }</span>
           </div>
@@ -89,14 +89,14 @@ export default class Comment extends Component {
               <i className="fa fa-thumbs-up" aria-hidden="true"></i>
               { this.props.state === 'UPVOTING_COMMENT' && isCurrentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
-                : ` ${ comment.upvotes } Support`
+                : ` ${ comment.upvotes } Agree`
               }
             </button>
             <button className="btn btn-secondary post-button col" onClick={ this.onDownvote }>
               <i className="fa fa-thumbs-down" aria-hidden="true"></i>
               { this.props.state === 'DOWNVOTING_COMMENT' && isCurrentComment
                 ? <Circle size={ 15 } color='black' style={{ display: 'inline-block', padding: '0', margin: '0 0 0 1rem', height: 'auto' }}/>
-                : ` ${ comment.downvotes } Don't support`
+                : ` ${ comment.downvotes } Disagree`
               }
             </button>
             <button className="btn btn-secondary post-button col" onClick={ this.onReport }>

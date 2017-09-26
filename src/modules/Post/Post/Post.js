@@ -248,14 +248,14 @@ class Post extends Component {
             <i className="fa fa-thumbs-up" aria-hidden="true"></i>
             { this.props.state === 'UPVOTING_POST'
               ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
-              : ` ${ post.upvotes } Support`
+              : ` ${ post.upvotes } Agree`
             }
           </Button>
           <Button className="col" style={ btnStyle2 } onClick={ this.downvotePost }>
             <i className="fa fa-thumbs-down" aria-hidden="true"></i>
             { this.props.state === 'DOWNVOTING_POST'
               ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
-              : ` ${ post.downvotes } Don't Support`
+              : ` ${ post.downvotes } Disagree`
             }
           </Button>
           <Button className="col" style={ btnStyle2 } onClick={ this.flagPost }>

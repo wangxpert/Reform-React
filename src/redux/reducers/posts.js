@@ -15,7 +15,7 @@ export const resetPosts = (state = initialState) => {
   return { ...state, state: 'RESETED_POSTS', posts: [] }
 }
 
-export const resetMyPages = (state = initialState) => {
+export const resetMyPosts = (state = initialState) => {
   return { ...state, state: 'RESETED_MYPOSTS', myPosts: { posts: [], lastKey: null } }
 }
 
@@ -277,6 +277,7 @@ export const flagPostCommentFailed = (state = initialState, action) => {
 // map action types to reducer functions
 export const handlers = {
   [Types.RESET_POSTS]: resetPosts,
+  [Types.RESET_MYPOSTS]: resetMyPosts,
   [Types.POSTS_FETCH_REQUESTED]: fetchPostsRequested,
   [Types.POSTS_FETCH_SUCCEEDED]: fetchPostsSucceeded,
   [Types.POSTS_FETCH_FAILED]: fetchPostsFailed,

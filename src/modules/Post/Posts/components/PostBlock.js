@@ -115,23 +115,23 @@ class PostBlock extends Component {
         <div className="px-4 pt-3 pb-1">
           <p className="post-text">{ post.text }</p>
           <div className="p-3 row">
-            <button className="btn btn-secondary post-button col" onClick={ this.onUpvote }>
+            <button className="btn btn-secondary post-button col col-lg" onClick={ this.onUpvote }>
               <i className="fa fa-thumbs-up" aria-hidden="true"></i>
               &nbsp;&nbsp;{ post.upvotes }
               { props.state === 'UPVOTING_POST' && props.currentPost === post.post
                 ? <Circle size={ 15 } color='black' style={ spinnerStyle }/>
-                : ' Support'
+                : ' Agree'
               }
             </button>
-            <button className="btn btn-secondary post-button col" onClick={ this.onDownvote }>
+            <button className="btn btn-secondary post-button col col-lg" onClick={ this.onDownvote }>
               <i className="fa fa-thumbs-down" aria-hidden="true"></i>
               &nbsp;&nbsp;{ post.downvotes }
               { props.state === 'DOWNVOTING_POST' && props.currentPost === post.post
                 ? <Circle size={ 15 } color='black' style={ spinnerStyle }/>
-                : ' Don\'t Support'
+                : ' Disagree'
               }
             </button>
-            <button className="btn btn-secondary post-button col" onClick={ this.onFlag }>
+            <button className="btn btn-secondary post-button col col-lg" onClick={ this.onFlag }>
               <i className="fa fa-user-times" aria-hidden="true"></i>
               &nbsp;&nbsp;{ post.flags }
               { props.state === 'FLAGGING_POST' && props.currentPost === post.post
@@ -139,9 +139,9 @@ class PostBlock extends Component {
                 : ' Report'
               }
             </button>
-            <button className="btn btn-secondary post-button col" onClick={ this.onComment }>
+            <button className="btn btn-secondary post-button col-12 col-lg" onClick={ this.onComment }>
               <i className="fa fa-comments" aria-hidden="true"></i>
-              &nbsp;&nbsp;{ post.comments }
+              &nbsp;{ post.comments }
               { props.state === 'COMMENTING_POST' && props.currentPost === post.post
                 ? <Circle size={ 15 } color='black' style={ spinnerStyle }/>
                 : ' Comment'

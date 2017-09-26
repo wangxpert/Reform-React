@@ -113,7 +113,7 @@ function* updatePost(action) {
      yield put(Actions.updatePostSucceeded(result))
      NotificationManager.success('Your changed is saved.', 'Edit Post')
    } catch (e) {
-     yield put(Actions.createPostFailed(e))
+     yield put(Actions.updatePostFailed(e))
      NotificationManager.error(errorMessage(e.errorMessage), 'Error...')
    }
 }

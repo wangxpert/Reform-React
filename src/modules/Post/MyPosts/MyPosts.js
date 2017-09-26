@@ -28,6 +28,7 @@ class MyPosts extends Component {
 
     this.props.resetMyPosts()
     this.props.getMyPosts(FETCH_LIMIT, null, idToken)
+    console.log('MYPOSTS')
   }
 
   loadPosts() {
