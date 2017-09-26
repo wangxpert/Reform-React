@@ -282,7 +282,7 @@ class Page extends Component {
                 <source src={ `https://${ page.videos[0] }` } />
               </Player>
             }
-            { page.youtubelinks[0] &&
+            { page.youtubelinks && page.youtubelinks[0] &&
               <iframe className="video w-100" title={ page.title }
                 frameBorder="0" allowFullScreen
                 src={ `https://www.youtube.com/embed/${ YouTubeVideoId(page.youtubelinks[0]) }` }>
@@ -309,14 +309,14 @@ class Page extends Component {
             </form>
           </div>
 
-          { page.youtubelinks[1] &&
+          { page.youtubelinks && page.youtubelinks[1] &&
             <iframe className="video mb-2 col-12 col-lg-6" title={ page.title }
               frameBorder="0" allowFullScreen
               src={ `https://www.youtube.com/embed/${ YouTubeVideoId(page.youtubelinks[1]) }` }>
             </iframe>
           }
 
-          { page.youtubelinks[2] &&
+          { page.youtubelinks && page.youtubelinks[2] &&
             <iframe className="video mb-2 col-12 col-lg-6" title={ page.title }
               frameBorder="0" allowFullScreen
               src={ `https://www.youtube.com/embed/${ YouTubeVideoId(page.youtubelinks[2]) }` }>
