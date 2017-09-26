@@ -107,7 +107,6 @@ function* updateActivismPage(action) {
       deleteFile(AWS_S3_ACTIVISM_FOLDER, path[path.length - 1])
     }
 
-    console.log(data)
     var result = yield call(Api.updateActivismPage, action.pageId, data, action.idToken)
 
     yield put(Actions.updateActivismPageSucceeded(result))

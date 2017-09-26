@@ -5,6 +5,7 @@ import Edit from './Edit'
 
 // Import Actions
 import * as Actions from '../../../redux/actions/activism'
+import { push } from 'react-router-redux'
 
 import {
   statesFetchRequested,
@@ -34,7 +35,8 @@ function mapDispatchToProps(dispatch) {
     citiesFetchRequested: (state) => dispatch(citiesFetchRequested(state)),
     selectState: (state) => dispatch(selectState(state)),
     selectCity: (city) => dispatch(selectCity(city)),
-    updateActivismPage: (pageId, data, idToken) => dispatch(Actions.updateActivismPageRequested(pageId, data, idToken))
+    updateActivismPage: (pageId, data, idToken) => dispatch(Actions.updateActivismPageRequested(pageId, data, idToken)),
+    changeLocation: (path) => dispatch(push(path))
   }
 }
 

@@ -5,7 +5,7 @@ export const POST_API_URL = 'https://poqsfjosu4.execute-api.us-east-1.amazonaws.
 export const ACTIVISM_API_URL = 'https://l91wzx5wg2.execute-api.us-east-1.amazonaws.com/dev'
 
 export default function callApi(baseUrl, endpoint, method = 'get', body, idToken) {
-  console.log(endpoint)
+
   return fetch(`${baseUrl}/${endpoint}`, {
     headers: { 'content-type': 'application/json', 'Authorization': idToken },
     method,

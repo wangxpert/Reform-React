@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import {
   ThreeBounce
 } from 'better-react-spinkit'
-import { NotificationManager } from 'react-notifications'
 
 import Button from '../../../components/Button'
 import ImagePicker from '../../../components/ImagePicker'
@@ -25,7 +24,9 @@ class Edit extends Component {
       imageFiles: [],
       videoFile: null,
       video: '',
-      youtube: ''
+      youtube1: '',
+      youtube2: '',
+      youtube3: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -63,7 +64,9 @@ class Edit extends Component {
         description: page.text,
         video: page.videos[0] ? page.videos[0] : '',
         videoFile: null,
-        youtube: page.youtubelink ? page.youtubelink: ''
+        youtube1: page.youtubelinks[0] ? page.youtubelinks[0]: '',
+        youtube2: page.youtubelinks[1] ? page.youtubelinks[1]: '',
+        youtube3: page.youtubelinks[2] ? page.youtubelinks[2]: ''
       })
     }
 
@@ -75,6 +78,10 @@ class Edit extends Component {
     if (nextProps.cities !== this.props.cities && nextProps.cities) {
       if (nextProps.selectedState === page.state) this.props.selectCity(page.selectedCity)
       else this.props.selectCity(nextProps.cities.Items[0].city)
+    }
+
+    if (nextProps.state !== this.props.state && nextProps.state === 'UPDATE_ACTIVISM_PAGE_SUCCEEDED') {
+      nextProps.changeLocation(`/activism/pages/${ page.id }`)
     }
 
   }
@@ -104,7 +111,6 @@ class Edit extends Component {
     this.props.selectCity(city)
   }
 
-
   onChange(e) {
     const target = e.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -115,20 +121,16 @@ class Edit extends Component {
     })
   }
 
-  validateInput() {
-    const state = this.state
-    if (state.newPassword !== state.confirmPassword) {
-      NotificationManager.error('Password must match the confirm password.', "Password doesn't match...")
-      return false
-    }
-    return true
-  }
-
   onSave(e) {
     e.preventDefault()
 
     if (this.props.state === 'UPDATING_ACTIVISM_PAGE')
       return
+
+    var youtube = []
+    for (let i = 0; i < 3; i++) {
+      youtube[i] = this.state[`youtube${i + 1}`]
+    }
 
     this.props.updateActivismPage(this.props.page.id,
       {
@@ -141,7 +143,7 @@ class Edit extends Component {
         videoFile: this.state.videoFile,
         oldImages: this.props.page.images,
         oldVideo: this.props.page.videos[0],
-        youtubelink: this.state.youtube
+        youtubelinks: youtube
       }, this.props.session.idToken.jwtToken)
   }
 
@@ -284,8 +286,14 @@ class Edit extends Component {
 
           <div className="form-group row">
             <label htmlFor="youtube" className="col-auto col-md-3 col-form-label">Youtube:</label>
+            <div className="ml-auto mb-1 col-md-9">
+              <input className="form-control" type="url" name="youtube1" id="youtube1" value={ this.state.youtube1 } onChange={ this.onChange } placeholder={ '' } />
+            </div>
+            <div className="ml-auto mb-1 col-md-9">
+              <input className="form-control" type="url" name="youtube2" id="youtube2" value={ this.state.youtube2 } onChange={ this.onChange } placeholder={ '' } />
+            </div>
             <div className="ml-auto col-md-9">
-              <input className="form-control" type="text" name="youtube" id="youtube" value={ this.state.youtube } onChange={ this.onChange } placeholder={ '' } />
+              <input className="form-control" type="url" name="youtube3" id="youtube3" value={ this.state.youtube3 } onChange={ this.onChange } placeholder={ '' } />
             </div>
           </div>
 

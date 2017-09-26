@@ -4,7 +4,6 @@ import React, { Component } from 'react'
 import {
   ThreeBounce
 } from 'better-react-spinkit'
-import { NotificationManager } from 'react-notifications'
 
 import Button from '../../../components/Button'
 import ImagePicker from '../../../components/ImagePicker'
@@ -25,7 +24,9 @@ class Create extends Component {
       imageFiles: [],
       videoFile: null,
       video: '',
-      youtube: ''
+      youtube1: '',
+      youtube2: '',
+      youtube3: ''
     }
 
     this.onChange = this.onChange.bind(this)
@@ -96,7 +97,6 @@ class Create extends Component {
     this.props.selectCity(city)
   }
 
-
   onChange(e) {
     const target = e.target
     const value = target.type === 'checkbox' ? target.checked : target.value
@@ -107,20 +107,16 @@ class Create extends Component {
     })
   }
 
-  validateInput() {
-    const state = this.state
-    if (state.newPassword !== state.confirmPassword) {
-      NotificationManager.error('Password must match the confirm password.', "Password doesn't match...")
-      return false
-    }
-    return true
-  }
-
   onSave(e) {
     e.preventDefault()
 
     if (this.props.state === 'CREATING_ACTIVISM_PAGE')
       return
+
+    var youtube = []
+    for (let i = 0; i < 3; i++) {
+      youtube[i] = this.state[`youtube${i + 1}`]
+    }
 
     this.props.createActivismPage({
       title: this.state.title,
@@ -130,7 +126,7 @@ class Create extends Component {
       text: this.state.description,
       imageFiles: this.state.imageFiles,
       videoFile: this.state.videoFile,
-      youtubelink: this.state.youtube
+      youtubelinks: youtube
     }, this.props.session.idToken.jwtToken)
   }
 
@@ -272,9 +268,15 @@ class Create extends Component {
           </div>
 
           <div className="form-group row">
-            <label htmlFor="youtube" className="col-auto col-md-3 col-form-label">Youtube:</label>
+            <label htmlFor="youtube" className="col-auto col-md-3 col-form-label">Youtube Links:</label>
+            <div className="ml-auto mb-1 col-md-9">
+              <input className="form-control" type="url" name="youtube1" id="youtube1" value={ this.state.youtube1 } onChange={ this.onChange } placeholder={ '' } />
+            </div>
+            <div className="ml-auto mb-1 col-md-9">
+              <input className="form-control" type="url" name="youtube2" id="youtube2" value={ this.state.youtube2 } onChange={ this.onChange } placeholder={ '' } />
+            </div>
             <div className="ml-auto col-md-9">
-              <input className="form-control" type="text" name="youtube" id="youtube" value={ this.state.youtube } onChange={ this.onChange } placeholder={ '' } />
+              <input className="form-control" type="url" name="youtube3" id="youtube3" value={ this.state.youtube3 } onChange={ this.onChange } placeholder={ '' } />
             </div>
           </div>
 
