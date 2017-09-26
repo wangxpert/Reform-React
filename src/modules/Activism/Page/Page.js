@@ -261,55 +261,59 @@ class Page extends Component {
         </div>
 
         <div className="row">
-          <div className="col-12 col-lg-5 mb-3" >
+          <div className="col-12 col-lg-6" >
             <div className="image-container">
               { page.images.length ?
-                <Carousel axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
+                <Carousel key={ previewImages } axis="horizontal" showThumbs={ true } showArrows={ true } dynamicHeight={ true }>
                   { previewImages }
                 </Carousel>
                 : <div className="text-center p-5">No Image</div>
               }
             </div>
-            <div className="pt-3 text-center">
+            <div className="mt-3 mb-2 text-center">
               <div className="mb-2"> Share : </div>
               <ShareButtons shareUrl={ shareUrl } title={ page.title } />
             </div>
           </div>
-
-
-          <div className="col-12 col-lg-7 d-lg-flex flex-lg-column justify-content-between">
+          <div className="col-12 col-lg-6">
             { page.videos[0] &&
               <Player className="mb-2">
                 <source src={ `https://${ page.videos[0] }` } />
               </Player>
             }
             { page.youtubelink &&
-              <iframe className="video mb-2" title={ page.title }
+              <iframe className="video mb-2 w-100" title={ page.title }
                 frameBorder="0" allowFullScreen
                 src={ `https://www.youtube.com/embed/${ youtubeId }` }>
               </iframe>
             }
-            <div className="content-container col">
+          </div>
+
+          <div className="col-12">
+            <div className="content-container">
               { page.text }
             </div>
-            <form onSubmit={ this.addUserEmail }>
-              <div className="inform-container row mt-4 mb-4">
-                <div className="col-12 mb-1">
-                  Stay informed. Sign Up for email updates.
-                </div>
+          </div>
 
-                <div className="col">
-                  <input type="email" placeholder="Email Address" name="email" onChange={ this.onChange } required/>
-                </div>
-                <div className="col-auto">
-                  <Button style={ btnStyle }>
-                    <small>SUBMIT</small>
-                  </Button>
-                </div>
+        </div>
+
+        <div className="row">
+          <div className="col-12">
+            <form onSubmit={ this.addUserEmail } className="inform-container row mt-4 mb-4 px-1">
+              <div className="col-12 mb-1">
+                Stay informed. Sign Up for email updates.
+              </div>
+
+              <div className="col">
+                <input type="email" placeholder="Email Address" name="email" onChange={ this.onChange } required/>
+              </div>
+              <div className="col-auto">
+                <Button style={ btnStyle }>
+                  <small>SUBMIT</small>
+                </Button>
               </div>
             </form>
           </div>
-
         </div>
 
         <div className="p-3 mt-1 row">
@@ -317,14 +321,14 @@ class Page extends Component {
             <i className="fa fa-thumbs-up" aria-hidden="true"></i>
             { this.props.state === 'UPVOTING_ACTIVISM_PAGE'
               ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
-              : ` ${ page.upvotes } Support`
+              : ` ${ page.upvotes } Agree`
             }
           </Button>
           <Button className="col" style={ btnStyle2 } onClick={ this.downvotePage }>
             <i className="fa fa-thumbs-down" aria-hidden="true"></i>
             { this.props.state === 'DOWNVOTING_ACTIVISM_PAGE'
               ? <Circle size={ 15 } color='white' style={ spinnerStyle }/>
-              : ` ${ page.downvotes } Don't Support`
+              : ` ${ page.downvotes } Disagree`
             }
           </Button>
           <Button className="col" style={ btnStyle2 } onClick={ this.flagPage }>
