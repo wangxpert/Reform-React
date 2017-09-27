@@ -170,7 +170,7 @@ class Post extends Component {
     if (!post)
       return null
 
-    const shareUrl = ''
+    const shareUrl = window.location.href
 
     let comments = null
 

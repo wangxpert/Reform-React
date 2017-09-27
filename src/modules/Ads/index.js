@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 // Import Components
 import AlertBox from './components/AlertBox'
 import MobileApps from './components/MobileApps'
-import AdSense from 'react-adsense'
+import AdSense from './components/GoogleAdSense'
 
 class Ads extends Component {
 
@@ -20,9 +20,9 @@ class Ads extends Component {
       <div>
         { this.state.showAlert && <AlertBox closeAlert={ e => (this.setState({ showAlert: false })) } /> }
         <MobileApps />
-        <AdSense.Google client='ca-pub-1870518657416443'
+        <AdSense client='ca-pub-1870518657416443'
                         slot='5619428622'
-                        style={{ display: 'block' }}
+                        test='off'
                         format='auto' />
       </div>
     )

@@ -196,7 +196,7 @@ class Page extends Component {
       </div>
     ))
 
-    const shareUrl = ''
+    const shareUrl = window.location.href
 
     let comments = null
 
@@ -288,7 +288,7 @@ class Page extends Component {
                 src={ `https://www.youtube.com/embed/${ YouTubeVideoId(page.youtubelinks[0]) }` }>
               </iframe>
             }
-            <div className="content-container col">
+            <div className="content-container col p-0">
               { page.text }
             </div>
             <form onSubmit={ this.addUserEmail }>

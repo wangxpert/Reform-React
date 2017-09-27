@@ -33,7 +33,6 @@ class Buttons extends Component {
         <FacebookShareButton
           url={ shareUrl }
           quote={ title }
-          picture={ picture }
           className="share-button"
           >
           <FacebookIcon
@@ -43,7 +42,8 @@ class Buttons extends Component {
 
         <GooglePlusShareButton
           url={ shareUrl }
-          quote={ title }
+          title={ title }
+          picture={ picture }
           className="share-button"
           >
           <GooglePlusIcon
@@ -63,7 +63,7 @@ class Buttons extends Component {
 
         <TwitterShareButton
           url={ shareUrl }
-          quote={ title }
+          title={ title }
           className="share-button"
           >
           <TwitterShareIcon
